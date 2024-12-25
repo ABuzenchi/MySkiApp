@@ -1,0 +1,77 @@
+.navBar {
+    display: flex;
+    align-items: center;  
+    justify-content: space-between;
+    padding: 10px 20px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navBar .mantine-Button {
+    margin-left: 10px; 
+    font-weight: 500;  
+  }
+  
+  .navBar .mantine-Button:hover {
+    background-color: #f0f0f0; 
+  }
+  
+  .navBar .mantine-Button a {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .navBar img {
+    height: 40px;  
+    width: auto;
+  }
+  
+  .navBar div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navBar div button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+  }
+  
+  .navBar svg {
+    margin-right: 5px; 
+  }
+  
+  .navBar .mantine-Button:first-of-type {
+    margin-left: 0; 
+  }
+  
+  @media (max-width: 768px) {
+    .navBar {
+      flex-direction: column;  
+      align-items: flex-start; 
+    }
+  
+    .navBar .mantine-Button {
+      width: 100%; 
+      margin: 5px 0; 
+    }
+  
+    .navBar div {
+      width: 100%;  
+      justify-content: center; 
+    }
+  }
+  
+  .navBar a {
+    color: var(--text-color); /* Utilizează culoarea textului definită pentru tema activă */
+    text-decoration: none; /* Elimină sublinierea */
+    font-weight: 500; /* Ajustează grosimea fontului dacă este necesar */
+  }
+  
+  .navBar a:hover {
+    color: var(--button-hover); /* Schimbă culoarea la hover */
+    text-decoration: underline; /* Adaugă o subliniere la hover (opțional) */
+  }
