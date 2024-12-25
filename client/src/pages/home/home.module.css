@@ -1,0 +1,10 @@
+.pageBackground {
+    background-image: url('../../assets/home-background.jpeg'); 
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 655px; 
+    width: auto; 
+    padding: 0px;
+  }
+  
