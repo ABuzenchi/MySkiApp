@@ -73,6 +73,6 @@
   }
   
   .navBar a:hover {
-    color: var(--button-hover); /* Schimbă culoarea la hover */
+    /* color: var(--button-hover); Schimbă culoarea la hover */
     text-decoration: underline; /* Adaugă o subliniere la hover (opțional) */
   }
