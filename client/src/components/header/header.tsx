@@ -5,6 +5,7 @@ import { AiFillHome } from "react-icons/ai";
 import { FaMap } from "react-icons/fa";
 import { MdForum } from "react-icons/md";
 import { FaCircleUser } from "react-icons/fa6";
+import UserProfile from "../user-profile/user-profile";
 
 const Header = () => {
 
@@ -28,10 +29,7 @@ const Header = () => {
         Forum
       </Button>
 
-      <Button component="a" href="/user-profile" size="lg">
-        <FaCircleUser />
-        User Profile
-      </Button>
+     <UserProfile/>
     </div>
     </>
   );

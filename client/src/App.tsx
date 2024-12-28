@@ -4,6 +4,7 @@ import Resorts from "./pages/resorts/resorts";
 import Forum from "./pages/forum/forum";
 import Header from "./components/header/header";
 import { MantineProvider } from "@mantine/core";
+import '@mantine/core/styles.css'
 
 const App = () => {
   return (
