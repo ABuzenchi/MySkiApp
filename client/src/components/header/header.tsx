@@ -4,7 +4,6 @@ import { Button, Image } from "@mantine/core";
 import { AiFillHome } from "react-icons/ai";
 import { FaMap } from "react-icons/fa";
 import { MdForum } from "react-icons/md";
-import { FaCircleUser } from "react-icons/fa6";
 import UserProfile from "../user-profile/user-profile";
 
 const Header = () => {
