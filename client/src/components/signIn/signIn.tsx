@@ -1,22 +1,54 @@
-import { Button, Modal } from "@mantine/core"
-import { useDisclosure } from "@mantine/hooks"
-import classes from "./signIn.module.css"
-import SignUp from "../signUp/signUp"
+import { Button, Modal } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import classes from "./signIn.module.css";
+import SignUp from "../signUp/signUp";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../store/authSlice";
 
-// interface SignUpProps{
-//   closeDrawer:()=>void;
-// }
+const SignIn = () => {
+  const [opened, { open, close }] = useDisclosure(false);
 
-const SignIn=()=>{
-    const [opened, { open, close }] = useDisclosure(false)
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const dispatch = useDispatch();
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/auth/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // const handleOpenModal=()=>{
-    //     closeDrawer();
-    //     {open};
-    // }
- return(
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("authToken", data.token); // Salvează token-ul
+      console.log(data.token, data.username);
+      dispatch(login({ username: data.username })); // Actualizează Redux
+      console.log("Login successful, token:", data.token);
+      alert("Login successful!");
+      close(); // Închide modalul
+    } catch (error: any) {
+      console.error("Error during login:", error.message);
+      alert(`Login failed: ${error.message}`);
+    }
+  };
+
+  return (
     <>
-     <Modal
+      <Modal
         opened={opened}
         onClose={close}
         title="Welcome back"
@@ -25,22 +57,23 @@ const SignIn=()=>{
           blur: 3,
         }}
         classNames={{
-            root: classes.signInRoot,
-            header: classes.signInHeader, 
-          }}
+          root: classes.signInRoot,
+          header: classes.signInHeader,
+        }}
       >
-         <div className={classes.signupcontainer}>
-          <form className={classes.signupform}>
-            <div className={classes.formgroup}>
+        <div className={classes.signincontainer}>
+          <form className={classes.signinform} onSubmit={handleSubmit}>
+            {/* <div className={classes.formgroup}>
               <label>Name</label>
               <input type="text" id="name" placeholder="Enter your name" />
-            </div>
+            </div> */}
 
             <div className={classes.formgroup}>
               <label>Email*</label>
               <input
                 type="email"
                 id="email"
+                onChange={handleChange}
                 placeholder="Enter your email"
                 required
               />
@@ -52,13 +85,14 @@ const SignIn=()=>{
                 type="password"
                 id="password"
                 placeholder="Enter your password"
+                onChange={handleChange}
                 required
               />
               <small>Must be at least 8 characters.</small>
             </div>
 
-            <button type="submit" className={classes.signupbutton}>
-              Sign Up
+            <button type="submit" className={classes.signinbutton}>
+              Sign In
             </button>
 
             <div className={classes.separator}>
@@ -77,7 +111,7 @@ const SignIn=()=>{
       </div> */}
 
             <p className={classes.signintext}>
-              Don't have an account? <SignUp/>
+              Don't have an account? <SignUp />
             </p>
           </form>
         </div>
@@ -87,8 +121,7 @@ const SignIn=()=>{
         Sign In
       </Button>
     </>
- )
-}
+  );
+};
 
 export default SignIn;
-

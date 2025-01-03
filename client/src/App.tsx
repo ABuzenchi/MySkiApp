@@ -5,10 +5,13 @@ import Forum from "./pages/forum/forum";
 import Header from "./components/header/header";
 import { MantineProvider } from "@mantine/core";
 import '@mantine/core/styles.css'
+import { Provider } from "react-redux";
+import store from "./store";
 
 const App = () => {
   return (
     <MantineProvider>
+      <Provider store={store}>
       <BrowserRouter>
         <Header></Header>
         <Routes>
@@ -17,6 +20,7 @@ const App = () => {
           <Route path="/forum" element={<Forum />} />
         </Routes>
       </BrowserRouter>
+      </Provider>
     </MantineProvider>
   );
 };
