@@ -2,6 +2,8 @@ import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import classes from "./signUp.module.css";
+import { login } from "../../store/authSlice";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -10,7 +12,7 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +21,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData); // Verifică datele înainte de a le trimite
+    console.log('Form Data:', formData); 
     try {
       const response = await fetch("http://localhost:3000/auth/signup", {
         method: "POST",
@@ -35,6 +37,8 @@ const SignUp = () => {
       }
 
       const data = await response.json();
+       dispatch(login({ username: data.username })); // Actualizează Redux
+            console.log("Login successful, token:", data.token);
       alert(`Signup successful! Token: ${data.token}`);
       close();
     } catch (err: any) {
