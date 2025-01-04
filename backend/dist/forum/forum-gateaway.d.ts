@@ -4,5 +4,5 @@ export declare class ForumGateaway implements OnGatewayConnection, OnGatewayDisc
     server: Server;
     handleConnection(client: Socket): void;
     handleDisconnect(client: Socket): void;
-    handleNewMessage(message: string): void;
+    handleNewMessage(message: string, client: Socket): void;
 }

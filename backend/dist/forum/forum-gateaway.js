@@ -15,20 +15,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ForumGateaway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
+const jwt = require("jsonwebtoken");
 let ForumGateaway = class ForumGateaway {
     handleConnection(client) {
-        console.log('New user connected...', client.id);
+        const token = client.handshake.auth.token || client.handshake.query.token;
+        console.log('Auth token', client.handshake.auth.token);
+        console.log('Query token', client.handshake.query.token);
+        console.log('Received token:', token);
+        try {
+            const decoded = jwt.verify(token, 'iloveskiing');
+            client.data.user = decoded;
+            console.log('User connected:', client.data.user?.username);
+        }
+        catch (error) {
+            console.error('Authentication error:', error.message);
+            client.disconnect();
+            return;
+        }
+        console.log('User after connection', client.data);
+        console.log('Client connected:', client.id);
         client.broadcast.emit('user-joined', {
-            message: 'New user joined the forum: ${client.id}',
+            message: `New user joined the forum: ${client.data.user.username}`,
         });
     }
     handleDisconnect(client) {
-        console.log('New user disconnected...', client.id);
+        console.log('User disconnected:', client.data.user?.username);
         this.server.emit('user-left', {
-            message: 'User left the forum: ${client.id}',
+            message: `User left the forum: ${client.data.user?.username}`,
         });
     }
-    handleNewMessage(message) {
+    handleNewMessage(message, client) {
+        console.log('Client (before message):', client);
+        console.log('Client data (before message):', client.data);
+        console.log('Client user (before message):', client.data ? client.data.user : 'No user data');
+        if (client.data.user) {
+            console.log(`${client.data.user.username} says: ${message}`);
+        }
         console.log(message);
         this.server.emit('message', 'message');
     }
@@ -42,10 +64,16 @@ __decorate([
     (0, websockets_1.SubscribeMessage)('newMessage'),
     __param(0, (0, websockets_1.MessageBody)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [String, socket_io_1.Socket]),
     __metadata("design:returntype", void 0)
 ], ForumGateaway.prototype, "handleNewMessage", null);
 exports.ForumGateaway = ForumGateaway = __decorate([
-    (0, websockets_1.WebSocketGateway)(3002, { cors: { origin: 'http://localhost:5173' } })
+    (0, websockets_1.WebSocketGateway)(3002, {
+        cors: {
+            origin: 'http://localhost:5173',
+            methods: ['GET', 'POST'],
+            allowedHeaders: ['Content-Type'],
+        },
+    })
 ], ForumGateaway);
 //# sourceMappingURL=forum-gateaway.js.map
