@@ -7,6 +7,7 @@ import { MantineProvider } from "@mantine/core";
 import '@mantine/core/styles.css'
 import { Provider } from "react-redux";
 import store from "./store";
+import Sinaia from "./pages/Sinaia/Sinaia";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/resorts" element={<Resorts />} />
           <Route path="/forum" element={<Forum />} />
+          <Route path="/Sinaia" element={ <Sinaia/>} />
         </Routes>
       </BrowserRouter>
       </Provider>

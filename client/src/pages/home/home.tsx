@@ -2,7 +2,12 @@ import classes from "./home.module.css"
 const Home=()=> {
   return (
     <div className={classes.pageBackground}>
-        <h1>Home</h1>
+        <input className={classes.searchLocation}
+                type="text"
+                id="searchLocation"
+                placeholder="Enter a location"
+                required
+              />
     </div>
     
   )

@@ -5,6 +5,7 @@ import { AiFillHome } from "react-icons/ai";
 import { FaMap } from "react-icons/fa";
 import { MdForum } from "react-icons/md";
 import UserProfile from "../user-profile/user-profile";
+import ResortsOptions from "../resortsOptions/resortsOptions";
 
 const Header = () => {
 
@@ -18,15 +19,16 @@ const Header = () => {
         Home
       </Button>
 
-      <Button variant="default" component="a" href="/resorts" size="lg">
+      {/* <Button variant="default" component="a" href="/resorts" size="lg">
         <FaMap />
         Resorts
-      </Button>
+      </Button> */}
 
       <Button variant="default" component="a" href="/forum" size="lg">
         <MdForum />
         Forum
       </Button>
+      <ResortsOptions></ResortsOptions>
 
      <UserProfile/>
     </div>

@@ -65,8 +65,10 @@ const UserProfile = () => {
           </>
           ) : (
             <>
+            <div className={classes.authContainer}>
               <SignUp />
               <SignIn />
+              </div>
             </>
           )}
         </div>
