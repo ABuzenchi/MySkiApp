@@ -2,9 +2,9 @@ import { Button, Menu } from "@mantine/core";
 import { FaMap } from "react-icons/fa";
 const ResortsOptions=()=> {
   return (
-    <Menu width={200} shadow="md">
+    <Menu width={200} shadow="md" trigger="hover" openDelay={100} closeDelay={400}>
     <Menu.Target>
-    <Button variant="default" size="lg">
+    <Button variant="default" size="lg" component="a" href="/Resorts">
         <FaMap />
         Resorts
       </Button>
