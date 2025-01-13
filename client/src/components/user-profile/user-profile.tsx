@@ -1,4 +1,4 @@
-import { Button, Drawer } from "@mantine/core";
+import { Button, Drawer,Image } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./user-profile.module.css";
 import SignUp from "../signUp/signUp";
@@ -8,6 +8,7 @@ import { RootState } from "../../store";
 import { useEffect } from "react";
 import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode"; // Import corect pentru jwt-decode
+import ballons from "../../assets/balloons.png"
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -58,10 +59,13 @@ const UserProfile = () => {
         <div className={classes.butttonsContainer}>
           {isAuthenticated ? (
             <>
+            <div className={classes.userContainer}>
             <p className={classes.welcomeMessage}>Hello, {username}!</p>
+            <Image src={ballons}/>
             <Button variant="default" onClick={handleLogout}>
             Logout
           </Button>
+          </div>
           </>
           ) : (
             <>
