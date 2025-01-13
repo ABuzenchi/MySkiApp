@@ -78,7 +78,7 @@ const UserProfile = () => {
         </div>
       </Drawer>
 
-      <Button variant="default" onClick={open}>
+      <Button variant="default" onClick={open} size="md">
         User Profile
       </Button>
     </>
