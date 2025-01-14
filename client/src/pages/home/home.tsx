@@ -23,9 +23,9 @@ const Home = () => {
             </div>}
             data={[
               { value: "Sinaia" },
-              { value: "Brasov" },
-              { value: "Cluj-Napoca" },
-              { value: "Bucharest" },
+              { value: "Poiana Brasov" },
+              { value: "Straja" },
+              { value: "Transalpina" },
             ]}
             onOptionSubmit={handleOptionSubmit}
             className={classes.searchInput}

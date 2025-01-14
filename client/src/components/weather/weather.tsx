@@ -144,7 +144,7 @@ interface WeatherProps {
   location: string;
 }
 
-const Weather: React.FC<WeatherProps> = ({ location }) => {
+const Weather = ({ location}:WeatherProps) => {
   const [data, setData] = useState<any>({});
   const api_key = "0b901684929992e24d14fa2cc85abd9b";
 

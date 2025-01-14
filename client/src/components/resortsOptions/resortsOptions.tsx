@@ -14,15 +14,14 @@ const ResortsOptions=()=> {
       <Menu.Item component="a" href="/Sinaia">
         Sinaia
       </Menu.Item>
-      <Menu.Item component="a" href="/Poiana-Brasov">
+      <Menu.Item component="a" href="/Poiana Brasov">
         Poiana Brasov
       </Menu.Item>
-      <Menu.Item
-        component="a"
-        href="https://mantine.dev"
-        target="_blank"
-      >
-        External link
+      <Menu.Item component="a" href="/Straja">
+        Straja
+      </Menu.Item>
+      <Menu.Item component="a" href="/Transalpina">
+        Transalpina
       </Menu.Item>
     </Menu.Dropdown>
   </Menu>
