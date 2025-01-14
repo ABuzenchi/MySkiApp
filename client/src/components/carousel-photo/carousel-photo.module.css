@@ -1,0 +1,12 @@
+.carouselimage {
+    border-radius: 10px; 
+    object-fit: cover;   
+    width: 100%;
+    height: 522.7px;
+    margin-top: 40px;
+  }
+
+  .container
+  {
+    width: 200px;
+  }

@@ -95,9 +95,9 @@ const SignIn = () => {
               Sign In
             </button>
 
-            <div className={classes.separator}>
+            {/* <div className={classes.separator}>
               <span>or continue with</span>
-            </div>
+            </div> */}
 
             {/* <div class="social-buttons">
         <button type="button" class="social-button google">

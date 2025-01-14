@@ -8,6 +8,7 @@ import '@mantine/core/styles.css'
 import { Provider } from "react-redux";
 import store from "./store";
 import Sinaia from "./pages/Sinaia/Sinaia";
+import PoianaBrasov from "./pages/Poiana-Brasov/Poiana-Brasov";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/resorts" element={<Resorts />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/Sinaia" element={ <Sinaia/>} />
+          <Route path="/Poiana-Brasov" element={ <PoianaBrasov/>} />
         </Routes>
       </BrowserRouter>
       </Provider>

@@ -106,9 +106,9 @@ const SignUp = () => {
               Sign Up
             </button>
 
-            <div className={classes.separator}>
+            {/* <div className={classes.separator}>
               <span>or continue with</span>
-            </div>
+            </div> */}
 
             <p className={classes.signintext}>
               Already have an account? <a href="#">Sign in</a>
