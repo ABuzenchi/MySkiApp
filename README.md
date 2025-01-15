@@ -15,31 +15,31 @@ Follow these steps to set up and run the project locally:
 
 ### Backend
 1. Navigate to the backend folder:
-   \`\`\`bash
+   ```bash
    cd backend
-   \`\`\`
+   ```
    2. Install dependencies:
-   \`\`\`bash
+    ```bash
    npm install
-   \`\`\`
+    ```
 3. Start the server:
-   \`\`\`bash
+   ```bash
    npm run start
-   \`\`\`
+    ```
 
 ### Frontend
 1. Navigate to the client folder:
-   \`\`\`bash
+    ```bash
    cd client
-   \`\`\`
+    ```
 2. Install dependencies:
-   \`\`\`bash
+    ```bash
    npm install
-   \`\`\`
+    ```
 3. Start the application:
-   \`\`\`bash
+    ```bash
    npm run dev
-   \`\`\`
+    ```
 
 ## Technologies Used
 
