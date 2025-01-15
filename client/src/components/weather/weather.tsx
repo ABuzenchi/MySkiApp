@@ -11,7 +11,8 @@ interface WeatherProps {
 
 const Weather = ({ location}:WeatherProps) => {
   const [data, setData] = useState<any>({});
-  const api_key = "0b901684929992e24d14fa2cc85abd9b";
+  const api_key =  import.meta.env.VITE_WEATHER_API_KEY;
+  console.log("API Key:", import.meta.env.VITE_WEATHER_API_KEY);
 
   useEffect(() => {
     const fetchWeather = async () => {
