@@ -5,13 +5,14 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
+  ConnectedSocket,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import * as jwt from 'jsonwebtoken';
 
 @WebSocketGateway(3002, {
   cors: {
-    origin: 'http://localhost:5173', // Asigură-te că origin-ul este corect
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
   },
@@ -24,19 +25,18 @@ export class ForumGateaway implements OnGatewayConnection, OnGatewayDisconnect {
     console.log('Auth token', client.handshake.auth.token);
     console.log('Query token', client.handshake.query.token);
     console.log('Received token:', token);
+    
     try {
-      const decoded = jwt.verify(token, 'iloveskiing'); // Secretul tău
-      client.data.user = decoded; // Atașează datele utilizatorului la client
+      const decoded = jwt.verify(token, 'iloveskiing');
+      client.data = { user: decoded }; // Initialize client.data object properly
       console.log('User connected:', client.data.user?.username);
     } catch (error) {
       console.error('Authentication error:', error.message);
-      client.disconnect(); // Deconectează clienții neautorizați
+      client.disconnect();
       return;
     }
 
     console.log('User after connection', client.data);
-
-
     console.log('Client connected:', client.id);
 
     client.broadcast.emit('user-joined', {
@@ -45,22 +45,27 @@ export class ForumGateaway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   handleDisconnect(client: Socket) {
-    console.log('User disconnected:', client.data.user?.username);
+    console.log('User disconnected:', client.data?.user?.username);
 
     this.server.emit('user-left', {
-      message: `User left the forum: ${client.data.user?.username}`,
+      message: `User left the forum: ${client.data?.user?.username}`,
     });
   }
 
   @SubscribeMessage('newMessage')
-  handleNewMessage(@MessageBody() message: string, client: Socket) {
-    console.log('Client (before message):', client); // Verifică dacă clientul este definit
-    console.log('Client data (before message):', client.data); // Verifică dacă client.data există
-    console.log('Client user (before message):', client.data ? client.data.user : 'No user data'); // Verifică datele utilizatorului
-    if (client.data.user) {
-      console.log(`${client.data.user.username} says: ${message}`);
+  handleNewMessage(
+    @MessageBody() message: string,
+    @ConnectedSocket() client: Socket,
+  ) {
+    if (!client.data?.user) {
+      console.error('No user data found for client');
+      return;
     }
-    console.log(message);
-    this.server.emit('message', 'message');
+
+    console.log(`${client.data.user.username} says: ${message}`);
+    this.server.emit('message', {
+      username: client.data.user.username,
+      message: message,
+    });
   }
 }
