@@ -1,10 +1,50 @@
 .pageBackground {
-    background-image: url('../../assets/home-background.jpeg'); 
-    background-size: cover; 
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 655px; 
-    width: auto; 
-    padding: 0px;
-  }
-  
+  background-image: url("../../assets/home-background.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 655px;
+  width: auto;
+  padding: 0px;
+}
+
+.centerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.contentContainer {
+  text-align: center;
+}
+
+.headerTitle {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.searchInput input {
+  width: 300px;
+  height: 40px;
+  font-size: 1rem;
+
+  margin-left: 25px;
+}
+
+.rightsection {
+  position: absolute;
+  right: 18px; /* Mutarea iconului mai spre stânga */
+ 
+  display: flex;
+  align-items: center;
+
+  padding: 0 8px;
+  border-radius: 4px;
+}
+
+.right-section i {
+  font-size: 20px; /* Dimensiunea iconului */
+}

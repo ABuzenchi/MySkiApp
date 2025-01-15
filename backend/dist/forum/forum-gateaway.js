@@ -24,7 +24,7 @@ let ForumGateaway = class ForumGateaway {
         console.log('Received token:', token);
         try {
             const decoded = jwt.verify(token, 'iloveskiing');
-            client.data.user = decoded;
+            client.data = { user: decoded };
             console.log('User connected:', client.data.user?.username);
         }
         catch (error) {
@@ -39,20 +39,21 @@ let ForumGateaway = class ForumGateaway {
         });
     }
     handleDisconnect(client) {
-        console.log('User disconnected:', client.data.user?.username);
+        console.log('User disconnected:', client.data?.user?.username);
         this.server.emit('user-left', {
-            message: `User left the forum: ${client.data.user?.username}`,
+            message: `User left the forum: ${client.data?.user?.username}`,
         });
     }
     handleNewMessage(message, client) {
-        console.log('Client (before message):', client);
-        console.log('Client data (before message):', client.data);
-        console.log('Client user (before message):', client.data ? client.data.user : 'No user data');
-        if (client.data.user) {
-            console.log(`${client.data.user.username} says: ${message}`);
+        if (!client.data?.user) {
+            console.error('No user data found for client');
+            return;
         }
-        console.log(message);
-        this.server.emit('message', 'message');
+        console.log(`${client.data.user.username} says: ${message}`);
+        this.server.emit('message', {
+            username: client.data.user.username,
+            message: message,
+        });
     }
 };
 exports.ForumGateaway = ForumGateaway;
@@ -63,6 +64,7 @@ __decorate([
 __decorate([
     (0, websockets_1.SubscribeMessage)('newMessage'),
     __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, socket_io_1.Socket]),
     __metadata("design:returntype", void 0)

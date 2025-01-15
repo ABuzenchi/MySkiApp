@@ -7,6 +7,10 @@ import { MantineProvider } from "@mantine/core";
 import '@mantine/core/styles.css'
 import { Provider } from "react-redux";
 import store from "./store";
+import Sinaia from "./pages/Sinaia/Sinaia";
+import PoianaBrasov from "./pages/Poiana-Brasov/Poiana-Brasov";
+import Straja from "./pages/Straja/Straja";
+import Transalpina from "./pages/Transalpina/Transalpina";
 
 const App = () => {
   return (
@@ -18,6 +22,10 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/resorts" element={<Resorts />} />
           <Route path="/forum" element={<Forum />} />
+          <Route path="/Sinaia" element={ <Sinaia/>} />
+          <Route path="/Poiana Brasov" element={ <PoianaBrasov/>} />
+          <Route path="/Straja" element={ <Straja/>} />
+          <Route path="/Transalpina" element={ <Transalpina/>} />
         </Routes>
       </BrowserRouter>
       </Provider>
