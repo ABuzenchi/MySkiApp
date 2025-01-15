@@ -2,7 +2,6 @@ import classes from "./header.module.css";
 import alpineSkiingLight from "../../assets/alpine-skiing-light.png";
 import { Button, Image } from "@mantine/core";
 import { AiFillHome } from "react-icons/ai";
-import { FaMap } from "react-icons/fa";
 import { MdForum } from "react-icons/md";
 import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
@@ -18,11 +17,6 @@ const Header = () => {
         <AiFillHome />
         Home
       </Button>
-
-      {/* <Button variant="default" component="a" href="/resorts" size="lg">
-        <FaMap />
-        Resorts
-      </Button> */}
 
       <Button variant="default" component="a" href="/forum" size="lg">
         <MdForum />

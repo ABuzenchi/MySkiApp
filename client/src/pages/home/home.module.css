@@ -36,7 +36,7 @@
 
 .rightsection {
   position: absolute;
-  right: 18px; /* Mutarea iconului mai spre stânga */
+  right: 18px; 
  
   display: flex;
   align-items: center;
@@ -46,5 +46,5 @@
 }
 
 .right-section i {
-  font-size: 20px; /* Dimensiunea iconului */
+  font-size: 20px; 
 }

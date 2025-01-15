@@ -28,7 +28,7 @@ export class ForumGateaway implements OnGatewayConnection, OnGatewayDisconnect {
     
     try {
       const decoded = jwt.verify(token, 'iloveskiing');
-      client.data = { user: decoded }; // Initialize client.data object properly
+      client.data = { user: decoded }; 
       console.log('User connected:', client.data.user?.username);
     } catch (error) {
       console.error('Authentication error:', error.message);

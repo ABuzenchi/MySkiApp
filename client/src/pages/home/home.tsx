@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Autocomplete } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import classes from "./home.module.css";

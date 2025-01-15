@@ -34,12 +34,12 @@ const SignIn = () => {
       }
 
       const data = await response.json();
-      localStorage.setItem("authToken", data.token); // Salvează token-ul
+      localStorage.setItem("authToken", data.token);
       console.log(data.token, data.username);
-      dispatch(login({ username: data.username })); // Actualizează Redux
+      dispatch(login({ username: data.username }));
       console.log("Login successful, token:", data.token);
       alert("Login successful!");
-      close(); // Închide modalul
+      close();
     } catch (error: any) {
       console.error("Error during login:", error.message);
       alert(`Login failed: ${error.message}`);
@@ -63,11 +63,6 @@ const SignIn = () => {
       >
         <div className={classes.signincontainer}>
           <form className={classes.signinform} onSubmit={handleSubmit}>
-            {/* <div className={classes.formgroup}>
-              <label>Name</label>
-              <input type="text" id="name" placeholder="Enter your name" />
-            </div> */}
-
             <div className={classes.formgroup}>
               <label>Email*</label>
               <input
@@ -94,21 +89,6 @@ const SignIn = () => {
             <button type="submit" className={classes.signinbutton}>
               Sign In
             </button>
-
-            {/* <div className={classes.separator}>
-              <span>or continue with</span>
-            </div> */}
-
-            {/* <div class="social-buttons">
-        <button type="button" class="social-button google">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_2013_Google.png" alt="Google" />
-          Google
-        </button>
-        <button type="button" class="social-button apple">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" />
-          Apple
-        </button>
-      </div> */}
 
             <p className={classes.signintext}>
               Don't have an account? <SignUp />

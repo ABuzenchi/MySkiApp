@@ -1,4 +1,4 @@
-import { Button, Drawer,Image } from "@mantine/core";
+import { Button, Drawer, Image } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./user-profile.module.css";
 import SignUp from "../signUp/signUp";
@@ -7,13 +7,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect } from "react";
 import { login, logout } from "../../store/authSlice";
-import { jwtDecode } from "jwt-decode"; // Import corect pentru jwt-decode
-import ballons from "../../assets/balloons.png"
+import { jwtDecode } from "jwt-decode";
+import ballons from "../../assets/balloons.png";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const dispatch = useDispatch();
-  const { username, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { username, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -21,11 +23,9 @@ const UserProfile = () => {
       try {
         const decodedToken: any = jwtDecode(token);
         if (decodedToken.exp * 1000 < Date.now()) {
-          // Token expirat
           localStorage.removeItem("authToken");
           dispatch(logout());
         } else {
-          // Token valid
           dispatch(login({ username: decodedToken.username }));
         }
       } catch (err) {
@@ -35,13 +35,11 @@ const UserProfile = () => {
     }
   }, [dispatch]);
 
-    // Funcție de logout
-    const handleLogout = () => {
-      localStorage.removeItem("authToken"); // Șterge token-ul din localStorage
-      dispatch(logout()); // Actualizează starea Redux pentru deconectare
-      close(); // Închide Drawer-ul
-    };
-
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    dispatch(logout());
+    close();
+  };
 
   return (
     <>
@@ -59,19 +57,19 @@ const UserProfile = () => {
         <div className={classes.butttonsContainer}>
           {isAuthenticated ? (
             <>
-            <div className={classes.userContainer}>
-            <p className={classes.welcomeMessage}>Hello, {username}!</p>
-            <Image src={ballons}/>
-            <Button variant="default" onClick={handleLogout}>
-            Logout
-          </Button>
-          </div>
-          </>
+              <div className={classes.userContainer}>
+                <p className={classes.welcomeMessage}>Hello, {username}!</p>
+                <Image src={ballons} />
+                <Button variant="default" onClick={handleLogout}>
+                  Logout
+                </Button>
+              </div>
+            </>
           ) : (
             <>
-            <div className={classes.authContainer}>
-              <SignUp />
-              <SignIn />
+              <div className={classes.authContainer}>
+                <SignUp />
+                <SignIn />
               </div>
             </>
           )}

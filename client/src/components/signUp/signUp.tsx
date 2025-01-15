@@ -21,7 +21,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data:', formData); 
+    console.log("Form Data:", formData);
     try {
       const response = await fetch("http://localhost:3000/auth/signup", {
         method: "POST",
@@ -37,8 +37,8 @@ const SignUp = () => {
       }
 
       const data = await response.json();
-       dispatch(login({ username: data.username })); // Actualizează Redux
-            console.log("Login successful, token:", data.token);
+      dispatch(login({ username: data.username }));
+      console.log("Login successful, token:", data.token);
       alert(`Signup successful! Token: ${data.token}`);
       close();
     } catch (err: any) {
@@ -105,10 +105,6 @@ const SignUp = () => {
             <button type="submit" className={classes.signupbutton}>
               Sign Up
             </button>
-
-            {/* <div className={classes.separator}>
-              <span>or continue with</span>
-            </div> */}
 
             <p className={classes.signintext}>
               Already have an account? <a href="#">Sign in</a>
