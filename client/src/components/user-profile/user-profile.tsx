@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
 import ballons from "../../assets/balloons.png";
+import { Dictionary } from "../../dictionaries/en";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -58,10 +59,10 @@ const UserProfile = () => {
           {isAuthenticated ? (
             <>
               <div className={classes.userContainer}>
-                <p className={classes.welcomeMessage}>Hello, {username}!</p>
+                <p className={classes.welcomeMessage}>/{Dictionary.Hello} {username}!</p>
                 <Image src={ballons} />
                 <Button variant="default" onClick={handleLogout}>
-                  Logout
+                 {Dictionary.Logout}
                 </Button>
               </div>
             </>
@@ -77,7 +78,7 @@ const UserProfile = () => {
       </Drawer>
 
       <Button variant="default" onClick={open} size="md">
-        User Profile
+        {Dictionary.UserProfile}
       </Button>
     </>
   );

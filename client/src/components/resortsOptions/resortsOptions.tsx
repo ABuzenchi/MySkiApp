@@ -1,5 +1,6 @@
 import { Button, Menu } from "@mantine/core";
 import { FaMap } from "react-icons/fa";
+import { Dictionary } from "../../dictionaries/en";
 const ResortsOptions = () => {
   return (
     <Menu
@@ -12,22 +13,22 @@ const ResortsOptions = () => {
       <Menu.Target>
         <Button variant="default" size="lg">
           <FaMap />
-          Resorts
+          {Dictionary.Resorts}
         </Button>
       </Menu.Target>
 
       <Menu.Dropdown>
         <Menu.Item component="a" href="/Sinaia">
-          Sinaia
+         {Dictionary.Sinaia}
         </Menu.Item>
         <Menu.Item component="a" href="/Poiana Brasov">
-          Poiana Brasov
+         {Dictionary.Poiana_Brasov}
         </Menu.Item>
         <Menu.Item component="a" href="/Straja">
-          Straja
+          {Dictionary.Straja}
         </Menu.Item>
         <Menu.Item component="a" href="/Transalpina">
-          Transalpina
+          {Dictionary.Transalpina}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

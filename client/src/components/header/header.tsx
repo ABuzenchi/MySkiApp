@@ -5,6 +5,7 @@ import { AiFillHome } from "react-icons/ai";
 import { MdForum } from "react-icons/md";
 import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
+import { Dictionary } from "../../dictionaries/en";
 
 const Header = () => {
   return (
@@ -14,12 +15,12 @@ const Header = () => {
 
         <Button variant="default" component="a" href="/" size="lg">
           <AiFillHome />
-          Home
+          {Dictionary.Home}
         </Button>
 
         <Button variant="default" component="a" href="/forum" size="lg">
           <MdForum />
-          Forum
+          {Dictionary.Forum}
         </Button>
         <ResortsOptions></ResortsOptions>
 
