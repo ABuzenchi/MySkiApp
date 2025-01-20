@@ -9,9 +9,9 @@ interface WeatherProps {
   location: string;
 }
 
-const Weather = ({ location}:WeatherProps) => {
+const Weather = ({ location }: WeatherProps) => {
   const [data, setData] = useState<any>({});
-  const api_key =  import.meta.env.VITE_WEATHER_API_KEY;
+  const api_key = import.meta.env.VITE_WEATHER_API_KEY;
   console.log("API Key:", import.meta.env.VITE_WEATHER_API_KEY);
 
   useEffect(() => {
@@ -67,9 +67,7 @@ const Weather = ({ location}:WeatherProps) => {
         <>
           <div className={classes.weather}>
             <img src={weatherImage} alt="Weather icon" />
-            <div className={classes.weathertype}>
-              {data.weather[0].main}
-            </div>
+            <div className={classes.weathertype}>{data.weather[0].main}</div>
             <div className={classes.temp}>
               {`${Math.floor(data.main.temp)}°C`}
             </div>
@@ -80,15 +78,11 @@ const Weather = ({ location}:WeatherProps) => {
           <div className={classes.weatherdata}>
             <div className={classes.humidity}>
               <div className={classes.dataname}>Humidity</div>
-              <div className={classes.data}>
-                {data.main.humidity}%
-              </div>
+              <div className={classes.data}>{data.main.humidity}%</div>
             </div>
             <div className={classes.wind}>
               <div className={classes.dataname}>Wind</div>
-              <div className={classes.data}>
-                {data.wind.speed} km/h
-              </div>
+              <div className={classes.data}>{data.wind.speed} km/h</div>
             </div>
           </div>
         </>

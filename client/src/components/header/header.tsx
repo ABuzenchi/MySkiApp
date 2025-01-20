@@ -7,25 +7,24 @@ import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
 
 const Header = () => {
-
   return (
     <>
-    <div className={classes.navBar}>
-      <Image src={alpineSkiingLight} />
+      <div className={classes.navBar}>
+        <Image src={alpineSkiingLight} />
 
-      <Button variant="default" component="a" href="/" size="lg">
-        <AiFillHome />
-        Home
-      </Button>
+        <Button variant="default" component="a" href="/" size="lg">
+          <AiFillHome />
+          Home
+        </Button>
 
-      <Button variant="default" component="a" href="/forum" size="lg">
-        <MdForum />
-        Forum
-      </Button>
-      <ResortsOptions></ResortsOptions>
+        <Button variant="default" component="a" href="/forum" size="lg">
+          <MdForum />
+          Forum
+        </Button>
+        <ResortsOptions></ResortsOptions>
 
-     <UserProfile/>
-    </div>
+        <UserProfile />
+      </div>
     </>
   );
 };

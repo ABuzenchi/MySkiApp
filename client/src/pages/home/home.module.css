@@ -36,8 +36,8 @@
 
 .rightsection {
   position: absolute;
-  right: 18px; 
- 
+  right: 18px;
+
   display: flex;
   align-items: center;
 
@@ -46,5 +46,5 @@
 }
 
 .right-section i {
-  font-size: 20px; 
+  font-size: 20px;
 }

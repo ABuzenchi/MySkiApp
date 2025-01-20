@@ -8,11 +8,11 @@ import strajaPicture03 from "../../assets/straja-picture03.jpg";
 import strajaPicture04 from "../../assets/straja-picture-04.jpg";
 
 const images = [
-    strajaMap,
-    strajaPicture01,
-    strajaPicture02,
-    strajaPicture03,
-    strajaPicture04,
+  strajaMap,
+  strajaPicture01,
+  strajaPicture02,
+  strajaPicture03,
+  strajaPicture04,
 ];
 export default function Straja() {
   return (
@@ -20,7 +20,7 @@ export default function Straja() {
       <div className={classes.container}>
         <Weather location="Straja" />
         <CarouselPhoto images={images} />
-       </div>
+      </div>
     </>
   );
 }

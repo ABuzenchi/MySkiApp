@@ -1,29 +1,29 @@
 .drawerRoot {
-    position: absolute !important; 
-    top: 0; 
-    right: 0; 
-    z-index: 1100; 
-    width: 100%; 
-  }
-  
-  .drawerHeader {
-    font-size: 1.2rem; 
-    color: #333; 
-  }
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  z-index: 1100;
+  width: 100%;
+}
 
-  .butttonsContainer{
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .authContainer{
-    display: flex;
-    flex-direction: row;
-    gap:10px;
-  }
+.drawerHeader {
+  font-size: 1.2rem;
+  color: #333;
+}
 
-  .userContainer{
-    display: flex;
-    flex-direction: column;
-    gap:5px;
-  }
+.butttonsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.authContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.userContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
