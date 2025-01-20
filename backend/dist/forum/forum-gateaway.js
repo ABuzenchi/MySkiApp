@@ -23,7 +23,7 @@ let ForumGateaway = class ForumGateaway {
         console.log('Query token', client.handshake.query.token);
         console.log('Received token:', token);
         try {
-            const decoded = jwt.verify(token, 'iloveskiing');
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
             client.data = { user: decoded };
             console.log('User connected:', client.data.user?.username);
         }
