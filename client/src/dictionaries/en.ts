@@ -16,4 +16,5 @@ export const Dictionary = {
   Percents: "%",
   SpeedWind: "km/h",
   Send: "Send",
+  AuthRequired:" Log in or create an account to join the conversation and interact with other users."
 };

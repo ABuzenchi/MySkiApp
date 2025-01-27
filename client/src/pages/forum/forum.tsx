@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import classes from "./forum.module.css";
 import { Dictionary } from "../../dictionaries/en";
+import NotAuthUser from "../../components/not-auth-user/not-auth-user";
 
 interface Message {
   username?: string;
@@ -51,6 +52,11 @@ const Forum = () => {
       socket.off("user-left");
     };
   }, []);
+
+
+  if (localStorage.getItem("authToken") === null) {
+    return <NotAuthUser/>
+  }
 
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
