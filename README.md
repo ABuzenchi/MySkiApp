@@ -18,7 +18,7 @@ Follow these steps to set up and run the project locally:
    ```bash
    cd backend
    ```
-   2. Install dependencies:
+2. Install dependencies:
     ```bash
    npm install
     ```
@@ -49,6 +49,11 @@ Follow these steps to set up and run the project locally:
 * **Postman:** A tool for testing
 * **MongoDB:** A NoSQL database for efficient and scalable data storage.
 * **OpenWeatherMap API:** An API for providing real-time weather data
+* **Jest:** A JavaScript testing framework designed for writing and running unit and integration tests
+* **Playwright:**  A library for end-to-end testing 
+* **K6:** A modern performance testing tool used to simulate high loads and measure the system's reliability and scalability under stress.
+
+![Architecture Diagram](images/diagram.PNG "Architecture Diagram")
 
 ## Documentation
 
@@ -57,3 +62,7 @@ Follow these steps to set up and run the project locally:
 * [Postman - API Testing Tool](https://www.postman.com/)
 * [MongoDB - NoSQL Database](https://www.mongodb.com/)
 * [OpenWeatherMap API - Weather Data](https://openweathermap.org/api)
+* [Jest](https://jestjs.io/)
+* [Playwright](https://playwright.dev/)
+* [K6](https://k6.io/)
+
