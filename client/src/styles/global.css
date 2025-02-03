@@ -5,9 +5,9 @@
   --button-background: #e0e0e0;
   --button-hover: #d6d6d6;
   --shadow-color: rgba(0, 0, 0, 0.1);
-  --primary-color: #1db05f;   
-  --stop-color: #ef0d36;       
-  --reset-color: #eaa800;     
+  --primary-color: #1db05f;
+  --stop-color: #ef0d36;
+  --reset-color: #eaa800;
 }
 
 .dark-mode {
@@ -16,9 +16,10 @@
   --text-color: #ffffff;
   --button-background: #333333;
   --button-hover: #444444;
-  --shadow-color: rgba(255, 255, 255, 0.1); --primary-color: #1db05f;   
-  --stop-color: #ef0d36;       
-  --reset-color: #eaa800;     
+  --shadow-color: rgba(255, 255, 255, 0.1);
+  --primary-color: #1db05f;
+  --stop-color: #ef0d36;
+  --reset-color: #eaa800;
 }
 
 body {

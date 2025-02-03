@@ -8,11 +8,11 @@ import transalpinaPicture03 from "../../assets/transalpina-picture03.jpg";
 import transalpinaPicture04 from "../../assets/transalpina-picture04.png";
 
 const images = [
-    transalpinaMap,
-    transalpinaPicture01,
-    transalpinaPicture02,
-    transalpinaPicture03,
-    transalpinaPicture04,
+  transalpinaMap,
+  transalpinaPicture01,
+  transalpinaPicture02,
+  transalpinaPicture03,
+  transalpinaPicture04,
 ];
 export default function Transalpina() {
   return (
@@ -20,7 +20,7 @@ export default function Transalpina() {
       <div className={classes.container}>
         <Weather location="Voineasa" />
         <CarouselPhoto images={images} />
-       </div>
+      </div>
     </>
   );
 }
