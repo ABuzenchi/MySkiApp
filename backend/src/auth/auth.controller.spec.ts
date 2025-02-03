@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 describe('AuthController', () => {
   let authController: AuthController;
 
-  // Mock simplu pentru AuthService
   const mockAuthService = {
     signUp: jest.fn((dto) => ({
       token: 'test-token',
@@ -31,7 +30,7 @@ describe('AuthController', () => {
     authController = module.get<AuthController>(AuthController);
   });
 
-  // Test pentru signup
+  
   it('should return token and username on signup', async () => {
     const result = await authController.signUp({
       username: 'test',
@@ -43,8 +42,7 @@ describe('AuthController', () => {
     expect(result).toHaveProperty('username');
   });
 
-  // Test pentru signin
-  it('should return token and username on signin', async () => {
+    it('should return token and username on signin', async () => {
     const result = await authController.signIn({
       email: 'test@test.com',
       password: 'password'
