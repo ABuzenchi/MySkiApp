@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
 import ballons from "../../assets/balloons.png";
+import UserAvatar from "../UserAvatar/UserAvatar";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -59,6 +60,7 @@ const UserProfile = () => {
             <>
               <div className={classes.userContainer}>
                 <p className={classes.welcomeMessage}>Hello, {username}!</p>
+                <UserAvatar/>
                 <Image src={ballons} />
                 <Button variant="default" onClick={handleLogout}>
                   Logout
