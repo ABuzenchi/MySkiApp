@@ -1,21 +1,33 @@
-import { useState } from "react";
-import { Avatar, Button, Drawer, Modal } from "@mantine/core";
+import { Avatar } from "@mantine/core";
+import { useEffect, useState } from "react";
 import SettingsMenu from "../SettingsMenu/SettingsMenu";
+import classes from "./UserAvatar.module.css";
+import { setAvatar } from "../../store/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+interface UserAvatarInterface {
+  username: string | null;
+}
+const UserAvatar = ({ username }: UserAvatarInterface) => {
+ 
+  const dispatch = useDispatch();
+  const { avatar } = useSelector((state: RootState) => state.auth);
 
-const UserAvatar = () => {
-  const [image, setImage] = useState<string | null>(null);
-  const [opened, setOpened] = useState(false);
+  useEffect(() => {
+    const savedImage = localStorage.getItem(`userAvatar_${username}`);
+    if (savedImage && savedImage !== avatar) {
+      dispatch(setAvatar(savedImage));  
+    }
+  }, [dispatch, username, avatar]);
 
   return (
-    <>
-      <Avatar color="pink" src={image} alt="Profile picture" size="lg" />
-      <Button onClick={() => setOpened(true)}>Setări</Button>
-
-      {/* Meniu de setări */}
-      <Modal opened={opened} onClose={() => setOpened(false)} title="Setări"  withinPortal={false}>
-        <SettingsMenu onImageSelect={setImage} />
-      </Modal>
-    </>
+    <div className={classes.container}>
+      <SettingsMenu  />
+      <div className={classes.infoUser}>
+        <Avatar color="pink" src={avatar} alt="Profile picture" size="xl" />
+        <p className={classes.username}>{username}</p>
+      </div>
+    </div>
   );
 };
 

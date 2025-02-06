@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+
+.infoUser{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.username{
+    font-weight: bolder;
+}

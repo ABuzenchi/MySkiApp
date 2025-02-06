@@ -8,7 +8,6 @@ import { RootState } from "../../store";
 import { useEffect } from "react";
 import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
-import ballons from "../../assets/balloons.png";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
 const UserProfile = () => {
@@ -27,7 +26,12 @@ const UserProfile = () => {
           localStorage.removeItem("authToken");
           dispatch(logout());
         } else {
-          dispatch(login({ username: decodedToken.username }));
+          const savedAvatar = localStorage.getItem(`userAvatar_${decodedToken.username}`);
+          if (savedAvatar) {
+            dispatch(login({ username: decodedToken.username, avatar: savedAvatar }));
+          } else {
+            dispatch(login({ username: decodedToken.username, avatar: null }));
+          }
         }
       } catch (err) {
         console.error("Invalid token:", err);
@@ -35,6 +39,7 @@ const UserProfile = () => {
       }
     }
   }, [dispatch]);
+  
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -59,9 +64,7 @@ const UserProfile = () => {
           {isAuthenticated ? (
             <>
               <div className={classes.userContainer}>
-                <p className={classes.welcomeMessage}>Hello, {username}!</p>
-                <UserAvatar/>
-                <Image src={ballons} />
+                <UserAvatar username={username}/>
                 <Button variant="default" onClick={handleLogout}>
                   Logout
                 </Button>
