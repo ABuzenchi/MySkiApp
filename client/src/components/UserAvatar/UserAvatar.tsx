@@ -1,27 +1,21 @@
-import { useState } from 'react';
-import { Avatar, FileInput, Stack } from '@mantine/core';
+import { useState } from "react";
+import { Avatar, Button, Drawer, Modal } from "@mantine/core";
+import SettingsMenu from "../SettingsMenu/SettingsMenu";
 
 const UserAvatar = () => {
   const [image, setImage] = useState<string | null>(null);
-
-  const handleFileChange = (file: File | null) => {
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => setImage(e.target?.result as string);
-      reader.readAsDataURL(file);
-    }
-  };
+  const [opened, setOpened] = useState(false);
 
   return (
-    <Stack align="center">
+    <>
       <Avatar color="pink" src={image} alt="Profile picture" size="lg" />
-      <FileInput
-        label="Alege o imagine"
-        placeholder="Click pentru a selecta"
-        accept="image/*"
-        onChange={handleFileChange}
-      />
-    </Stack>
+      <Button onClick={() => setOpened(true)}>Setări</Button>
+
+      {/* Meniu de setări */}
+      <Modal opened={opened} onClose={() => setOpened(false)} title="Setări"  withinPortal={false}>
+        <SettingsMenu onImageSelect={setImage} />
+      </Modal>
+    </>
   );
 };
 
