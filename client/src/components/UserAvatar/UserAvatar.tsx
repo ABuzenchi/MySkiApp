@@ -1,5 +1,5 @@
 import { Avatar } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import SettingsMenu from "../SettingsMenu/SettingsMenu";
 import classes from "./UserAvatar.module.css";
 import { setAvatar } from "../../store/authSlice";

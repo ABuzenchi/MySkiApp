@@ -1,52 +1,64 @@
 .navBar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Distribuie elementele pe lățime */
   padding: 10px 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
-  z-index: 1000;
-  background-color: white;
   width: 100%;
+  z-index: 1000;
 }
 
+/* Secțiuni pentru aliniere corectă */
+.leftSection {
+  display: flex;
+  align-items: center;
+  flex: 1; /* Ocupă spațiu pe stânga */
+}
+
+.centerSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 2; /* Face ca butoanele să fie centrate */
+  gap: 15px;
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1; /* Plasează user profile la dreapta */
+}
+
+/* Imaginea */
 .image {
   height: 60px;
   width: auto;
+  margin-left: 10px;
   transition: height 0.3s ease-in-out;
 }
 
-.menuButton {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  display: none;
+/* Butoane */
+.buttonText {
+  margin-left: 8px;
 }
 
-.mobileMenu {
+.buttons {
   display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  gap: 10px;
 }
 
-.mobileMenu .mantine-Button {
-  width: 100%;
-  margin-bottom: 5px;
-}
-
+/* Mobile Styles */
 @media (max-width: 768px) {
   .navBar {
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
+  }
+
+  .centerSection {
+    display: none; /* Ascunde butoanele în versiunea mobilă */
   }
 
   .image {
@@ -55,11 +67,5 @@
 
   .menuButton {
     display: block;
-  }
-
-  .navBar .mantine-Button,
-  .navBar .userProfile,
-  .navBar .resortsOptions {
-    display: none;
   }
 }

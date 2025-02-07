@@ -1,5 +1,6 @@
 import { Button, Menu } from "@mantine/core";
 import { FaMap } from "react-icons/fa";
+import classes from "./resortsOptions.module.css"
 const ResortsOptions = () => {
   return (
     <Menu
@@ -10,9 +11,9 @@ const ResortsOptions = () => {
       closeDelay={400}
     >
       <Menu.Target>
-        <Button variant="default" size="lg">
+        <Button variant="transparent" color="black" size="lg">
           <FaMap />
-          Resorts
+          <span className={classes.buttonText}>Resorts</span>
         </Button>
       </Menu.Target>
 

@@ -3,6 +3,7 @@ import { Autocomplete } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import classes from "./home.module.css";
 import { MdOutlineSearch } from "react-icons/md";
+import mountain from "../../assets/home-firts-photo.jpeg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Home = () => {
     <div className={classes.pageBackground}>
       <div className={classes.centerContainer}>
         <div className={classes.contentContainer}>
+          
           <h1 className={classes.headerTitle}>DESTINATIONS</h1>
           <Autocomplete
             placeholder="Search a location"
@@ -32,6 +34,7 @@ const Home = () => {
           />
         </div>
       </div>
+      
     </div>
   );
 };

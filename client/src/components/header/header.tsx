@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classes from "./header.module.css";
-import alpineSkiingLight from "../../assets/alpine-skiing-light.png";
+import alpineSkiingLight from "../../assets/mountain.png";
 import { Button, Image } from "@mantine/core";
 import { AiFillHome, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { MdForum } from "react-icons/md";
@@ -15,27 +15,42 @@ const Header = () => {
 
   return (
     <div className={classes.navBar}>
-      <Image src={alpineSkiingLight} className={classes.image} />
+      {/* Logo - Stânga */}
+      <div className={classes.leftSection}>
+        <Image src={alpineSkiingLight} className={classes.image} />
+      </div>
 
-      {isMobile ? (
+      {/* Meniu - Centru */}
+      {!isMobile ? (
+        <div className={classes.centerSection}>
+          <Button variant="transparent" color="black" component="a" href="/" size="lg">
+            <AiFillHome />
+            <span className={classes.buttonText}>Home</span>
+          </Button>
+
+          <Button variant="transparent" color="black" component="a" href="/forum" size="lg">
+            <MdForum />
+            <span className={classes.buttonText}>Forum</span>
+          </Button>
+
+          <ResortsOptions />
+        </div>
+      ) : (
         <>
-          <button
-            className={classes.menuButton}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
+          <button className={classes.menuButton} onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
           </button>
 
           {menuOpen && (
             <div className={classes.mobileMenu}>
-              <Button variant="default" component="a" href="/" size="lg">
+              <Button variant="transparent" color="black" component="a" href="/" size="lg">
                 <AiFillHome />
-                Home
+                <span className={classes.buttonText}>Home</span>
               </Button>
 
-              <Button variant="default" component="a" href="/forum" size="lg">
+              <Button variant="transparent" color="black" component="a" href="/forum" size="lg">
                 <MdForum />
-                Forum
+                <span className={classes.buttonText}>Forum</span>
               </Button>
 
               <ResortsOptions />
@@ -43,22 +58,12 @@ const Header = () => {
             </div>
           )}
         </>
-      ) : (
-        <>
-          <Button variant="default" component="a" href="/" size="lg">
-            <AiFillHome />
-            Home
-          </Button>
-
-          <Button variant="default" component="a" href="/forum" size="lg">
-            <MdForum />
-            Forum
-          </Button>
-
-          <ResortsOptions />
-          <UserProfile />
-        </>
       )}
+
+      {/* User Profile - Dreapta */}
+      <div className={classes.rightSection}>
+        <UserProfile />
+      </div>
     </div>
   );
 };

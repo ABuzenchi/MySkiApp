@@ -1,4 +1,4 @@
-import { Button, Drawer, Image } from "@mantine/core";
+import { Button, Drawer } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./user-profile.module.css";
 import SignUp from "../signUp/signUp";
@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
 import UserAvatar from "../UserAvatar/UserAvatar";
+import { FaUserAlt } from "react-icons/fa";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -81,8 +82,9 @@ const UserProfile = () => {
         </div>
       </Drawer>
 
-      <Button variant="default" onClick={open} size="md">
-        User Profile
+      <Button variant="transparent" color="black"  onClick={open} size="lg">
+        <FaUserAlt></FaUserAlt>
+        <span className={classes.buttonText}>User Profile</span>
       </Button>
     </>
   );
