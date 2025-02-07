@@ -1,6 +1,6 @@
 import { useState } from "react";
 import classes from "./header.module.css";
-import alpineSkiingLight from "../../assets/mountain.png";
+import alpineSkiingLight from "../../assets/mountainDark.png";
 import { Button, Image } from "@mantine/core";
 import { AiFillHome, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { MdForum } from "react-icons/md";
@@ -23,12 +23,12 @@ const Header = () => {
       {/* Meniu - Centru */}
       {!isMobile ? (
         <div className={classes.centerSection}>
-          <Button variant="transparent" color="black" component="a" href="/" size="lg">
+          <Button variant="transparent" color="#040024" component="a" href="/" size="lg">
             <AiFillHome />
             <span className={classes.buttonText}>Home</span>
           </Button>
 
-          <Button variant="transparent" color="black" component="a" href="/forum" size="lg">
+          <Button variant="transparent" color="#040024" component="a" href="/forum" size="lg">
             <MdForum />
             <span className={classes.buttonText}>Forum</span>
           </Button>
@@ -43,12 +43,12 @@ const Header = () => {
 
           {menuOpen && (
             <div className={classes.mobileMenu}>
-              <Button variant="transparent" color="black" component="a" href="/" size="lg">
+              <Button variant="transparent" color="#040024" component="a" href="/" size="lg">
                 <AiFillHome />
                 <span className={classes.buttonText}>Home</span>
               </Button>
 
-              <Button variant="transparent" color="black" component="a" href="/forum" size="lg">
+              <Button variant="transparent" color="#040024" component="a" href="/forum" size="lg">
                 <MdForum />
                 <span className={classes.buttonText}>Forum</span>
               </Button>

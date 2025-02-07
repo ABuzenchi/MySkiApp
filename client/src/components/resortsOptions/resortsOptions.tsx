@@ -11,7 +11,7 @@ const ResortsOptions = () => {
       closeDelay={400}
     >
       <Menu.Target>
-        <Button variant="transparent" color="black" size="lg">
+        <Button variant="transparent" color="#040024" size="lg">
           <FaMap />
           <span className={classes.buttonText}>Resorts</span>
         </Button>

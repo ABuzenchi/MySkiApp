@@ -82,7 +82,7 @@ const UserProfile = () => {
         </div>
       </Drawer>
 
-      <Button variant="transparent" color="black"  onClick={open} size="lg">
+      <Button variant="transparent" color="#040024"  onClick={open} size="lg">
         <FaUserAlt></FaUserAlt>
         <span className={classes.buttonText}>User Profile</span>
       </Button>
