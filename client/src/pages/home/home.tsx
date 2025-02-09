@@ -2,7 +2,7 @@ import { Autocomplete } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import classes from "./home.module.css";
 import { MdOutlineSearch } from "react-icons/md";
-import { Dictionary } from "../../dictionaries/en";
+import {EnDictionary } from "../../dictionaries/en";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,10 +15,10 @@ const Home = () => {
     <div className={classes.pageBackground}>
       <div className={classes.centerContainer}>
         <div className={classes.contentContainer}>
-          <h1 className={classes.headerTitle}>{Dictionary.Destinations}</h1>
+          <h1 className={classes.headerTitle}>{EnDictionary.Destinations}</h1>
           <Autocomplete
             classNames={{ options: classes.dropdownItem }}
-            placeholder={Dictionary.SearchLocation}
+            placeholder={EnDictionary.SearchLocation}
             rightSection={
               <div className={classes.rightsection}>
                 <MdOutlineSearch size={20} />

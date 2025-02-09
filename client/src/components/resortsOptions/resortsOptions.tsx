@@ -1,7 +1,7 @@
 import { Button, Menu } from "@mantine/core";
 import { FaMap } from "react-icons/fa";
 import classes from "./resortsOptions.module.css"
-import { Dictionary } from "../../dictionaries/en";
+import {EnDictionary } from "../../dictionaries/en";
 const ResortsOptions = () => {
   return (
     <Menu
@@ -14,22 +14,22 @@ const ResortsOptions = () => {
       <Menu.Target>
         <Button variant="transparent" color="#040024" size="lg">
           <FaMap />
-          <span className={classes.buttonText}>{Dictionary.Resorts}</span>
+          <span className={classes.buttonText}>{EnDictionary.Resorts}</span>
         </Button>
       </Menu.Target>
 
       <Menu.Dropdown>
         <Menu.Item component="a" href="/Sinaia" className={classes.item}>
-         {Dictionary.Sinaia}
+         {EnDictionary.Sinaia}
         </Menu.Item>
         <Menu.Item component="a" href="/Poiana Brasov" className={classes.item}>
-         {Dictionary.PoianaBrasov}
+         {EnDictionary.PoianaBrasov}
         </Menu.Item>
         <Menu.Item component="a" href="/Straja" className={classes.item}>
-         {Dictionary.Straja}
+         {EnDictionary.Straja}
         </Menu.Item>
         <Menu.Item component="a" href="/Transalpina" className={classes.item}>
-          {Dictionary.Transalpina}
+          {EnDictionary.Transalpina}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

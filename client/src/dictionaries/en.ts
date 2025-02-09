@@ -1,4 +1,4 @@
-export const Dictionary = {
+export const EnDictionary = {
   Home: "Home",
   Forum: "Forum",
   ChooseAPhoto: "Choose a photo",

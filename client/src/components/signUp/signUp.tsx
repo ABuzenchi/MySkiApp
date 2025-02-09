@@ -4,7 +4,7 @@ import { useState } from "react";
 import classes from "./signUp.module.css";
 import { login } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
-import { Dictionary } from "../../dictionaries/en";
+import {EnDictionary } from "../../dictionaries/en";
 
 const SignUp = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -65,11 +65,11 @@ const SignUp = () => {
         <div className={classes.signupcontainer}>
           <form className={classes.signupform} onSubmit={handleSubmit}>
             <div className={classes.formgroup}>
-              <label>{Dictionary.Username}</label>
+              <label>{EnDictionary.Username}</label>
               <input
                 type="text"
                 id="username"
-                placeholder={Dictionary.EnterUsername}
+                placeholder={EnDictionary.EnterUsername}
                 value={formData.username}
                 onChange={handleChange}
                 required
@@ -77,11 +77,11 @@ const SignUp = () => {
             </div>
 
             <div className={classes.formgroup}>
-              <label>{Dictionary.Email}</label>
+              <label>{EnDictionary.Email}</label>
               <input
                 type="email"
                 id="email"
-                placeholder={Dictionary.EnterEmail}
+                placeholder={EnDictionary.EnterEmail}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -89,33 +89,33 @@ const SignUp = () => {
             </div>
 
             <div className={classes.formgroup}>
-              <label>{Dictionary.Password}</label>
+              <label>{EnDictionary.Password}</label>
               <input
                 type="password"
                 id="password"
-                placeholder={Dictionary.CreatePassword}
+                placeholder={EnDictionary.CreatePassword}
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
-              <small>{Dictionary.PasswordCondition}</small>
+              <small>{EnDictionary.PasswordCondition}</small>
             </div>
 
             {error && <p className={classes.error}>{error}</p>}
 
             <button type="submit" className={classes.signupbutton}>
-              {Dictionary.SignUp}
+              {EnDictionary.SignUp}
             </button>
 
             <p className={classes.signintext}>
-              {Dictionary.AccountExists} <a href="#">Sign in</a>
+              {EnDictionary.AccountExists} <a href="#">Sign in</a>
             </p>
           </form>
         </div>
       </Modal>
 
       <Button variant="default" onClick={open}>
-        {Dictionary.SignUp}
+        {EnDictionary.SignUp}
       </Button>
     </>
   );

@@ -7,7 +7,7 @@ import { MdForum } from "react-icons/md";
 import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
 import useDevice, { DeviceTypes } from "../../hooks/useDevice";
-import { Dictionary } from "../../dictionaries/en";
+import { EnDictionary } from "../../dictionaries/en";
 
 const Header = () => {
   const { device } = useDevice();
@@ -30,7 +30,7 @@ const Header = () => {
             size="lg"
           >
             <AiFillHome />
-            <span className={classes.buttonText}>{Dictionary.Home}</span>
+            <span className={classes.buttonText}>{EnDictionary.Home}</span>
           </Button>
 
           <Button
@@ -41,7 +41,7 @@ const Header = () => {
             size="lg"
           >
             <MdForum />
-            <span className={classes.buttonText}>{Dictionary.Forum}</span>
+            <span className={classes.buttonText}>{EnDictionary.Forum}</span>
           </Button>
 
           <ResortsOptions />
@@ -65,7 +65,7 @@ const Header = () => {
                 size="lg"
               >
                 <AiFillHome />
-                <span className={classes.buttonText}>{Dictionary.Home}</span>
+                <span className={classes.buttonText}>{EnDictionary.Home}</span>
               </Button>
 
               <Button
@@ -76,7 +76,7 @@ const Header = () => {
                 size="lg"
               >
                 <MdForum />
-                <span className={classes.buttonText}>{Dictionary.Forum}</span>
+                <span className={classes.buttonText}>{EnDictionary.Forum}</span>
               </Button>
 
               <ResortsOptions />

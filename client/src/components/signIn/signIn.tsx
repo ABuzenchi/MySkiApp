@@ -5,7 +5,7 @@ import SignUp from "../signUp/signUp";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/authSlice";
-import { Dictionary } from "../../dictionaries/en";
+import {EnDictionary } from "../../dictionaries/en";
 
 const SignIn = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -65,41 +65,41 @@ const SignIn = () => {
         <div className={classes.signincontainer}>
           <form className={classes.signinform} onSubmit={handleSubmit}>
             <div className={classes.formgroup}>
-              <label>{Dictionary.Email}</label>
+              <label>{EnDictionary.Email}</label>
               <input
                 type="email"
                 id="email"
                 onChange={handleChange}
-                placeholder={Dictionary.EnterEmail}
+                placeholder={EnDictionary.EnterEmail}
                 required
               />
             </div>
 
             <div className={classes.formgroup}>
-              <label>{Dictionary.Password}</label>
+              <label>{EnDictionary.Password}</label>
               <input
                 type="password"
                 id="password"
-                placeholder={Dictionary.EnterEmail}
+                placeholder={EnDictionary.EnterEmail}
                 onChange={handleChange}
                 required
               />
-              <small>{Dictionary.PasswordCondition}</small>
+              <small>{EnDictionary.PasswordCondition}</small>
             </div>
 
             <button type="submit" className={classes.signinbutton}>
-              {Dictionary.SignIn}
+              {EnDictionary.SignIn}
             </button>
 
             <p className={classes.signintext}>
-             {Dictionary.NoAccount} <SignUp />
+             {EnDictionary.NoAccount} <SignUp />
             </p>
           </form>
         </div>
       </Modal>
 
       <Button variant="default" onClick={open}>
-        {Dictionary.SignIn}
+        {EnDictionary.SignIn}
       </Button>
     </>
   );

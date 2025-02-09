@@ -4,7 +4,7 @@ import sunny from "../../assets/sunny.png";
 import rainy from "../../assets/rainy.png";
 import snowy from "../../assets/snowy.png";
 import cloudy from "../../assets/cloudy.png";
-import { Dictionary } from "../../dictionaries/en";
+import {EnDictionary } from "../../dictionaries/en";
 
 interface WeatherProps {
   location: string;
@@ -78,17 +78,17 @@ const Weather = ({ location }: WeatherProps) => {
           </div>
           <div className={classes.weatherdata}>
             <div className={classes.humidity}>
-              <div className={classes.dataname}>{Dictionary.Humidity}</div>
+              <div className={classes.dataname}>{EnDictionary.Humidity}</div>
               <div className={classes.data}>{data.main.humidity}%</div>
             </div>
             <div className={classes.wind}>
-              <div className={classes.dataname}>{Dictionary.Wind}</div>
+              <div className={classes.dataname}>{EnDictionary.Wind}</div>
               <div className={classes.data}>{data.wind.speed} km/h</div>
             </div>
           </div>
         </>
       ) : (
-        <div className={classes.loading}>{Dictionary.Loading}</div>
+        <div className={classes.loading}>{EnDictionary.Loading}</div>
       )}
     </div>
   );
