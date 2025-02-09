@@ -18,16 +18,16 @@ const ResortsOptions = () => {
       </Menu.Target>
 
       <Menu.Dropdown>
-        <Menu.Item component="a" href="/Sinaia">
+        <Menu.Item component="a" href="/Sinaia" className={classes.item}>
           Sinaia
         </Menu.Item>
-        <Menu.Item component="a" href="/Poiana Brasov">
+        <Menu.Item component="a" href="/Poiana Brasov" className={classes.item}>
           Poiana Brasov
         </Menu.Item>
-        <Menu.Item component="a" href="/Straja">
+        <Menu.Item component="a" href="/Straja" className={classes.item}>
           Straja
         </Menu.Item>
-        <Menu.Item component="a" href="/Transalpina">
+        <Menu.Item component="a" href="/Transalpina" className={classes.item}>
           Transalpina
         </Menu.Item>
       </Menu.Dropdown>

@@ -19,7 +19,9 @@ const Home = () => {
           
           <h1 className={classes.headerTitle}>DESTINATIONS</h1>
           <Autocomplete
+          classNames={{options: classes.dropdownItem}}
             placeholder="Search a location"
+            
             rightSection={ <div className={classes.rightsection}>
               <MdOutlineSearch size={20} />
             </div>}

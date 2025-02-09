@@ -84,7 +84,6 @@ const UserProfile = () => {
 
       <Button variant="transparent" color="#040024"  onClick={open} size="lg">
         <FaUserAlt></FaUserAlt>
-        <span className={classes.buttonText}>User Profile</span>
       </Button>
     </>
   );
