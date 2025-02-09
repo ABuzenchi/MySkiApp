@@ -5,6 +5,7 @@ import ImageUploader from "../ImageUploader/ImageUploader";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setAvatar } from "../../store/authSlice";
+import { Dictionary } from "../../dictionaries/en";
 
 const SettingsMenu = () => {
   const [opened, setOpened] = useState(false);
@@ -32,7 +33,7 @@ const SettingsMenu = () => {
       <Modal
         opened={opened}
         onClose={() => setOpened(false)}
-        title="Setări profil"
+        title={Dictionary.ProfileSettings}
         withinPortal={false}
       >
         <div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import classes from "./signUp.module.css";
 import { login } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
+import { Dictionary } from "../../dictionaries/en";
 
 const SignUp = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -64,11 +65,11 @@ const SignUp = () => {
         <div className={classes.signupcontainer}>
           <form className={classes.signupform} onSubmit={handleSubmit}>
             <div className={classes.formgroup}>
-              <label>Name</label>
+              <label>{Dictionary.Username}</label>
               <input
                 type="text"
                 id="username"
-                placeholder="Enter your name"
+                placeholder={Dictionary.EnterUsername}
                 value={formData.username}
                 onChange={handleChange}
                 required
@@ -76,11 +77,11 @@ const SignUp = () => {
             </div>
 
             <div className={classes.formgroup}>
-              <label>Email*</label>
+              <label>{Dictionary.Email}</label>
               <input
                 type="email"
                 id="email"
-                placeholder="Enter your email"
+                placeholder={Dictionary.EnterEmail}
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -88,33 +89,33 @@ const SignUp = () => {
             </div>
 
             <div className={classes.formgroup}>
-              <label>Password*</label>
+              <label>{Dictionary.Password}</label>
               <input
                 type="password"
                 id="password"
-                placeholder="Create password"
+                placeholder={Dictionary.CreatePassword}
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
-              <small>Must be at least 8 characters.</small>
+              <small>{Dictionary.PasswordCondition}</small>
             </div>
 
             {error && <p className={classes.error}>{error}</p>}
 
             <button type="submit" className={classes.signupbutton}>
-              Sign Up
+              {Dictionary.SignUp}
             </button>
 
             <p className={classes.signintext}>
-              Already have an account? <a href="#">Sign in</a>
+              {Dictionary.AccountExists} <a href="#">Sign in</a>
             </p>
           </form>
         </div>
       </Modal>
 
       <Button variant="default" onClick={open}>
-        Sign Up
+        {Dictionary.SignUp}
       </Button>
     </>
   );

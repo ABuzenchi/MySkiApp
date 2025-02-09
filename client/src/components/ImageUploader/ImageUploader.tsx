@@ -1,4 +1,5 @@
 import { FileInput } from "@mantine/core";
+import { Dictionary } from "../../dictionaries/en";
 
 interface ImageUploaderProps {
   onImageSelect: (image: string | null) => void;
@@ -15,8 +16,8 @@ const ImageUploader = ({ onImageSelect }: ImageUploaderProps) => {
 
   return (
     <FileInput
-      label="Alege o imagine"
-      placeholder="Click pentru a selecta"
+      label={Dictionary.ChooseAPhoto}
+      placeholder={Dictionary.ClickPhoto}
       accept="image/*"
       onChange={handleFileChange}
     />

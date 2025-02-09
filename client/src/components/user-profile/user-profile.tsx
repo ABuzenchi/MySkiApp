@@ -10,6 +10,7 @@ import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { FaUserAlt } from "react-icons/fa";
+import { Dictionary } from "../../dictionaries/en";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -67,7 +68,7 @@ const UserProfile = () => {
               <div className={classes.userContainer}>
                 <UserAvatar username={username}/>
                 <Button variant="default" onClick={handleLogout}>
-                  Logout
+                  {Dictionary.Logout}
                 </Button>
               </div>
             </>

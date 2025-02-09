@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import classes from "./forum.module.css";
+import { Dictionary } from '../../dictionaries/en';
 
 interface Message {
   username?: string;
@@ -60,8 +61,8 @@ const Forum = () => {
   return (
     <div className={classes.container}>
       <form className={classes.chatForm} onSubmit={sendMessage}>
-        <input className={classes.chatInput} type="text" placeholder="Your message" />
-        <button className={classes.sendButton}>Send</button>
+        <input className={classes.chatInput} type="text" placeholder={Dictionary.YourMessage} />
+        <button className={classes.sendButton}>{Dictionary.Send}</button>
       </form>
 
       <ul className={classes.messageList}>

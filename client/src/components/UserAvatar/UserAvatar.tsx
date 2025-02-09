@@ -5,6 +5,7 @@ import classes from "./UserAvatar.module.css";
 import { setAvatar } from "../../store/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { Dictionary } from "../../dictionaries/en";
 interface UserAvatarInterface {
   username: string | null;
 }
@@ -24,7 +25,7 @@ const UserAvatar = ({ username }: UserAvatarInterface) => {
     <div className={classes.container}>
       <SettingsMenu  />
       <div className={classes.infoUser}>
-        <Avatar color="pink" src={avatar} alt="Profile picture" size="xl" />
+        <Avatar color="pink" src={avatar} alt={Dictionary.ProfilePicture} size="xl" />
         <p className={classes.username}>{username}</p>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { MdForum } from "react-icons/md";
 import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
 import useDevice, { DeviceTypes } from "../../hooks/useDevice";
+import { Dictionary } from "../../dictionaries/en";
 
 const Header = () => {
   const { device } = useDevice();
@@ -15,42 +16,67 @@ const Header = () => {
 
   return (
     <div className={classes.navBar}>
-      {/* Logo - Stânga */}
       <div className={classes.leftSection}>
         <Image src={alpineSkiingLight} className={classes.image} />
       </div>
 
-      {/* Meniu - Centru */}
       {!isMobile ? (
         <div className={classes.centerSection}>
-          <Button variant="transparent" color="#040024" component="a" href="/" size="lg">
+          <Button
+            variant="transparent"
+            color="#040024"
+            component="a"
+            href="/"
+            size="lg"
+          >
             <AiFillHome />
-            <span className={classes.buttonText}>Home</span>
+            <span className={classes.buttonText}>{Dictionary.Home}</span>
           </Button>
 
-          <Button variant="transparent" color="#040024" component="a" href="/forum" size="lg">
+          <Button
+            variant="transparent"
+            color="#040024"
+            component="a"
+            href="/forum"
+            size="lg"
+          >
             <MdForum />
-            <span className={classes.buttonText}>Forum</span>
+            <span className={classes.buttonText}>{Dictionary.Forum}</span>
           </Button>
 
           <ResortsOptions />
         </div>
       ) : (
         <>
-          <button className={classes.menuButton} onClick={() => setMenuOpen(!menuOpen)}>
+          <button
+            className={classes.menuButton}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
             {menuOpen ? <AiOutlineClose /> : <AiOutlineMenu />}
           </button>
 
           {menuOpen && (
             <div className={classes.mobileMenu}>
-              <Button variant="transparent" color="#040024" component="a" href="/" size="lg">
+              <Button
+                variant="transparent"
+                color="#040024"
+                component="a"
+                href="/"
+                size="lg"
+              >
                 <AiFillHome />
-                <span className={classes.buttonText}>Home</span>
+                <span className={classes.buttonText}>{Dictionary.Home}</span>
               </Button>
 
-              <Button variant="transparent" color="#040024" component="a" href="/forum" size="lg">
+              <Button
+                variant="transparent"
+                color="#040024"
+                component="a"
+                href="/forum"
+                size="lg"
+              >
                 <MdForum />
-                <span className={classes.buttonText}>Forum</span>
+                <span className={classes.buttonText}>{Dictionary.Forum}</span>
               </Button>
 
               <ResortsOptions />
@@ -59,8 +85,6 @@ const Header = () => {
           )}
         </>
       )}
-
-      {/* User Profile - Dreapta */}
       <div className={classes.rightSection}>
         <UserProfile />
       </div>

@@ -5,6 +5,7 @@ import SignUp from "../signUp/signUp";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/authSlice";
+import { Dictionary } from "../../dictionaries/en";
 
 const SignIn = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -64,41 +65,41 @@ const SignIn = () => {
         <div className={classes.signincontainer}>
           <form className={classes.signinform} onSubmit={handleSubmit}>
             <div className={classes.formgroup}>
-              <label>Email*</label>
+              <label>{Dictionary.Email}</label>
               <input
                 type="email"
                 id="email"
                 onChange={handleChange}
-                placeholder="Enter your email"
+                placeholder={Dictionary.EnterEmail}
                 required
               />
             </div>
 
             <div className={classes.formgroup}>
-              <label>Password*</label>
+              <label>{Dictionary.Password}</label>
               <input
                 type="password"
                 id="password"
-                placeholder="Enter your password"
+                placeholder={Dictionary.EnterEmail}
                 onChange={handleChange}
                 required
               />
-              <small>Must be at least 8 characters.</small>
+              <small>{Dictionary.PasswordCondition}</small>
             </div>
 
             <button type="submit" className={classes.signinbutton}>
-              Sign In
+              {Dictionary.SignIn}
             </button>
 
             <p className={classes.signintext}>
-              Don't have an account? <SignUp />
+             {Dictionary.NoAccount} <SignUp />
             </p>
           </form>
         </div>
       </Modal>
 
       <Button variant="default" onClick={open}>
-        Sign In
+        {Dictionary.SignIn}
       </Button>
     </>
   );
