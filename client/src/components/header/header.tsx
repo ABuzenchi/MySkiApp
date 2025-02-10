@@ -8,6 +8,7 @@ import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
 import useDevice, { DeviceTypes } from "../../hooks/useDevice";
 import { EnDictionary } from "../../dictionaries/en";
+import LanguageSelector from "../LanguageSelector/LanguageSelector";
 
 const Header = () => {
   const { device } = useDevice();
@@ -87,6 +88,7 @@ const Header = () => {
       )}
       <div className={classes.rightSection}>
         <UserProfile />
+        <LanguageSelector/>
       </div>
     </div>
   );
