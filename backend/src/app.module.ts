@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ForumModule } from './forum/forum.module';
+import { ScraperModule } from './scraper/scraper.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ForumModule } from './forum/forum.module';
     MongooseModule.forRoot(process.env.MONGO),
     AuthModule,
     ForumModule,
+    ScraperModule
   ],
   controllers: [AppController],
   providers: [AppService],

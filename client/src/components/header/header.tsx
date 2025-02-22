@@ -10,7 +10,6 @@ import useDevice, { DeviceTypes } from "../../hooks/useDevice";
 import { EnDictionary } from "../../dictionaries/en";
 import LanguageSelector from "../LanguageSelector/LanguageSelector";
 import { FaMoon } from "react-icons/fa";
-import { GoSun } from "react-icons/go";
 
 const Header = () => {
   const { device } = useDevice();
