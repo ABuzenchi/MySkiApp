@@ -1,8 +1,6 @@
-export interface PartieInfo {
-    nume: string;
-    dificultate: string;
-    lungime: string;
-    status?: string;
-    diferentaNivel?: string;
-    statiune: string;
-  }
+export interface SlopeInfo {
+  name: string;
+  status: string;
+  length: string;
+  departureAltitude: string;
+}

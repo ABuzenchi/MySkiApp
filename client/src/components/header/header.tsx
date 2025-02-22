@@ -3,13 +3,11 @@ import classes from "./header.module.css";
 import alpineSkiingLight from "../../assets/mountainDark.png";
 import { Button, Image } from "@mantine/core";
 import { AiFillHome, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { MdForum, MdSunny } from "react-icons/md";
+import { MdForum } from "react-icons/md";
 import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
 import useDevice, { DeviceTypes } from "../../hooks/useDevice";
 import { EnDictionary } from "../../dictionaries/en";
-import LanguageSelector from "../LanguageSelector/LanguageSelector";
-import { FaMoon } from "react-icons/fa";
 
 const Header = () => {
   const { device } = useDevice();
@@ -89,13 +87,13 @@ const Header = () => {
       )}
       <div className={classes.rightSection}>
         <UserProfile />
-        <LanguageSelector />
+        {/* <LanguageSelector />
         <Button variant="outline">
           <FaMoon color="white" />
         </Button>
         <Button variant="outline">
           <MdSunny color="white" />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

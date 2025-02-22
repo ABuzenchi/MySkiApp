@@ -1,18 +1,18 @@
 import { Controller, Get } from '@nestjs/common';
 import { ScraperService } from './scraper.service';
-import { PartieInfo } from './interfaces/partie-info.interface'
+import { SlopeInfo } from './interfaces/partie-info.interface'
 
-@Controller('partii')
+@Controller('slopes')
 export class ScraperController {
   constructor(private readonly scraperService: ScraperService) {}
 
   @Get()
-  async getAllPartii(): Promise<PartieInfo[]> {
-    return this.scraperService.getAllPartii();
+  async getAllSlopes(): Promise<SlopeInfo[]> {
+    return this.scraperService.getAllSlopes();
   }
 
   @Get('sinaia')
-  async getSinaiaPartii(): Promise<PartieInfo[]> {
+  async getSinaiaPartii(): Promise<SlopeInfo[]> {
     return this.scraperService.scrapeSinaia();
   }
 

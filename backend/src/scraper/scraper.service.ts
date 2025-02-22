@@ -1,12 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
-import { PartieInfo } from './interfaces/partie-info.interface';
+import { SlopeInfo } from './interfaces/partie-info.interface';
 
 @Injectable()
 export class ScraperService {
   private readonly logger = new Logger(ScraperService.name);
 
-  async scrapeSinaia(): Promise<PartieInfo[]> {
+  async scrapeSinaia(): Promise<SlopeInfo[]> {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     
@@ -17,23 +17,23 @@ export class ScraperService {
         timeout: 60000
       });
 
-      const partiiInfo = await page.evaluate(() => {
-        const partii = Array.from(document.querySelectorAll('tr[class*="ninja_table_row"]'));
+      const slopesInfo = await page.evaluate(() => {
+        const slopes = Array.from(document.querySelectorAll('tr[class*="ninja_table_row"]'));
         
-        return partii.map(partie => {
+        return slopes.map(partie => {
           return {
-            nume: partie.querySelector('.ninja_column_2.ninja_clmn_nm_denumire')?.textContent?.trim() || 'Necunoscut',
-            dificultate: partie.querySelector('.ninja_column_1.ninja_clmn_nm_stare')?.textContent?.trim() || 'Necunoscut',
-            lungime: partie.querySelector('.ninja_column_3.ninja_clmn_nm_lungime')?.textContent?.trim() || 'Necunoscut',
+            name: partie.querySelector('.ninja_column_2.ninja_clmn_nm_denumire')?.textContent?.trim() || 'Necunoscut',
+            // dificultate: partie.querySelector('.ninja_column_1.ninja_clmn_nm_stare')?.textContent?.trim() || 'Necunoscut',
+            length: partie.querySelector('.ninja_column_3.ninja_clmn_nm_lungime')?.textContent?.trim() || 'Necunoscut',
             status: partie.querySelector('.ninja_column_1.ninja_clmn_nm_stare')?.textContent?.trim() || 'Necunoscut',
-            diferentaNivel: partie.querySelector('.ninja_column_4.ninja_clmn_nm_altitudine_plecare')?.textContent?.trim() || 'Necunoscut',
-            statiune: 'Sinaia',
+            departureAltitude: partie.querySelector('.ninja_column_4.ninja_clmn_nm_altitudine_plecare')?.textContent?.trim() || 'Necunoscut',
+            // statiune: 'Sinaia',
           };
         });
       });
       
-      console.log(`S-au extras ${partiiInfo.length} pârtii din Sinaia`);
-      return partiiInfo;
+      console.log(`S-au extras ${slopesInfo.length} pârtii din Sinaia`);
+      return slopesInfo;
     } catch (error) {
       this.logger.error(`Eroare la scraping Sinaia: ${error.message}`);
       throw error;
@@ -43,13 +43,13 @@ export class ScraperService {
   }
 
 
-  async getAllPartii(): Promise<PartieInfo[]> {
+  async getAllSlopes(): Promise<SlopeInfo[]> {
     try {
-      const [sinaiaPartii] = await Promise.all([
+      const [sinaiaSlopes] = await Promise.all([
         this.scrapeSinaia(),
       ]);
 
-      return [...sinaiaPartii];
+      return [...sinaiaSlopes];
     } catch (error) {
       this.logger.error(`Eroare la extragerea tuturor pârtiilor: ${error.message}`);
       throw error;
