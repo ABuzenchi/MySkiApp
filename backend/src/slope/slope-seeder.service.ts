@@ -250,7 +250,7 @@ export class SlopeSeederService {
       },
       {
         name: 'CĂLUGĂRUL 3',
-        location: '654',
+        location: 'Sinaia',
         geoLocation: { type: 'Point', coordinates: [45.364532, 25.473476] },
         length: 620,
         difficulty: SlopeDifficulty.MEDIUM,
@@ -260,7 +260,7 @@ export class SlopeSeederService {
       },
       {
         name: 'LACULUI',
-        location: '474',
+        location: 'Sinaia',
         geoLocation: {
           type: 'Point',
           coordinates: [45.36370086669922, 25.49251937866211],

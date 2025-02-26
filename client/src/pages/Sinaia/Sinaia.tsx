@@ -131,6 +131,7 @@ export default function Sinaia() {
               <th>Lățime (m)</th>
               <th>Altitudine Bază (m)</th>
               <th>Altitudine Vârf (m)</th>
+              <th>Stare</th>
             </tr>
           </thead>
           <tbody>
@@ -142,6 +143,7 @@ export default function Sinaia() {
                 <td>{slope.width}</td>
                 <td>{slope.baseElevation}</td>
                 <td>{slope.topElevation}</td>
+                <td>{slope.status}</td>
               </tr>
             ))}
           </tbody>

@@ -37,6 +37,7 @@ export class ScraperService {
       this.logger.log(`S-au extras ${slopesInfo.length} pârtii din ${stationKey}`);
 
       for (const slopeData of slopesInfo) {
+        console.log(slopeData.name,slopeData.status);
         await this.slopeModel.findOneAndUpdate(
           { name: slopeData.name }, 
           { status: slopeData.status }, 
