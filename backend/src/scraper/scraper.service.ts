@@ -1,58 +1,54 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as puppeteer from 'puppeteer';
 import { SlopeInfo } from './interfaces/partie-info.interface';
+import { STATION_CONFIG } from './scraper.config';
+import { InjectModel } from '@nestjs/mongoose';
+import { Slope, SlopeDocument } from 'src/slope/slope.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class ScraperService {
   private readonly logger = new Logger(ScraperService.name);
+  constructor(
+    @InjectModel(Slope.name) private slopeModel: Model<SlopeDocument>
+  ) {}
+  
 
-  async scrapeSinaia(): Promise<SlopeInfo[]> {
+  async scrapeStation(stationKey: string): Promise<SlopeInfo[]> {
+    console.log('Funcția începe...');
+    const config = STATION_CONFIG[stationKey];
+    if (!config) throw new Error(`Stațiunea ${stationKey} nu este configurată.`);
+  
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
-    
+  
     try {
-      this.logger.log('Începe scraping pentru Sinaia');
-      await page.goto('https://sinaiago.ro/partiile-de-schi/', { 
-        waitUntil: 'networkidle2',
-        timeout: 60000
-      });
+      this.logger.log(`Începe scraping pentru ${stationKey}`);
+      await page.goto(config.url, { waitUntil: 'networkidle2', timeout: 60000 });
+      console.log(await page.content());
+      const slopesInfo = await page.evaluate((selectors) => {
+        const slopes = Array.from(document.querySelectorAll(selectors.row));
+        return slopes.map(partie => ({
+          status: partie.querySelector(selectors.status)?.textContent?.trim() || 'Necunoscut',
+          name:partie.querySelector(selectors.name)?.textContent?.trim()||"Necunoscut",
+        }));
+      }, config.selectors);
+  
+      this.logger.log(`S-au extras ${slopesInfo.length} pârtii din ${stationKey}`);
 
-      const slopesInfo = await page.evaluate(() => {
-        const slopes = Array.from(document.querySelectorAll('tr[class*="ninja_table_row"]'));
-        
-        return slopes.map(partie => {
-          return {
-            name: partie.querySelector('.ninja_column_2.ninja_clmn_nm_denumire')?.textContent?.trim() || 'Necunoscut',
-            // dificultate: partie.querySelector('.ninja_column_1.ninja_clmn_nm_stare')?.textContent?.trim() || 'Necunoscut',
-            length: partie.querySelector('.ninja_column_3.ninja_clmn_nm_lungime')?.textContent?.trim() || 'Necunoscut',
-            status: partie.querySelector('.ninja_column_1.ninja_clmn_nm_stare')?.textContent?.trim() || 'Necunoscut',
-            departureAltitude: partie.querySelector('.ninja_column_4.ninja_clmn_nm_altitudine_plecare')?.textContent?.trim() || 'Necunoscut',
-            // statiune: 'Sinaia',
-          };
-        });
-      });
-      
-      console.log(`S-au extras ${slopesInfo.length} pârtii din Sinaia`);
-      return slopesInfo;
+      for (const slopeData of slopesInfo) {
+        await this.slopeModel.findOneAndUpdate(
+          { name: slopeData.name }, 
+          { status: slopeData.status }, 
+          { new: true }
+        );
+      }
+      return this.slopeModel.find({ location: stationKey }).exec();
     } catch (error) {
-      this.logger.error(`Eroare la scraping Sinaia: ${error.message}`);
+      this.logger.error(`Eroare la scraping ${stationKey}: ${error.message}`);
       throw error;
     } finally {
       await browser.close();
-    }
-  }
-
-
-  async getAllSlopes(): Promise<SlopeInfo[]> {
-    try {
-      const [sinaiaSlopes] = await Promise.all([
-        this.scrapeSinaia(),
-      ]);
-
-      return [...sinaiaSlopes];
-    } catch (error) {
-      this.logger.error(`Eroare la extragerea tuturor pârtiilor: ${error.message}`);
-      throw error;
     }
   }
 }

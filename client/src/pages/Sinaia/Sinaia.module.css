@@ -1,30 +1,36 @@
-.container {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+.slopeTable {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-.table {
+
+.slopeTable h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.slopeTable table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
-.table th,
-.table td {
-  border: 1px solid #ddd;
-  padding: 8px;
+.slopeTable th,
+.slopeTable td {
+  padding: 10px;
   text-align: center;
+  border: 1px solid #ddd;
 }
 
-.table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+.slopeTable th {
+  background-color: #f4f4f4;
 }
 
-.table tr:nth-child(even) {
+.slopeTable tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.table tr:hover {
-  background-color: #eaeaea;
+.slopeTable tr:hover {
+  background-color: #f1f1f1;
 }
