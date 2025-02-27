@@ -93,6 +93,7 @@ import sinaiaPicture01 from "../../assets/sinaia-picture01.jpg";
 import sinaiaPicture02 from "../../assets/sinaia-picture02.jpg";
 import sinaiaPicture03 from "../../assets/sinaia-picture03.jpg";
 import sinaiaPicture04 from "../../assets/sinaia-picture04.jpg";
+import {Slope} from "../../interfaces/slope.interface"
 
 const images = [
   sinaiaMap,
@@ -103,7 +104,7 @@ const images = [
 ];
 
 export default function Sinaia() {
-  const [slopes, setSlopes] = useState([]);
+  const [slopes, setSlopes] = useState<Slope[]>([]);
 
   // Funcție pentru a obține pârtiile din Sinaia
   useEffect(() => {

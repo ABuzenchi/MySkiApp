@@ -1,6 +1,10 @@
 export interface Slope {
-    name: string;
-    status: string;
-    length: string;
-    departureAltitude: string;
-  }
+  _id: any;
+  name: string;
+  length: string;
+  difficulty: string;
+  width: string;
+  baseElevation: string;
+  topElevation: string;
+  status: string;
+}
