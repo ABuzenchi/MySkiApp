@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
+import { SkiResort } from "../../interfaces/skiResort.interface";
 
 
 const skiIcon = new L.Icon({
@@ -11,11 +12,7 @@ const skiIcon = new L.Icon({
   popupAnchor: [0, -32],
 });
 
-interface SkiResort {
-  name: string;
-  lat: number;
-  lng: number;
-}
+
 
 const skiResorts: SkiResort[] = [
   { name: "Poiana Brașov", lat: 45.5937, lng: 25.555 },
@@ -65,7 +62,7 @@ const LocateUser: React.FC<{
   return null;
 };
 
-const MapComponent: React.FC = () => {
+const MapComponent= () => {
   const [userLocation, setUserLocation] = useState<LatLngExpression | null>(
     null
   );
