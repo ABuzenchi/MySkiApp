@@ -115,6 +115,7 @@ export default function Sinaia() {
   }, []);
 
   return (
+    <>
     <div className={classes.container}>
       <Weather location="Sinaia" />
       <CarouselPhoto images={images} />
@@ -151,5 +152,9 @@ export default function Sinaia() {
         </table>
       </div>
     </div>
+    <div>
+      <iframe width="1074" height="604" src="https://www.youtube.com/embed/7wOYoWK869Q" title="🔴 LIVE | Webcam Ski Resort Transalpina cota 2000 | Starea Pârtiilor în Timp Real" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+    </div>
+    </>
   );
 }

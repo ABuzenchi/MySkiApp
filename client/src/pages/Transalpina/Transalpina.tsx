@@ -21,6 +21,9 @@ export default function Transalpina() {
         <Weather location="Voineasa" />
         <CarouselPhoto images={images} />
       </div>
+      <div>
+      <iframe width="972" height="546" src="https://www.youtube.com/embed/S4-J13OMpRA" title="🔴 LIVE | Webcam Ski Resort Transalpina | Starea Pârtiilor în Timp Real" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      </div>
     </>
   );
 }
