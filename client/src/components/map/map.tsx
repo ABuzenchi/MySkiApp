@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import { SkiResort } from "../../interfaces/skiResort.interface";
-
+import UserLocation from "../../userLocation/userLocation";
 
 const skiIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/854/854878.png",
@@ -11,8 +11,6 @@ const skiIcon = new L.Icon({
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
 });
-
-
 
 const skiResorts: SkiResort[] = [
   { name: "Poiana Brașov", lat: 45.5937, lng: 25.555 },
@@ -41,28 +39,7 @@ const skiResorts: SkiResort[] = [
   { name: "Gura Humorului", lat: 47.552462, lng: 25.885284 },
 ];
 
-const LocateUser: React.FC<{
-  setUserLocation: (loc: LatLngExpression) => void;
-}> = ({ setUserLocation }) => {
-  const map = useMap();
-
-  useEffect(() => {
-    map.locate({ setView: true, maxZoom: 10 });
-
-    map.on("locationfound", (e) => {
-      setUserLocation(e.latlng);
-      L.marker(e.latlng).addTo(map).bindPopup("Locația ta").openPopup();
-    });
-
-    return () => {
-      map.off("locationfound");
-    };
-  }, [map, setUserLocation]);
-
-  return null;
-};
-
-const MapComponent= () => {
+const MapComponent = () => {
   const [userLocation, setUserLocation] = useState<LatLngExpression | null>(
     null
   );
@@ -81,7 +58,7 @@ const MapComponent= () => {
         </Marker>
       ))}
 
-      <LocateUser setUserLocation={setUserLocation} />
+      <UserLocation setUserLocation={setUserLocation} />
     </MapContainer>
   );
 };
