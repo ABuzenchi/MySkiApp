@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "./home.module.css";
 import { MdOutlineSearch } from "react-icons/md";
 import {EnDictionary } from "../../dictionaries/en";
+import MapComponent from "../../components/map/map";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const Home = () => {
           />
         </div>
       </div>
+      <MapComponent/>
     </div>
   );
 };
