@@ -11,6 +11,7 @@ import { jwtDecode } from "jwt-decode";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { FaUserAlt } from "react-icons/fa";
 import {EnDictionary } from "../../dictionaries/en";
+import UserAvatarImage from "../UserAvatar/UserAvatarImage/UserAvatarImage";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -83,8 +84,8 @@ const UserProfile = () => {
         </div>
       </Drawer>
 
-      <Button variant="transparent" color="#040024"  onClick={open} size="lg">
-        <FaUserAlt></FaUserAlt>
+      <Button variant="transparent" color="#040024" onClick={open} size="lg">
+        {isAuthenticated ? <UserAvatarImage username={username} size="md"/> : <FaUserAlt />}
       </Button>
     </>
   );
