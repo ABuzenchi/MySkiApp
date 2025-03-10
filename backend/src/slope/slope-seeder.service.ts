@@ -110,7 +110,7 @@ export class SlopeSeederService {
       },
     ];
 
-    // Inserăm fiecare pantă, dacă nu există deja
+
     for (const slope of slopes) {
       const existingSlope = await this.slopeModel.findOne({ name: slope.name });
       if (!existingSlope) {

@@ -1,5 +1,3 @@
-// slope.module.ts
-
 import { Module, OnModuleInit } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Slope, SlopeSchema } from './slope.schema';

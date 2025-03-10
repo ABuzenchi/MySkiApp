@@ -50,9 +50,8 @@ export class Slope {
   @Prop({ required: true, min: 0 })
   topElevation: number;
 
-  @Prop({ default: 'Necunoscut' }) // Inițial necunoscut
+  @Prop({ default: 'Necunoscut' })
   status: string;
-
 }
 
 export const SlopeSchema = SchemaFactory.createForClass(Slope);
