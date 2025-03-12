@@ -57,7 +57,7 @@ const MapComponent = () => {
           <Popup>{resort.name}</Popup>
         </Marker>
       ))}
-
+      
       <UserLocation setUserLocation={setUserLocation} />
     </MapContainer>
   );

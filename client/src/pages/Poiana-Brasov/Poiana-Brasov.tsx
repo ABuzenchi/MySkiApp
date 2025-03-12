@@ -7,6 +7,7 @@ import PoianaBrasovPicture02 from "../../assets/PoianaBrasovPicture02.jpg";
 import PoianaBrasovPicture03 from "../../assets/PoianaBrasovPicture03.jpg";
 import PoianaBrasovPicture04 from "../../assets/PoianaBrasovPicture04.jpeg";
 import RatingResort from "../../components/rating/rating";
+import MapSearch from "../../components/map/map-search";
 
 const images = [
   PostavaruMap,
@@ -26,6 +27,9 @@ const PoianaBrasov = () => {
       <RatingResort></RatingResort>
       <div>
       <iframe width="1074" height="604" src="https://www.youtube.com/embed/Ifw-41CDRjQ" title="🔴 LIVE | Webcam Poiana Brașov - Gondola Postăvaru | Starea Pârtiilor în Timp Real" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+      </div>
+      <div>
+        <MapSearch/>
       </div>
     </>
   );
