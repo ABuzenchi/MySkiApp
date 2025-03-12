@@ -94,6 +94,10 @@ import sinaiaPicture02 from "../../assets/sinaia-picture02.jpg";
 import sinaiaPicture03 from "../../assets/sinaia-picture03.jpg";
 import sinaiaPicture04 from "../../assets/sinaia-picture04.jpg";
 import { Slope } from "../../interfaces/slope.interface";
+import { MdFavoriteBorder } from "react-icons/md";
+import { MdOutlineFavorite } from "react-icons/md";
+import { Button } from "@mantine/core";
+import { FaShareAlt } from "react-icons/fa";
 
 const images = [
   sinaiaMap,
@@ -105,6 +109,7 @@ const images = [
 
 export default function Sinaia() {
   const [slopes, setSlopes] = useState<Slope[]>([]);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // Funcție pentru a obține pârtiile din Sinaia
   useEffect(() => {
@@ -116,6 +121,19 @@ export default function Sinaia() {
 
   return (
     <>
+      <div className={classes.slopeDetails}>
+        <p >Sinaia</p>
+        <Button
+          variant="transparent"
+          onClick={() => setIsFavorite(!isFavorite)}
+          size="lg"
+        >
+          {isFavorite ? <MdOutlineFavorite /> : <MdFavoriteBorder />}
+        </Button>
+        <Button variant="transparent" size="sm">
+          <FaShareAlt/>
+        </Button>
+      </div>
       <div className={classes.container}>
         <Weather location="Sinaia" />
         <CarouselPhoto images={images} />
