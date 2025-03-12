@@ -98,6 +98,8 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { MdOutlineFavorite } from "react-icons/md";
 import { Button } from "@mantine/core";
 import { FaShareAlt } from "react-icons/fa";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 const images = [
   sinaiaMap,
@@ -110,6 +112,7 @@ const images = [
 export default function Sinaia() {
   const [slopes, setSlopes] = useState<Slope[]>([]);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [userWasThere, setUserWasThere] = useState(false);
 
   // Funcție pentru a obține pârtiile din Sinaia
   useEffect(() => {
@@ -122,7 +125,7 @@ export default function Sinaia() {
   return (
     <>
       <div className={classes.slopeDetails}>
-        <p >Sinaia</p>
+        <p>Sinaia</p>
         <Button
           variant="transparent"
           onClick={() => setIsFavorite(!isFavorite)}
@@ -131,7 +134,14 @@ export default function Sinaia() {
           {isFavorite ? <MdOutlineFavorite /> : <MdFavoriteBorder />}
         </Button>
         <Button variant="transparent" size="sm">
-          <FaShareAlt/>
+          <FaShareAlt />
+        </Button>
+        <Button
+          variant="transparent"
+          onClick={() => setUserWasThere(!userWasThere)}
+          size="sm"
+        >
+           {userWasThere ? <AiOutlineCheckCircle /> : <AiFillCheckCircle />}
         </Button>
       </div>
       <div className={classes.container}>
