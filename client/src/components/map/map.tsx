@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import { SkiResort } from "../../interfaces/skiResort.interface";
-import UserLocation from "../../userLocation/userLocation";
+import UserLocation from "../userLocation/userLocation";
 
 const skiIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/854/854878.png",
@@ -57,7 +57,7 @@ const MapComponent = () => {
           <Popup>{resort.name}</Popup>
         </Marker>
       ))}
-      
+
       <UserLocation setUserLocation={setUserLocation} />
     </MapContainer>
   );
