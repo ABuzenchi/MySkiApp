@@ -6,7 +6,6 @@ import transalpinaPicture01 from "../../assets/transalpina-picture01.jpg";
 import transalpinaPicture02 from "../../assets/transalpina-picture02.jpg";
 import transalpinaPicture03 from "../../assets/transalpina-picture03.jpg";
 import transalpinaPicture04 from "../../assets/transalpina-picture04.png";
-
 const images = [
   transalpinaMap,
   transalpinaPicture01,
@@ -24,6 +23,7 @@ export default function Transalpina() {
       <div>
       <iframe width="972" height="546" src="https://www.youtube.com/embed/S4-J13OMpRA" title="🔴 LIVE | Webcam Ski Resort Transalpina | Starea Pârtiilor în Timp Real" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
       </div>
+
     </>
   );
 }
