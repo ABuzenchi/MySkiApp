@@ -1,4 +1,4 @@
-import { Button, Drawer } from "@mantine/core";
+import { Button, Drawer, Image } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./user-profile.module.css";
 import SignUp from "../signUp/signUp";
@@ -10,8 +10,11 @@ import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { FaUserAlt } from "react-icons/fa";
-import {EnDictionary } from "../../dictionaries/en";
+import { EnDictionary } from "../../dictionaries/en";
 import UserAvatarImage from "../UserAvatar/UserAvatarImage/UserAvatarImage";
+import FirstFavorite from "../../assets/first-favorite.png";
+import FirstSlope from "../../assets/first-slope.png";
+import FirstReview from "../../assets/reviews.png";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -29,9 +32,13 @@ const UserProfile = () => {
           localStorage.removeItem("authToken");
           dispatch(logout());
         } else {
-          const savedAvatar = localStorage.getItem(`userAvatar_${decodedToken.username}`);
+          const savedAvatar = localStorage.getItem(
+            `userAvatar_${decodedToken.username}`
+          );
           if (savedAvatar) {
-            dispatch(login({ username: decodedToken.username, avatar: savedAvatar }));
+            dispatch(
+              login({ username: decodedToken.username, avatar: savedAvatar })
+            );
           } else {
             dispatch(login({ username: decodedToken.username, avatar: null }));
           }
@@ -42,7 +49,6 @@ const UserProfile = () => {
       }
     }
   }, [dispatch]);
-  
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -50,6 +56,12 @@ const UserProfile = () => {
     close();
   };
 
+  const statsData = [
+    { id: 1, icon: "🔥", value: "123", label: "Day Streak" },
+    { id: 2, icon: "⚡", value: "12000", label: "Total XP" },
+    { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
+    { id: 4, icon: "🏅", value: "5", label: "League Medals" },
+  ];
   return (
     <>
       <Drawer
@@ -67,7 +79,32 @@ const UserProfile = () => {
           {isAuthenticated ? (
             <>
               <div className={classes.userContainer}>
-                <UserAvatar username={username}/>
+                <UserAvatar username={username} />
+                <div className={classes.container}>
+                  <h3 className={classes.title}>Statistics</h3>
+                  <div className={classes.grid}>
+                    {statsData.map((stat) => (
+                      <div key={stat.id} className={classes.statBox}>
+                        <span className={classes.icon}>{stat.icon}</span>
+                        <div className={classes.info}>
+                          <span className={classes.value}>{stat.value}</span>
+                          <span className={classes.label}>{stat.label}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className={classes.container}>
+                  <h3 className={classes.title}>Achievements</h3>
+                  <div className={classes.imageContainer}>
+                    <Image src={FirstFavorite} className={classes.image} />
+                    <Image src={FirstSlope} className={classes.image} />
+                    <Image src={FirstReview} className={classes.image} />
+                  </div>
+                </div>
+                <div className={classes.container}>
+                  <h3 className={classes.title}>Friends</h3>
+                </div>
                 <Button variant="default" onClick={handleLogout}>
                   {EnDictionary.Logout}
                 </Button>
@@ -85,7 +122,11 @@ const UserProfile = () => {
       </Drawer>
 
       <Button variant="transparent" color="#040024" onClick={open} size="lg">
-        {isAuthenticated ? <UserAvatarImage username={username} size="md"/> : <FaUserAlt />}
+        {isAuthenticated ? (
+          <UserAvatarImage username={username} size="md" />
+        ) : (
+          <FaUserAlt />
+        )}
       </Button>
     </>
   );

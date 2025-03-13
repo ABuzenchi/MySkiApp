@@ -37,3 +37,87 @@
   align-items: left;
   justify-content: right;
 }
+
+.statisticContainer
+{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+}
+
+/* Container principal */
+.container {
+  background: white;
+  padding: 0 10px 10px 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: auto;      /* Se va adapta automat */
+  min-width: 400px; /* Evită să fie prea mic */
+  max-width: 90%;   /* Se adaptează la ecran */
+  font-family: Arial, sans-serif;
+}
+
+/* Titlul */
+.title {
+ 
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Grid 2x2 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+/* Fiecare statistică (card) */
+.statBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f0f0f0;
+  padding: 12px;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.statBox:hover {
+  transform: scale(1.05);
+}
+
+/* Iconițele */
+.icon {
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+/* Text */
+.info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.value {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.label {
+  font-size: 12px;
+  color: gray;
+}
+
+.image {
+  height: 70px;
+  width: auto !important;
+  margin-left: 10px;
+  transition: height 0.3s ease-in-out;
+}
+.imageContainer{
+  display: flex;
+  flex-direction: row;
+  gap:50px;
+}

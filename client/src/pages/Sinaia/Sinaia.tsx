@@ -100,6 +100,7 @@ import { Button } from "@mantine/core";
 import { FaShareAlt } from "react-icons/fa";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { AiFillCheckCircle } from "react-icons/ai";
+import ShareModal from "../../components/shareModal/shareModal";
 
 const images = [
   sinaiaMap,
@@ -133,9 +134,10 @@ export default function Sinaia() {
         >
           {isFavorite ? <MdOutlineFavorite /> : <MdFavoriteBorder />}
         </Button>
-        <Button variant="transparent" size="sm">
+        {/* <Button variant="transparent" size="sm">
           <FaShareAlt />
-        </Button>
+        </Button> */}
+        <ShareModal/>
         <Button
           variant="transparent"
           onClick={() => setUserWasThere(!userWasThere)}
@@ -150,7 +152,6 @@ export default function Sinaia() {
       </div>
 
       <div className={classes.slopeTable}>
-        <h2>Pârtiile din Sinaia</h2>
         <table>
           <thead>
             <tr>
