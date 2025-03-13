@@ -1,0 +1,28 @@
+.customModalTitle {
+    font-size: 24px; 
+    font-weight: bold; 
+    text-align: center;
+  }
+
+
+  .whatsappButton {
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    font-size: 66px; 
+    color:#25d366;
+  }
+
+  .facebookButton {
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    font-size: 60px; 
+    color:#3b5998;
+  }
+  
+  .container{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+  }
