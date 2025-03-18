@@ -19,7 +19,7 @@ import FirstReview from "../../assets/reviews.png";
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const dispatch = useDispatch();
-  const { username, isAuthenticated } = useSelector(
+  const { username, isAuthenticated, favoriteSlopes,visitedSlopes} = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -57,8 +57,8 @@ const UserProfile = () => {
   };
 
   const statsData = [
-    { id: 1, icon: "🔥", value: "123", label: "Day Streak" },
-    { id: 2, icon: "⚡", value: "12000", label: "Total XP" },
+    { id: 1, icon: "🏔️", value: favoriteSlopes.length, label: "Favorite Slopes" }, // Adaugă numărul de favorite
+    { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Slopes" }, // Adaugă numărul de vizitate
     { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
     { id: 4, icon: "🏅", value: "5", label: "League Medals" },
   ];

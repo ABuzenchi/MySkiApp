@@ -6,6 +6,7 @@ import strajaPicture01 from "../../assets/straja-picture01.jpg";
 import strajaPicture02 from "../../assets/straja-picture02.jpg";
 import strajaPicture03 from "../../assets/straja-picture03.jpg";
 import strajaPicture04 from "../../assets/straja-picture-04.jpg";
+import SlopeStatus from "../../components/slope-status/slope-status";
 
 const images = [
   strajaMap,
@@ -17,6 +18,7 @@ const images = [
 export default function Straja() {
   return (
     <>
+    <SlopeStatus name="Straja" />
       <div className={classes.container}>
         <Weather location="Straja" />
         <CarouselPhoto images={images} />

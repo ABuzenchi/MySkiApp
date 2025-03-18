@@ -1,89 +1,3 @@
-// import Weather from "../../components/weather/weather";
-// import CarouselPhoto from "../../components/carousel-photo/carousel-photo";
-// import classes from "./Sinaia.module.css";
-// import sinaiaMap from "../../assets/sinaia-map.jpg";
-// import sinaiaPicture01 from "../../assets/sinaia-picture01.jpg";
-// import sinaiaPicture02 from "../../assets/sinaia-picture02.jpg";
-// import sinaiaPicture03 from "../../assets/sinaia-picture03.jpg";
-// import sinaiaPicture04 from "../../assets/sinaia-picture04.jpg";
-// import { useState, useEffect } from 'react';
-// import {Slope} from "../../interfaces/slope.interface"
-
-// const images = [
-//   sinaiaMap,
-//   sinaiaPicture01,
-//   sinaiaPicture02,
-//   sinaiaPicture03,
-//   sinaiaPicture04,
-// ];
-
-// export default function Sinaia() {
-//   const [partii, setPartii] = useState<Slope[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     fetchPartii();
-//   }, []);
-
-//   const fetchPartii = async () => {
-//     try {
-//       const response = await fetch('http://localhost:3000/slopes/sinaia');
-//       if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//       }
-//       const data = await response.json();
-//       setPartii(data);
-//       setLoading(false);
-//     } catch (err:any) {
-//       setError(err.message);
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <div className={classes.container}>
-//         <Weather location="Sinaia" />
-//         <CarouselPhoto images={images} />
-//         </div>
-
-//         {loading && <div>Se încarcă...</div>}
-
-//         {error && (
-//           <div>Eroare la încărcarea datelor: {error}</div>
-//         )}
-
-//         {!loading && !error && (
-//           <div>
-//           <h2>Slopes</h2>
-//           <table className={classes.table}>
-//             <thead>
-//               <tr>
-//                 <th>Name</th>
-//                 <th>Status</th>
-//                 <th>Length</th>
-//                 <th>Departure altitude</th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {partii.map((partie, index) => (
-//                 <tr key={index}>
-//                   <td>{partie.name}</td>
-//                   <td>{partie.status}</td>
-//                   <td>{partie.length}</td>
-//                   <td>{partie.departureAltitude}</td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-//         </div>
-//         )}
-
-//     </>
-//   );
-// }
-
 import { useState, useEffect } from "react";
 import Weather from "../../components/weather/weather";
 import CarouselPhoto from "../../components/carousel-photo/carousel-photo";
@@ -94,13 +8,7 @@ import sinaiaPicture02 from "../../assets/sinaia-picture02.jpg";
 import sinaiaPicture03 from "../../assets/sinaia-picture03.jpg";
 import sinaiaPicture04 from "../../assets/sinaia-picture04.jpg";
 import { Slope } from "../../interfaces/slope.interface";
-import { MdFavoriteBorder } from "react-icons/md";
-import { MdOutlineFavorite } from "react-icons/md";
-import { Button } from "@mantine/core";
-import { FaShareAlt } from "react-icons/fa";
-import { AiOutlineCheckCircle } from "react-icons/ai";
-import { AiFillCheckCircle } from "react-icons/ai";
-import ShareModal from "../../components/shareModal/shareModal";
+import SlopeStatus from "../../components/slope-status/slope-status";
 
 const images = [
   sinaiaMap,
@@ -112,10 +20,8 @@ const images = [
 
 export default function Sinaia() {
   const [slopes, setSlopes] = useState<Slope[]>([]);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [userWasThere, setUserWasThere] = useState(false);
+ 
 
-  // Funcție pentru a obține pârtiile din Sinaia
   useEffect(() => {
     fetch("http://localhost:3000/slopes/location/Sinaia")
       .then((response) => response.json())
@@ -123,29 +29,10 @@ export default function Sinaia() {
       .catch((error) => console.error("Eroare la preluarea datelor: ", error));
   }, []);
 
+  
   return (
     <>
-      <div className={classes.slopeDetails}>
-        <p>Sinaia</p>
-        <Button
-          variant="transparent"
-          onClick={() => setIsFavorite(!isFavorite)}
-          size="lg"
-        >
-          {isFavorite ? <MdOutlineFavorite /> : <MdFavoriteBorder />}
-        </Button>
-        {/* <Button variant="transparent" size="sm">
-          <FaShareAlt />
-        </Button> */}
-        <ShareModal/>
-        <Button
-          variant="transparent"
-          onClick={() => setUserWasThere(!userWasThere)}
-          size="sm"
-        >
-           {userWasThere ? <AiOutlineCheckCircle /> : <AiFillCheckCircle />}
-        </Button>
-      </div>
+      <SlopeStatus name="Sinaia"/>
       <div className={classes.container}>
         <Weather location="Sinaia" />
         <CarouselPhoto images={images} />

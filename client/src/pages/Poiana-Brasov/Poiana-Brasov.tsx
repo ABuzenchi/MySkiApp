@@ -8,6 +8,7 @@ import PoianaBrasovPicture03 from "../../assets/PoianaBrasovPicture03.jpg";
 import PoianaBrasovPicture04 from "../../assets/PoianaBrasovPicture04.jpeg";
 import RatingResort from "../../components/rating/rating";
 import MapSearch from "../../components/map/map-search";
+import SlopeStatus from "../../components/slope-status/slope-status";
 
 const images = [
   PostavaruMap,
@@ -20,6 +21,7 @@ const images = [
 const PoianaBrasov = () => {
   return (
     <>
+    <SlopeStatus name="Poiana Brasov"/>
       <div className={classes.container}>
         <Weather location="Brasov" />
         <CarouselPhoto images={images} />

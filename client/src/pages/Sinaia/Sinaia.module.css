@@ -41,23 +41,3 @@
   gap: 10px;
 }
 
-.slopeDetails {
-  display: flex;
-  align-items: center; 
-  margin-left: 25px;
-  gap: 5px; 
-  font-size: 24px; 
-  font-weight: bold;
-}
-
-
-.slopeDetails p {
-  margin: 0; 
-}
-
-.slopeDetails button {
-  background: none; 
-  border: none; 
-  cursor: pointer;
-  font-size: 25px; 
-}

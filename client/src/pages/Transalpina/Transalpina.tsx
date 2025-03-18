@@ -6,6 +6,7 @@ import transalpinaPicture01 from "../../assets/transalpina-picture01.jpg";
 import transalpinaPicture02 from "../../assets/transalpina-picture02.jpg";
 import transalpinaPicture03 from "../../assets/transalpina-picture03.jpg";
 import transalpinaPicture04 from "../../assets/transalpina-picture04.png";
+import SlopeStatus from "../../components/slope-status/slope-status";
 const images = [
   transalpinaMap,
   transalpinaPicture01,
@@ -16,6 +17,7 @@ const images = [
 export default function Transalpina() {
   return (
     <>
+    <SlopeStatus name="Straja" />
       <div className={classes.container}>
         <Weather location="Voineasa" />
         <CarouselPhoto images={images} />
