@@ -91,31 +91,40 @@ const SignIn = () => {
             <button type="submit" className={classes.signinbutton}>
               {EnDictionary.SignIn}
             </button>
+            <div className={classes.separator}>
+              <span>or continue with</span>
+            </div>
+
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                const res = await fetch("http://localhost:3000/auth/google", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    token: credentialResponse.credential,
+                  }),
+                });
+
+                const data = await res.json();
+                localStorage.setItem("authToken", data.token);
+                dispatch(
+                  login({
+                    username: data.username,
+                    avatar: data.profilePicture,
+                  })
+                );
+                alert("Login with Google successful!");
+                close();
+              }}
+              onError={() => {
+                alert("Google login failed");
+              }}
+            />
 
             <p className={classes.signintext}>
               {EnDictionary.NoAccount} <SignUp />
             </p>
           </form>
-          <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-              const res = await fetch("http://localhost:3000/auth/google", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: credentialResponse.credential }),
-              });
-
-              const data = await res.json();
-              localStorage.setItem("authToken", data.token);
-              dispatch(
-                login({ username: data.username, avatar: data.profilePicture })
-              );
-              alert("Login with Google successful!");
-              close();
-            }}
-            onError={() => {
-              alert("Google login failed");
-            }}
-          />
         </div>
       </Modal>
 

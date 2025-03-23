@@ -6,6 +6,7 @@ import { login } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
 import { EnDictionary } from "../../dictionaries/en";
 import { GoogleLogin } from "@react-oauth/google";
+import SignIn from "../signIn/signIn";
 
 const SignUp = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -109,30 +110,38 @@ const SignUp = () => {
               {EnDictionary.SignUp}
             </button>
 
+            <div className={classes.separator}>
+              <span>or continue with</span>
+            </div>
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                const res = await fetch("http://localhost:3000/auth/google", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    token: credentialResponse.credential,
+                  }),
+                });
+
+                const data = await res.json();
+                localStorage.setItem("authToken", data.token);
+                dispatch(
+                  login({
+                    username: data.username,
+                    avatar: data.profilePicture,
+                  })
+                );
+                alert("Signup with Google successful!");
+                close();
+              }}
+              onError={() => {
+                alert("Google signup failed");
+              }}
+            />
             <p className={classes.signintext}>
-              {EnDictionary.AccountExists} <a href="#">Sign in</a>
+              {EnDictionary.AccountExists} <SignIn />
             </p>
           </form>
-          <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-              const res = await fetch("http://localhost:3000/auth/google", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: credentialResponse.credential }),
-              });
-
-              const data = await res.json();
-              localStorage.setItem("authToken", data.token);
-              dispatch(
-                login({ username: data.username, avatar: data.profilePicture })
-              );
-              alert("Signup with Google successful!");
-              close();
-            }}
-            onError={() => {
-              alert("Google signup failed");
-            }}
-          />
         </div>
       </Modal>
 
