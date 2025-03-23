@@ -38,6 +38,9 @@ let AuthController = class AuthController {
     async updateAvatar(username, profilePicture) {
         return this.authService.updateProfilePicture(username, profilePicture);
     }
+    async loginWithGoogle(token) {
+        return this.authService.loginWithGoogle(token);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -77,6 +80,13 @@ __decorate([
     __metadata("design:paramtypes", [String, String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "updateAvatar", null);
+__decorate([
+    (0, common_1.Post)('google'),
+    __param(0, (0, common_1.Body)('token')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "loginWithGoogle", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

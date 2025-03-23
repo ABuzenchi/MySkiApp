@@ -4,7 +4,8 @@ import { useState } from "react";
 import classes from "./signUp.module.css";
 import { login } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
-import {EnDictionary } from "../../dictionaries/en";
+import { EnDictionary } from "../../dictionaries/en";
+import { GoogleLogin } from "@react-oauth/google";
 
 const SignUp = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -12,7 +13,7 @@ const SignUp = () => {
     username: "",
     email: "",
     password: "",
-     profilePicture: ""
+    profilePicture: "",
   });
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -112,6 +113,26 @@ const SignUp = () => {
               {EnDictionary.AccountExists} <a href="#">Sign in</a>
             </p>
           </form>
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              const res = await fetch("http://localhost:3000/auth/google", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: credentialResponse.credential }),
+              });
+
+              const data = await res.json();
+              localStorage.setItem("authToken", data.token);
+              dispatch(
+                login({ username: data.username, avatar: data.profilePicture })
+              );
+              alert("Signup with Google successful!");
+              close();
+            }}
+            onError={() => {
+              alert("Google signup failed");
+            }}
+          />
         </div>
       </Modal>
 

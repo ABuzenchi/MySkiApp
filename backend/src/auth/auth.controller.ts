@@ -38,11 +38,18 @@ export class AuthController {
   getUser(@Param('username') username: string): Promise<User> {
     return this.authService.getUserByUsername(username);
   }
+
+
   @Patch(':username/avatar')
   async updateAvatar(
     @Param('username') username: string,
     @Body('profilePicture') profilePicture: string,
   ) {
     return this.authService.updateProfilePicture(username, profilePicture);
+  }
+
+  @Post('google')
+  async loginWithGoogle(@Body('token') token: string) {
+    return this.authService.loginWithGoogle(token);
   }
 }

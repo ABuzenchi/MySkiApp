@@ -19,6 +19,8 @@ const user_schema_1 = require("./schema/user.schema");
 const mongoose_2 = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt_1 = require("@nestjs/jwt");
+const google_auth_library_1 = require("google-auth-library");
+const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 let AuthService = class AuthService {
     constructor(userModel, jwtService) {
         this.userModel = userModel;
@@ -81,6 +83,34 @@ let AuthService = class AuthService {
     async updateProfilePicture(username, profilePicture) {
         const user = await this.userModel.findOneAndUpdate({ username }, { profilePicture }, { new: true });
         return { username: user.username, profilePicture: user.profilePicture };
+    }
+    async loginWithGoogle(token) {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: process.env.GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        if (!payload || !payload.email) {
+            throw new common_1.UnauthorizedException('Google token is invalid');
+        }
+        let user = await this.userModel.findOne({ email: payload.email });
+        if (!user) {
+            user = await this.userModel.create({
+                username: payload.name,
+                email: payload.email,
+                profilePicture: payload.picture,
+                password: await bcrypt.hash('google-auth-placeholder', 10),
+            });
+        }
+        const jwt = this.jwtService.sign({
+            id: user._id,
+            username: user.username,
+        });
+        return {
+            token: jwt,
+            username: user.username,
+            profilePicture: user.profilePicture,
+        };
     }
 };
 exports.AuthService = AuthService;

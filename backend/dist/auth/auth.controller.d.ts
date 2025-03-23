@@ -22,4 +22,9 @@ export declare class AuthController {
         username: string;
         profilePicture: string;
     }>;
+    loginWithGoogle(token: string): Promise<{
+        token: string;
+        username: string;
+        profilePicture: string;
+    }>;
 }

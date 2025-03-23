@@ -8,6 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { OAuth2Client } from 'google-auth-library';
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 @Injectable()
 export class AuthService {
@@ -105,4 +108,40 @@ export class AuthService {
     );
     return { username: user.username, profilePicture: user.profilePicture };
   }
+
+  async loginWithGoogle(token: string) {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+  
+    const payload = ticket.getPayload();
+  
+    if (!payload || !payload.email) {
+      throw new UnauthorizedException('Google token is invalid');
+    }
+  
+    let user = await this.userModel.findOne({ email: payload.email });
+  
+    if (!user) {
+      user = await this.userModel.create({
+        username: payload.name,
+        email: payload.email,
+        profilePicture: payload.picture,
+        password: await bcrypt.hash('google-auth-placeholder', 10),
+      });
+    }
+  
+    const jwt = this.jwtService.sign({
+      id: user._id,
+      username: user.username,
+    });
+  
+    return {
+      token: jwt,
+      username: user.username,
+      profilePicture: user.profilePicture,
+    };
+  }
+  
 }
