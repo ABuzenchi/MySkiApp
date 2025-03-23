@@ -19,7 +19,7 @@ import FirstReview from "../../assets/reviews.png";
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const dispatch = useDispatch();
-  const { username, isAuthenticated, favoriteSlopes,visitedSlopes} = useSelector(
+  const { username, isAuthenticated, favoriteSlopes,visitedSlopes,profilePicture} = useSelector(
     (state: RootState) => state.auth
   );
 

@@ -12,12 +12,26 @@ const SettingsMenu = () => {
   const dispatch = useDispatch();
   const { username } = useSelector((state: RootState) => state.auth);
 
-  const handleImageSelect = (image: string | null) => {
-    if (image && username) {
-      dispatch(setAvatar(image));
-      localStorage.setItem(`userAvatar_${username}`, image);
+  const handleImageSelect = async (imageUrl: string | null) => {
+    if (!username || !imageUrl) return;
+  
+    try {
+      const response = await fetch(`http://localhost:3000/auth/${username}/avatar`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ profilePicture: imageUrl }),
+      });
+  
+      const data = await response.json();
+      dispatch(setAvatar(data.profilePicture));
+      localStorage.setItem(`userAvatar_${username}`, data.profilePicture);
+    } catch (error) {
+      console.error("Error updating avatar:", error);
     }
   };
+  
 
   return (
     <>

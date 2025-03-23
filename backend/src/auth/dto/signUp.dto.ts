@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsArray, IsEmail, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class SignUpDto {
   @IsNotEmpty()
@@ -13,4 +13,16 @@ export class SignUpDto {
   @IsString()
   @MinLength(5)
   readonly password: string;
+
+  @IsOptional()
+  @IsString()
+  readonly profilePicture?: string;
+
+  @IsOptional()
+  @IsArray()
+  readonly favoriteSlopes?: string[];
+
+  @IsOptional()
+  @IsArray()
+  readonly visitedSlopes?: string[];
 }

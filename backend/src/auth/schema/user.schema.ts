@@ -13,6 +13,16 @@ export class User{
 
     @Prop()
     password:string
+
+    @Prop()
+    profilePicture:string
+
+    @Prop()
+    favoriteSlopes:string[]
+
+    @Prop()
+    visitedSlopes:string[]
 }
+
 
 export const UserSchema=SchemaFactory.createForClass(User);

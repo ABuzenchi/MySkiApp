@@ -37,7 +37,7 @@ const SignIn = () => {
       const data = await response.json();
       localStorage.setItem("authToken", data.token);
       console.log(data.token, data.username);
-      dispatch(login({ username: data.username }));
+      dispatch(login({ username: data.username, avatar: data.profilePicture }));
       console.log("Login successful, token:", data.token);
       alert("Login successful!");
       close();

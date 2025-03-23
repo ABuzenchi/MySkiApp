@@ -7,6 +7,7 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,20 +17,50 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(signUpDto: SignUpDto): Promise<{ token: string,username:string }> {
-    const { username, email, password } = signUpDto;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await this.userModel.create({
+  async signUp(
+    signUpDto: SignUpDto,
+  ): Promise<{ token: string; username: string }> {
+    const {
       username,
       email,
-      password: hashedPassword,
-    });
+      password,
+      profilePicture,
+      favoriteSlopes,
+      visitedSlopes,
+    } = signUpDto;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const token = this.jwtService.sign({ id: user._id ,username: user.username,});
-    return { token,username:user.username };
+    try {
+      const user = await this.userModel.create({
+        username,
+        email,
+        password: hashedPassword,
+        profilePicture,
+        favoriteSlopes,
+        visitedSlopes,
+      });
+
+      const token = this.jwtService.sign({
+        id: user._id,
+        username: user.username,
+      });
+      console.log('User created:', user);
+      return { token, username: user.username };
+    } catch (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
   }
 
-  async signIn(signInDto: SignInDto): Promise<{ token: string,username: string }> {
+  async signIn(
+    signInDto: SignInDto,
+  ): Promise<{
+    token: string;
+    username: string;
+    profilePicture?: string;
+    favoriteSlopes?: string[];
+    visitedSlopes?: string[];
+  }> {
     const { email, password } = signInDto;
 
     const user = await this.userModel.findOne({ email });
@@ -44,7 +75,34 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password');
     }
 
-    const token = this.jwtService.sign({ id: user._id,username: user.username, });
-    return { token,username:user.username};
+    const token = this.jwtService.sign({
+      id: user._id,
+      username: user.username,
+    });
+    return {
+      token,
+      username: user.username,
+      profilePicture: user.profilePicture,
+      favoriteSlopes: user.favoriteSlopes,
+      visitedSlopes: user.visitedSlopes,
+    };
+  }
+  async updateUser(username: string, updateData: UpdateUserDto): Promise<User> {
+    return this.userModel.findOneAndUpdate({ username }, updateData, {
+      new: true,
+    });
+  }
+
+  async getUserByUsername(username: string): Promise<User> {
+    return this.userModel.findOne({ username });
+  }
+
+  async updateProfilePicture(username: string, profilePicture: string) {
+    const user = await this.userModel.findOneAndUpdate(
+      { username },
+      { profilePicture },
+      { new: true }
+    );
+    return { username: user.username, profilePicture: user.profilePicture };
   }
 }

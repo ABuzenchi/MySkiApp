@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface AuthState {
   username: string | null;
   isAuthenticated: boolean;
-  avatar: string | null;
+  profilePicture: string | null;
   favoriteSlopes: string[];
   visitedSlopes: string[];
 }
@@ -10,7 +10,7 @@ interface AuthState {
 const initialState: AuthState = {
   username: null,
   isAuthenticated: false,
-  avatar: null,
+  profilePicture: null,
   favoriteSlopes:[],
   visitedSlopes:[],
 };
@@ -22,15 +22,15 @@ const authSlice = createSlice({
     login(state, action) {
       state.username = action.payload.username;
       state.isAuthenticated = true;
-      state.avatar = action.payload.avatar || null;
+      state.profilePicture = action.payload.avatar || null;
     },
     logout(state) {
       state.username = null;
       state.isAuthenticated = false;
-      state.avatar = null;
+      state.profilePicture = null;
     },
     setAvatar(state, action) {
-      state.avatar = action.payload;
+      state.profilePicture = action.payload;
     },
     addFavoriteSlopes(state,action){
       state.favoriteSlopes.push(action.payload);

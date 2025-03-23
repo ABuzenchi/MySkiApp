@@ -12,6 +12,7 @@ const SignUp = () => {
     username: "",
     email: "",
     password: "",
+     profilePicture: ""
   });
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -38,7 +39,7 @@ const SignUp = () => {
       }
 
       const data = await response.json();
-      dispatch(login({ username: data.username }));
+      dispatch(login({ username: data.username, avatar: data.profilePicture }));
       console.log("Login successful, token:", data.token);
       alert(`Signup successful! Token: ${data.token}`);
       close();

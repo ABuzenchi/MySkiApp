@@ -12,17 +12,17 @@ interface UserAvatarImageProps {
 
 const UserAvatarImage = ({ username,size}: UserAvatarImageProps) => {
   const dispatch = useDispatch();
-  const { avatar } = useSelector((state: RootState) => state.auth);
+  const { profilePicture } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     const savedImage = localStorage.getItem(`userAvatar_${username}`);
-    if (savedImage && savedImage !== avatar) {
+    if (savedImage && savedImage !== profilePicture) {
       dispatch(setAvatar(savedImage));
     }
-  }, [dispatch, username, avatar]);
+  }, [dispatch, username, profilePicture]);
 
   return (
-    <Avatar color="pink" src={avatar} alt={EnDictionary.ProfilePicture} size={size} />
+    <Avatar color="pink" src={profilePicture} alt={EnDictionary.ProfilePicture} size={size} />
   );
 };
 

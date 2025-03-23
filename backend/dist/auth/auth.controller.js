@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const signUp_dto_1 = require("./dto/signUp.dto");
 const signIn_dto_1 = require("./dto/signIn.dto");
+const updateUser_dto_1 = require("./dto/updateUser.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -27,6 +28,15 @@ let AuthController = class AuthController {
     }
     signIn(signInDto) {
         return this.authService.signIn(signInDto);
+    }
+    updateUser(username, updateUserDto) {
+        return this.authService.updateUser(username, updateUserDto);
+    }
+    getUser(username) {
+        return this.authService.getUserByUsername(username);
+    }
+    async updateAvatar(username, profilePicture) {
+        return this.authService.updateProfilePicture(username, profilePicture);
     }
 };
 exports.AuthController = AuthController;
@@ -44,6 +54,29 @@ __decorate([
     __metadata("design:paramtypes", [signIn_dto_1.SignInDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
+__decorate([
+    (0, common_1.Patch)('/update/:username'),
+    __param(0, (0, common_1.Param)('username')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, updateUser_dto_1.UpdateUserDto]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "updateUser", null);
+__decorate([
+    (0, common_1.Get)(':username'),
+    __param(0, (0, common_1.Param)('username')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getUser", null);
+__decorate([
+    (0, common_1.Patch)(':username/avatar'),
+    __param(0, (0, common_1.Param)('username')),
+    __param(1, (0, common_1.Body)('profilePicture')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "updateAvatar", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
