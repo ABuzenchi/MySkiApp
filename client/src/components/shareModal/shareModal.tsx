@@ -4,6 +4,7 @@ import { FaShareAlt } from "react-icons/fa";
 import classes from "./shareModal.module.css";
 import { FaWhatsapp } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa6";
+import QRCode from "react-qr-code";
 
 const ShareModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -24,13 +25,14 @@ const ShareModal = () => {
         }}
       >
         <div className={classes.container}>
-        {/* <QRCode value={currentUrl} size={160} /> */}
+       
           <Button variant="transparent"  className={classes.whatsappButton}>
             <FaWhatsapp className={classes.icon} />
           </Button>
           <Button variant="transparent"  className={classes.facebookButton}>
             <FaFacebook className={classes.icon}/>
           </Button>
+          <QRCode value={currentUrl} size={80} />
         </div>
       </Modal>
       <Button variant="transparent" size="sm" onClick={open}>
