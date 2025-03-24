@@ -41,6 +41,9 @@ let AuthController = class AuthController {
     async loginWithGoogle(token) {
         return this.authService.loginWithGoogle(token);
     }
+    updateSlopes(username, updateData) {
+        return this.authService.updateUser(username, updateData);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -87,6 +90,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "loginWithGoogle", null);
+__decorate([
+    (0, common_1.Patch)(':username/slopes'),
+    __param(0, (0, common_1.Param)('username')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "updateSlopes", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

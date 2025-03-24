@@ -73,9 +73,8 @@ let AuthService = class AuthService {
         };
     }
     async updateUser(username, updateData) {
-        return this.userModel.findOneAndUpdate({ username }, updateData, {
-            new: true,
-        });
+        console.log(`Updating ${username} with`, updateData);
+        return this.userModel.findOneAndUpdate({ username }, { $set: updateData }, { new: true });
     }
     async getUserByUsername(username) {
         return this.userModel.findOne({ username });

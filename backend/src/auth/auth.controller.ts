@@ -39,7 +39,6 @@ export class AuthController {
     return this.authService.getUserByUsername(username);
   }
 
-
   @Patch(':username/avatar')
   async updateAvatar(
     @Param('username') username: string,
@@ -51,5 +50,13 @@ export class AuthController {
   @Post('google')
   async loginWithGoogle(@Body('token') token: string) {
     return this.authService.loginWithGoogle(token);
+  }
+
+  @Patch(':username/slopes')
+  updateSlopes(
+    @Param('username') username: string,
+    @Body() updateData: { favoriteSlopes?: string[]; visitedSlopes?: string[] },
+  ): Promise<User> {
+    return this.authService.updateUser(username, updateData);
   }
 }

@@ -4,7 +4,7 @@ import classes from "./user-profile.module.css";
 import SignUp from "../signUp/signUp";
 import SignIn from "../signIn/signIn";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { useEffect } from "react";
 import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
@@ -15,10 +15,11 @@ import UserAvatarImage from "../UserAvatar/UserAvatarImage/UserAvatarImage";
 import FirstFavorite from "../../assets/first-favorite.png";
 import FirstSlope from "../../assets/first-slope.png";
 import FirstReview from "../../assets/reviews.png";
+import { getUserByUsername } from "../../store/getUserByUsername";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
-  const dispatch = useDispatch();
+   const dispatch = useDispatch<AppDispatch>();
   const { username, isAuthenticated, favoriteSlopes,visitedSlopes,profilePicture} = useSelector(
     (state: RootState) => state.auth
   );
@@ -32,16 +33,7 @@ const UserProfile = () => {
           localStorage.removeItem("authToken");
           dispatch(logout());
         } else {
-          const savedAvatar = localStorage.getItem(
-            `userAvatar_${decodedToken.username}`
-          );
-          if (savedAvatar) {
-            dispatch(
-              login({ username: decodedToken.username, avatar: savedAvatar })
-            );
-          } else {
-            dispatch(login({ username: decodedToken.username, avatar: null }));
-          }
+          dispatch(getUserByUsername(decodedToken.username));
         }
       } catch (err) {
         console.error("Invalid token:", err);

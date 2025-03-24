@@ -7,6 +7,8 @@ import { FaFacebook } from "react-icons/fa6";
 
 const ShareModal = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const currentUrl = window.location.href;
+
 
   return (
     <>
@@ -22,12 +24,12 @@ const ShareModal = () => {
         }}
       >
         <div className={classes.container}>
-          <p>QR CODE</p>
-          <Button variant="transparent" size="xl" className={classes.whatsappButton}>
-            <FaWhatsapp />
+        {/* <QRCode value={currentUrl} size={160} /> */}
+          <Button variant="transparent"  className={classes.whatsappButton}>
+            <FaWhatsapp className={classes.icon} />
           </Button>
-          <Button variant="transparent" size="xl" className={classes.facebookButton}>
-            <FaFacebook />
+          <Button variant="transparent"  className={classes.facebookButton}>
+            <FaFacebook className={classes.icon}/>
           </Button>
         </div>
       </Modal>

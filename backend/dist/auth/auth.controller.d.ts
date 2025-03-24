@@ -27,4 +27,8 @@ export declare class AuthController {
         username: string;
         profilePicture: string;
     }>;
+    updateSlopes(username: string, updateData: {
+        favoriteSlopes?: string[];
+        visitedSlopes?: string[];
+    }): Promise<User>;
 }

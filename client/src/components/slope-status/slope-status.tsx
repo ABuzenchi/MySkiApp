@@ -1,65 +1,70 @@
-import { useState } from "react";
+// src/components/slopeStatus/SlopeStatus.tsx
 import { useDispatch, useSelector } from "react-redux";
-import { addFavoriteSlopes, addVisitedSlopes, removeFavoriteSlope } from "../../store/authSlice";
-import { RootState } from "../../store";
-import classes from "./slope-status.module.css"
+import { RootState, AppDispatch } from "../../store";
+import { updateSlopes } from "../../store/updateSlopes";
+import classes from "./slope-status.module.css";
 import { Button } from "@mantine/core";
 import { MdFavoriteBorder, MdOutlineFavorite } from "react-icons/md";
 import ShareModal from "../shareModal/shareModal";
 import { AiFillCheckCircle, AiOutlineCheckCircle } from "react-icons/ai";
 
-interface SlopeStatusProps{
-    name:string;
+interface SlopeStatusProps {
+  name: string;
 }
 
-const SlopeStatus = ({name}:SlopeStatusProps) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    const [isVisited, setIsVisited] = useState(false);
-    const dispatch = useDispatch();
-    const { favoriteSlopes, visitedSlopes } = useSelector(
-       (state: RootState) => state.auth
-     );
+const SlopeStatus = ({ name }: SlopeStatusProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { favoriteSlopes, visitedSlopes, username } = useSelector(
+    (state: RootState) => state.auth
+  );
 
-     const handleFavoriteToggle = (slopeName: string) => {
-         if (favoriteSlopes.includes(slopeName)) {
-           dispatch(removeFavoriteSlope(slopeName)); 
-           setIsFavorite(false);
-         } else {
-           dispatch(addFavoriteSlopes(slopeName)); 
-           setIsFavorite(true);
-         }
-       };
-     
-       const handleVisitedToggle = (slopeName: string) => {
-         if (visitedSlopes.includes(slopeName)) {
-          //nothing
-         } else {
-           dispatch(addVisitedSlopes(slopeName)); 
-           setIsVisited(true);
-         }
-       };
+  const isFavorite = favoriteSlopes.includes(name);
+  const isVisited = visitedSlopes.includes(name);
 
-    return(
-        <div className={classes.slopeDetails}>
-        <p>{name}</p>
-        <Button
-          variant="transparent"
-          onClick={() => handleFavoriteToggle(name)}
-          size="lg"
-        >
-          {isFavorite ? <MdOutlineFavorite /> : <MdFavoriteBorder />}
-        </Button>
-        <ShareModal/>
-        <Button
-          variant="transparent"
-          onClick={() => handleVisitedToggle(name)}
-          size="sm"
-        >
-           {isVisited ? <AiFillCheckCircle /> : <AiOutlineCheckCircle />}
-        </Button>
-      </div>
-    )
-     
+  const handleFavoriteToggle = () => {
+    const updatedFavorites = isFavorite
+      ? favoriteSlopes.filter((slope) => slope !== name)
+      : [...favoriteSlopes, name];
+
+    dispatch(updateSlopes({
+      username: username!,
+      favoriteSlopes: updatedFavorites,
+      visitedSlopes: visitedSlopes // trimite și vizitatele existente
+    }));
+  };
+
+  const handleVisitedToggle = () => {
+    if (!isVisited) {
+      const updatedVisited = [...visitedSlopes, name];
+
+      dispatch(updateSlopes({
+        username: username!,
+        favoriteSlopes: favoriteSlopes, // trimite și favoritele existente
+        visitedSlopes: updatedVisited
+      }));
+    }
+  };
+
+  return (
+    <div className={classes.slopeDetails}>
+      <p>{name}</p>
+      <Button
+        variant="transparent"
+        onClick={handleFavoriteToggle}
+        size="lg"
+      >
+        {isFavorite ? <MdOutlineFavorite /> : <MdFavoriteBorder />}
+      </Button>
+      <ShareModal />
+      <Button
+        variant="transparent"
+        onClick={handleVisitedToggle}
+        size="sm"
+      >
+        {isVisited ? <AiFillCheckCircle /> : <AiOutlineCheckCircle />}
+      </Button>
+    </div>
+  );
 };
 
 export default SlopeStatus;

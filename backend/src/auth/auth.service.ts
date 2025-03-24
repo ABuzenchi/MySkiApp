@@ -90,10 +90,13 @@ export class AuthService {
       visitedSlopes: user.visitedSlopes,
     };
   }
-  async updateUser(username: string, updateData: UpdateUserDto): Promise<User> {
-    return this.userModel.findOneAndUpdate({ username }, updateData, {
-      new: true,
-    });
+  async updateUser(username: string, updateData: Partial<User>): Promise<User> {
+    console.log(`Updating ${username} with`, updateData);
+    return this.userModel.findOneAndUpdate(
+      { username },
+      { $set: updateData }, // <--- Asta e important
+      { new: true }
+    );
   }
 
   async getUserByUsername(username: string): Promise<User> {
