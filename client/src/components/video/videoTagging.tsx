@@ -21,7 +21,7 @@
 //     }
 //   };
 
-//   const seekToTime = (time) => {
+//   const seekToTime = (time:any) => {
 //     if (playerRef.current) {
 //       playerRef.current.seekTo(time, "seconds");
 //     }
