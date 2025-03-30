@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { fetchSlopesByLocation } from '../../api/slopes.api';
 import { logDayTrack } from '../../api/dayTrack.api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { fetchAllLocations } from '../../api/allSlopes.api';
 
 const DayTrackForm = () => {
   const [date, setDate] = useState('');
@@ -9,9 +12,17 @@ const DayTrackForm = () => {
   const [times, setTimes] = useState<Record<string, number>>({});
   const [status, setStatus] = useState('');
 
-  const username = 'alex'; // Poți pune userul din context sau state
+  const { username} = useSelector(
+    (state: RootState) => state.auth
+  );
 
-  const locations = ['Sinaia', 'Poiana Brașov', 'Predeal'];
+  const [locations, setLocations] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetchAllLocations()
+      .then(setLocations)
+      .catch((err) => setStatus(err.message));
+  }, []);
 
   useEffect(() => {
     if (location) {
@@ -35,7 +46,7 @@ const DayTrackForm = () => {
       .map(([slopeId, t]) => ({ slopeId, times: t }));
 
     try {
-      await logDayTrack(username, { date, slopes: slopeData });
+      await logDayTrack(username!, { date, slopes: slopeData });
       setStatus('✔️ Zi salvată cu succes!');
     } catch (err: any) {
       setStatus(err.message);

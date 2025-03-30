@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { ScraperService } from './scraper.service';
 import { SlopeInfo } from './interfaces/partie-info.interface';
 
-@Controller('slopes')
+@Controller('scraper')
 export class ScraperController {
   constructor(private readonly scraperService: ScraperService) {}
 

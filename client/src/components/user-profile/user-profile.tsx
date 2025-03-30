@@ -98,6 +98,7 @@ const UserProfile = () => {
                 <div className={classes.container}>
                   <h3 className={classes.title}>Friends</h3>
                 </div>
+                <DayTrackForm/>
                 <Button variant="default" onClick={handleLogout}>
                   {EnDictionary.Logout}
                 </Button>
@@ -108,7 +109,7 @@ const UserProfile = () => {
               <div className={classes.authContainer}>
                 <SignUp />
                 <SignIn />
-                <DayTrackForm/>
+              
               </div>
             </>
           )}

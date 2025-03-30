@@ -24,5 +24,9 @@ export class SlopeService {
   async update(id: string, updateSlopeDto: CreateSlopeDto): Promise<Slope> {
     return this.slopeModel.findByIdAndUpdate(id, updateSlopeDto, { new: true }).exec();
   }
-
+  async getAllLocations(): Promise<string[]> {
+    const locations = await this.slopeModel.distinct('location');
+    return locations;
+  }
+  
 }

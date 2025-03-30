@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Put,
+} from '@nestjs/common';
 import { SlopeService } from './slope.service';
 import { CreateSlopeDto } from './slope.dto';
 import { Slope } from './slope.schema';
@@ -24,7 +32,14 @@ export class SlopeController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSlopeDto: CreateSlopeDto): Promise<Slope> {
+  update(
+    @Param('id') id: string,
+    @Body() updateSlopeDto: CreateSlopeDto,
+  ): Promise<Slope> {
     return this.slopeService.update(id, updateSlopeDto);
+  }
+  @Get('/locations')
+  getLocations(): Promise<string[]> {
+    return this.slopeService.getAllLocations();
   }
 }
