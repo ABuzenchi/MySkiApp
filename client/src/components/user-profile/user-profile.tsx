@@ -16,6 +16,7 @@ import FirstFavorite from "../../assets/first-favorite.png";
 import FirstSlope from "../../assets/first-slope.png";
 import FirstReview from "../../assets/reviews.png";
 import { getUserByUsername } from "../../store/getUserByUsername";
+import DayTrackForm from "../day-track/day-track";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
@@ -107,6 +108,7 @@ const UserProfile = () => {
               <div className={classes.authContainer}>
                 <SignUp />
                 <SignIn />
+                <DayTrackForm/>
               </div>
             </>
           )}

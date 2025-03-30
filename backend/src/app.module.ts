@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ForumModule } from './forum/forum.module';
 import { ScraperModule } from './scraper/scraper.module';
 import { SlopeModule } from './slope/slope.module';
+import { DayTrackModule } from './dayTrack/dayTrack.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { SlopeModule } from './slope/slope.module';
     AuthModule,
     ForumModule,
     ScraperModule,
-    SlopeModule
+    SlopeModule,
+    DayTrackModule
   ],
   controllers: [AppController],
   providers: [AppService],
