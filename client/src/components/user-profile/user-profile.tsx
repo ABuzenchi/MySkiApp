@@ -74,6 +74,7 @@ const UserProfile = () => {
               <div className={classes.userContainer}>
                 <UserAvatar username={username} />
                 <div className={classes.container}>
+                <DayTrackForm/>
                   <h3 className={classes.title}>Statistics</h3>
                   <div className={classes.grid}>
                     {statsData.map((stat) => (
@@ -98,7 +99,7 @@ const UserProfile = () => {
                 <div className={classes.container}>
                   <h3 className={classes.title}>Friends</h3>
                 </div>
-                <DayTrackForm/>
+              
                 <Button variant="default" onClick={handleLogout}>
                   {EnDictionary.Logout}
                 </Button>
