@@ -5,7 +5,7 @@ import SignUp from "../signUp/signUp";
 import SignIn from "../signIn/signIn";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { login, logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
 import UserAvatar from "../UserAvatar/UserAvatar";
@@ -20,10 +20,30 @@ import DayTrackForm from "../day-track/day-track";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
-   const dispatch = useDispatch<AppDispatch>();
-  const { username, isAuthenticated, favoriteSlopes,visitedSlopes,profilePicture} = useSelector(
-    (state: RootState) => state.auth
-  );
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    username,
+    isAuthenticated,
+    favoriteSlopes,
+    visitedSlopes,
+    profilePicture,
+  } = useSelector((state: RootState) => state.auth);
+  const [otherUsers, setOtherUsers] = useState<string[]>([]);
+  useEffect(() => {
+    const fetchOtherUsers = async () => {
+      if (!username) return;
+
+      try {
+        const res = await fetch(`http://localhost:3000/auth/all?exclude=${encodeURIComponent(username)}`);
+        const data = await res.json();
+        setOtherUsers(data);
+      } catch (err) {
+        console.error("Failed to fetch users", err);
+      }
+    };
+
+    fetchOtherUsers();
+  }, [username]);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -50,7 +70,12 @@ const UserProfile = () => {
   };
 
   const statsData = [
-    { id: 1, icon: "🏔️", value: favoriteSlopes.length, label: "Favorite Slopes" }, // Adaugă numărul de favorite
+    {
+      id: 1,
+      icon: "🏔️",
+      value: favoriteSlopes.length,
+      label: "Favorite Slopes",
+    }, // Adaugă numărul de favorite
     { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Slopes" }, // Adaugă numărul de vizitate
     { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
     { id: 4, icon: "🏅", value: "5", label: "League Medals" },
@@ -74,7 +99,7 @@ const UserProfile = () => {
               <div className={classes.userContainer}>
                 <UserAvatar username={username} />
                 <div className={classes.container}>
-                <DayTrackForm/>
+                  <DayTrackForm />
                   <h3 className={classes.title}>Statistics</h3>
                   <div className={classes.grid}>
                     {statsData.map((stat) => (
@@ -98,8 +123,20 @@ const UserProfile = () => {
                 </div>
                 <div className={classes.container}>
                   <h3 className={classes.title}>Friends</h3>
+                  <div className={classes.userList}>
+                    {otherUsers.length > 0 ? (
+                      otherUsers.map((user) => (
+                        <div key={user} className={classes.userCard}>
+                          <UserAvatar username={user} />
+                          <span>{user}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No other users found</p>
+                    )}
+                  </div>
                 </div>
-              
+
                 <Button variant="default" onClick={handleLogout}>
                   {EnDictionary.Logout}
                 </Button>
@@ -110,7 +147,6 @@ const UserProfile = () => {
               <div className={classes.authContainer}>
                 <SignUp />
                 <SignIn />
-              
               </div>
             </>
           )}

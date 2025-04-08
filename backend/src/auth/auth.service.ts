@@ -146,5 +146,18 @@ export class AuthService {
       profilePicture: user.profilePicture,
     };
   }
+  async getAllUsersExceptCurrent(currentUsername: string): Promise<string[]> {
+    console.log("Excluding user:", currentUsername);
+  
+    const users = await this.userModel.find(
+      { username: { $ne: currentUsername } },
+      'username'
+    ).exec();
+  
+    console.log("Filtered users:", users);
+  
+    return users.map(user => user.username);
+  }
+  
   
 }

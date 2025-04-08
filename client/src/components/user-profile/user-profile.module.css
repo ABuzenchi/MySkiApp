@@ -121,3 +121,18 @@
   flex-direction: row;
   gap:50px;
 }
+
+.userList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+}

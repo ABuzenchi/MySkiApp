@@ -29,6 +29,10 @@ let AuthController = class AuthController {
     signIn(signInDto) {
         return this.authService.signIn(signInDto);
     }
+    async getAllUsersExceptCurrent(exclude) {
+        console.log('Exclude username primit:', exclude);
+        return this.authService.getAllUsersExceptCurrent(exclude);
+    }
     updateUser(username, updateUserDto) {
         return this.authService.updateUser(username, updateUserDto);
     }
@@ -60,6 +64,13 @@ __decorate([
     __metadata("design:paramtypes", [signIn_dto_1.SignInDto]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
+__decorate([
+    (0, common_1.Get)('all'),
+    __param(0, (0, common_1.Query)('exclude')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getAllUsersExceptCurrent", null);
 __decorate([
     (0, common_1.Patch)('/update/:username'),
     __param(0, (0, common_1.Param)('username')),

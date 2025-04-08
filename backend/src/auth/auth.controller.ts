@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
@@ -24,6 +24,11 @@ export class AuthController {
     visitedSlopes?: string[];
   }> {
     return this.authService.signIn(signInDto);
+  }
+  @Get('all')
+  async getAllUsersExceptCurrent(@Query('exclude') exclude: string) {
+    console.log('Exclude username primit:', exclude);
+    return this.authService.getAllUsersExceptCurrent(exclude);
   }
 
   @Patch('/update/:username')
