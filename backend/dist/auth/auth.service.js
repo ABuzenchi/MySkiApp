@@ -113,9 +113,12 @@ let AuthService = class AuthService {
     }
     async getAllUsersExceptCurrent(currentUsername) {
         console.log("Excluding user:", currentUsername);
-        const users = await this.userModel.find({ username: { $ne: currentUsername } }, 'username').exec();
+        const users = await this.userModel.find({ username: { $ne: currentUsername } }, 'username profilePicture').exec();
         console.log("Filtered users:", users);
-        return users.map(user => user.username);
+        return users.map(user => ({
+            username: user.username,
+            profilePicture: user.profilePicture,
+        }));
     }
 };
 exports.AuthService = AuthService;

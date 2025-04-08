@@ -1,4 +1,4 @@
-import { Button, Drawer, Image } from "@mantine/core";
+import { Avatar, Button, Drawer, Image } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./user-profile.module.css";
 import SignUp from "../signUp/signUp";
@@ -6,7 +6,7 @@ import SignIn from "../signIn/signIn";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { useEffect, useState } from "react";
-import { login, logout } from "../../store/authSlice";
+import { logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
 import UserAvatar from "../UserAvatar/UserAvatar";
 import { FaUserAlt } from "react-icons/fa";
@@ -28,13 +28,20 @@ const UserProfile = () => {
     visitedSlopes,
     profilePicture,
   } = useSelector((state: RootState) => state.auth);
-  const [otherUsers, setOtherUsers] = useState<string[]>([]);
+  const [otherUsers, setOtherUsers] = useState<
+    { username: string; profilePicture?: string }[]
+  >([]);
+
   useEffect(() => {
     const fetchOtherUsers = async () => {
       if (!username) return;
 
       try {
-        const res = await fetch(`http://localhost:3000/auth/all?exclude=${encodeURIComponent(username)}`);
+        const res = await fetch(
+          `http://localhost:3000/auth/all?exclude=${encodeURIComponent(
+            username
+          )}`
+        );
         const data = await res.json();
         setOtherUsers(data);
       } catch (err) {
@@ -75,11 +82,17 @@ const UserProfile = () => {
       icon: "🏔️",
       value: favoriteSlopes.length,
       label: "Favorite Slopes",
-    }, // Adaugă numărul de favorite
-    { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Slopes" }, // Adaugă numărul de vizitate
+    },
+    {
+      id: 2,
+      icon: "🎿",
+      value: visitedSlopes.length,
+      label: "Visited Slopes",
+    },
     { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
     { id: 4, icon: "🏅", value: "5", label: "League Medals" },
   ];
+
   return (
     <>
       <Drawer
@@ -95,60 +108,60 @@ const UserProfile = () => {
       >
         <div className={classes.butttonsContainer}>
           {isAuthenticated ? (
-            <>
-              <div className={classes.userContainer}>
-                <UserAvatar username={username} />
-                <div className={classes.container}>
-                  <DayTrackForm />
-                  <h3 className={classes.title}>Statistics</h3>
-                  <div className={classes.grid}>
-                    {statsData.map((stat) => (
-                      <div key={stat.id} className={classes.statBox}>
-                        <span className={classes.icon}>{stat.icon}</span>
-                        <div className={classes.info}>
-                          <span className={classes.value}>{stat.value}</span>
-                          <span className={classes.label}>{stat.label}</span>
-                        </div>
+            <div className={classes.userContainer}>
+              <UserAvatar username={username} />
+              <div className={classes.container}>
+                <DayTrackForm />
+                <h3 className={classes.title}>Statistics</h3>
+                <div className={classes.grid}>
+                  {statsData.map((stat) => (
+                    <div key={stat.id} className={classes.statBox}>
+                      <span className={classes.icon}>{stat.icon}</span>
+                      <div className={classes.info}>
+                        <span className={classes.value}>{stat.value}</span>
+                        <span className={classes.label}>{stat.label}</span>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-                <div className={classes.container}>
-                  <h3 className={classes.title}>Achievements</h3>
-                  <div className={classes.imageContainer}>
-                    <Image src={FirstFavorite} className={classes.image} />
-                    <Image src={FirstSlope} className={classes.image} />
-                    <Image src={FirstReview} className={classes.image} />
-                  </div>
-                </div>
-                <div className={classes.container}>
-                  <h3 className={classes.title}>Friends</h3>
-                  <div className={classes.userList}>
-                    {otherUsers.length > 0 ? (
-                      otherUsers.map((user) => (
-                        <div key={user} className={classes.userCard}>
-                          <UserAvatar username={user} />
-                          <span>{user}</span>
-                        </div>
-                      ))
-                    ) : (
-                      <p>No other users found</p>
-                    )}
-                  </div>
-                </div>
-
-                <Button variant="default" onClick={handleLogout}>
-                  {EnDictionary.Logout}
-                </Button>
               </div>
-            </>
+              <div className={classes.container}>
+                <h3 className={classes.title}>Achievements</h3>
+                <div className={classes.imageContainer}>
+                  <Image src={FirstFavorite} className={classes.image} />
+                  <Image src={FirstSlope} className={classes.image} />
+                  <Image src={FirstReview} className={classes.image} />
+                </div>
+              </div>
+              <div className={classes.container}>
+                <h3 className={classes.title}>Friends</h3>
+                <div className={classes.userList}>
+                  {otherUsers.length > 0 ? (
+                    otherUsers.map((user) => (
+                      <div key={user.username} className={classes.userCard}>
+                        <Avatar
+                          src={user.profilePicture || undefined}
+                          alt={user.username}
+                          size="md"
+                          color="cyan"
+                        />
+                        <span>{user.username}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No other users found</p>
+                  )}
+                </div>
+              </div>
+              <Button variant="default" onClick={handleLogout}>
+                {EnDictionary.Logout}
+              </Button>
+            </div>
           ) : (
-            <>
-              <div className={classes.authContainer}>
-                <SignUp />
-                <SignIn />
-              </div>
-            </>
+            <div className={classes.authContainer}>
+              <SignUp />
+              <SignIn />
+            </div>
           )}
         </div>
       </Drawer>

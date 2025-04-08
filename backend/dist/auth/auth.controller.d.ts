@@ -16,7 +16,10 @@ export declare class AuthController {
         favoriteSlopes?: string[];
         visitedSlopes?: string[];
     }>;
-    getAllUsersExceptCurrent(exclude: string): Promise<string[]>;
+    getAllUsersExceptCurrent(exclude: string): Promise<{
+        username: string;
+        profilePicture?: string;
+    }[]>;
     updateUser(username: string, updateUserDto: UpdateUserDto): Promise<User>;
     getUser(username: string): Promise<User>;
     updateAvatar(username: string, profilePicture: string): Promise<{

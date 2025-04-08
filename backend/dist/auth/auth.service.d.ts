@@ -29,5 +29,8 @@ export declare class AuthService {
         username: string;
         profilePicture: string;
     }>;
-    getAllUsersExceptCurrent(currentUsername: string): Promise<string[]>;
+    getAllUsersExceptCurrent(currentUsername: string): Promise<{
+        username: string;
+        profilePicture?: string;
+    }[]>;
 }
