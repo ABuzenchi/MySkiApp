@@ -13,6 +13,9 @@ const DayTrackCalendar = () => {
   const [slopes, setSlopes] = useState<any[]>([]);
   const [times, setTimes] = useState<Record<string, number>>({});
   const [status, setStatus] = useState('');
+  const [isExistingLog, setIsExistingLog] = useState(false);
+
+  const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
   const daysOfWeek = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(selectedDate);
@@ -20,22 +23,64 @@ const DayTrackCalendar = () => {
     return d;
   });
 
-  const formatDate = (date: Date) => date.toISOString().split('T')[0];
-
   useEffect(() => {
-    fetchAllLocations().then(setLocations).catch((err) => setStatus(err.message));
+    fetchAllLocations()
+      .then((res) => setLocations(res))
+      .catch((err) => setStatus(err.message));
   }, []);
 
   useEffect(() => {
-    if (location) {
-      fetchSlopesByLocation(location)
-        .then((data) => {
-          setSlopes(data);
-          const emptyTimes = Object.fromEntries(data.map((s: any) => [s._id, 0]));
-          setTimes(emptyTimes);
-        })
-        .catch((err) => setStatus(err.message));
-    }
+    const fetchLogForDate = async () => {
+      if (!username) return;
+
+      setTimes({});
+      setSlopes([]);
+      setIsExistingLog(false);
+      setStatus('');
+
+      try {
+        const res = await fetch(`http://localhost:3000/day-track/${username}/${formatDate(selectedDate)}`);
+        if (!res.ok) throw new Error('Eroare la preluarea logului');
+
+        const data = await res.json();
+
+        if (data && data.slopes && data.slopes.length > 0) {
+          setIsExistingLog(true);
+
+          const loc = data.slopes[0].slopeId.location;
+          setLocation(loc);
+
+          const slopeList = await fetchSlopesByLocation(loc);
+          setSlopes(slopeList);
+
+          const loadedTimes = Object.fromEntries(
+            data.slopes.map((entry: any) => [entry.slopeId._id, entry.times])
+          );
+          setTimes(loadedTimes);
+        } else {
+          // zi liberă, userul alege stațiunea
+          setIsExistingLog(false);
+          setLocation('');
+        }
+      } catch (err: any) {
+        console.error(err);
+        setStatus('Nu s-au putut încărca datele zilei.');
+      }
+    };
+
+    fetchLogForDate();
+  }, [selectedDate]);
+
+  useEffect(() => {
+    if (!location || isExistingLog) return;
+
+    fetchSlopesByLocation(location)
+      .then((data) => {
+        setSlopes(data);
+        const emptyTimes = Object.fromEntries(data.map((s: any) => [s._id, 0]));
+        setTimes(emptyTimes);
+      })
+      .catch((err) => setStatus(err.message));
   }, [location]);
 
   const handleChangeTimes = (slopeId: string, value: number) => {
@@ -53,6 +98,7 @@ const DayTrackCalendar = () => {
         slopes: slopeData,
       });
       setStatus('✔️ Zi salvată cu succes!');
+      setIsExistingLog(true);
     } catch (err: any) {
       setStatus(err.message);
     }
@@ -72,17 +118,15 @@ const DayTrackCalendar = () => {
           style={{ marginTop: 10 }}
           value={location}
           onChange={(e) => setLocation(e.target.value)}
+          disabled={isExistingLog}
         >
           <option value="">Alege stațiunea</option>
           {locations.map((loc) => (
-            <option key={loc} value={loc}>
-              {loc}
-            </option>
+            <option key={loc} value={loc}>{loc}</option>
           ))}
         </select>
       </div>
 
-      {/* Weekday selector */}
       <div style={{
         display: 'flex',
         justifyContent: 'space-around',
@@ -113,24 +157,23 @@ const DayTrackCalendar = () => {
         })}
       </div>
 
-      {/* Schedule view */}
       <div style={{ padding: 16 }}>
-      {slopes
-  .filter((s) => times[s._id] > 0)
-  .map((s) => {
-    const count = times[s._id];
-    const totalDistance = s.length * count;
-    return (
-      <div key={s._id} style={{
-        borderLeft: '4px solid #7D83FF',
-        paddingLeft: 8,
-        marginBottom: 10,
-      }}>
-        <strong>🎿 {s.name}</strong> – {count} coborâri – {totalDistance}m
-      </div>
-    );
-  })
-}
+        {slopes
+          .filter((s) => times[s._id] > 0)
+          .map((s) => {
+            const count = times[s._id];
+            const totalDistance = s.length * count;
+            return (
+              <div key={s._id} style={{
+                borderLeft: '4px solid #7D83FF',
+                paddingLeft: 8,
+                marginBottom: 10,
+              }}>
+                <strong>🎿 {s.name}</strong> – {count} coborâri – {totalDistance}m
+              </div>
+            );
+          })
+        }
 
         {slopes.length > 0 && (
           <>
@@ -149,20 +192,31 @@ const DayTrackCalendar = () => {
                   value={times[slope._id] || 0}
                   onChange={(e) => handleChangeTimes(slope._id, Number(e.target.value))}
                   style={{ width: 50 }}
+                  disabled={isExistingLog}
                 />
               </div>
             ))}
-            <button onClick={handleSubmit} style={{
-              marginTop: 10,
-              padding: '8px 16px',
-              backgroundColor: '#4B6CB7',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 8,
-              cursor: 'pointer'
-            }}>
-              Salvează ziua
-            </button>
+
+            {!isExistingLog && (
+              <button onClick={handleSubmit} style={{
+                marginTop: 10,
+                padding: '8px 16px',
+                backgroundColor: '#4B6CB7',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 8,
+                cursor: 'pointer'
+              }}>
+                Salvează ziua
+              </button>
+            )}
+
+            {isExistingLog && (
+              <p style={{ marginTop: 10, color: '#777' }}>
+                📌 Ziua aceasta a fost deja înregistrată. Nu se poate modifica.
+              </p>
+            )}
+
             {status && <p style={{ marginTop: 8 }}>{status}</p>}
           </>
         )}

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { Slope } from 'src/slope/slope.schema';
 
 export type DayTrackDocument = DayTrack & Document;
 
@@ -13,7 +14,7 @@ export class DayTrack {
 
   @Prop([
     {
-      slopeId: { type: Types.ObjectId, ref: 'slopes', required: true },
+      slopeId: { type: Types.ObjectId, ref: Slope.name, required: true },
       times: { type: Number, required: true, min: 0 },
     },
   ])

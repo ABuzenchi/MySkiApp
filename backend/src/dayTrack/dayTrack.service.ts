@@ -46,4 +46,18 @@ export class DayTrackService {
       .populate('slopes.slopeId')
       .sort({ date: -1 });
   }
+
+  async getLogByDate(username: string, date: string) {
+    const user = await this.userModel.findOne({ username });
+    if (!user) throw new NotFoundException('User not found');
+  
+    const start = new Date(date);
+    const end = new Date(date);
+    end.setHours(23, 59, 59, 999);
+  
+    return this.dayTrackModel
+      .findOne({ user: user._id, date: { $gte: start, $lte: end } })
+      .populate('slopes.slopeId');
+  }
+  
 }
