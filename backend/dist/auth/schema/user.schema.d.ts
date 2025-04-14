@@ -1,3 +1,4 @@
+export type UserDocument = User & Document;
 export declare class User {
     username: string;
     email: string;

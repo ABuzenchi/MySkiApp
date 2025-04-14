@@ -8,6 +8,7 @@ import { ForumModule } from './forum/forum.module';
 import { ScraperModule } from './scraper/scraper.module';
 import { SlopeModule } from './slope/slope.module';
 import { DayTrackModule } from './dayTrack/dayTrack.module';
+import { FriendRequestModule } from './friend-request/friend-request.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { DayTrackModule } from './dayTrack/dayTrack.module';
     ForumModule,
     ScraperModule,
     SlopeModule,
-    DayTrackModule
+    DayTrackModule,
+    FriendRequestModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,56 +1,30 @@
-import { Avatar, Button, Drawer, Image } from "@mantine/core";
+import { useEffect, useState } from "react";
+import FeatureSlidingDrawer, { SlidingState } from "../FeatureSlidingDrawer/FeatureSlidingDrawer";
+import FeatureDrawer from "../FeatureDrawer/FeatureDrawer";
+import useDevice, { DeviceTypes } from "../../hooks/useDevice";
 import { useDisclosure } from "@mantine/hooks";
-import classes from "./user-profile.module.css";
-import SignUp from "../signUp/signUp";
-import SignIn from "../signIn/signIn";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
-import { useEffect, useState } from "react";
 import { logout } from "../../store/authSlice";
 import { jwtDecode } from "jwt-decode";
-import UserAvatar from "../UserAvatar/UserAvatar";
-import { FaUserAlt } from "react-icons/fa";
-import { EnDictionary } from "../../dictionaries/en";
-import UserAvatarImage from "../UserAvatar/UserAvatarImage/UserAvatarImage";
-import FirstFavorite from "../../assets/first-favorite.png";
-import FirstSlope from "../../assets/first-slope.png";
-import FirstReview from "../../assets/reviews.png";
 import { getUserByUsername } from "../../store/getUserByUsername";
-import DayTrackForm from "../day-track/day-track";
+import { FaUserAlt } from "react-icons/fa";
+import UserAvatarImage from "../UserAvatar/UserAvatarImage/UserAvatarImage";
+import UserProfileContent from "./userProfileContent/userProfileContent";
+import OtherUserProfileContent from "./otherUserProfile/otehrUserProfile";
+import { Button } from "@mantine/core";
 
 const UserProfile = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    username,
-    isAuthenticated,
-    favoriteSlopes,
-    visitedSlopes,
-    profilePicture,
-  } = useSelector((state: RootState) => state.auth);
-  const [otherUsers, setOtherUsers] = useState<
-    { username: string; profilePicture?: string }[]
-  >([]);
+  const { username, isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  useEffect(() => {
-    const fetchOtherUsers = async () => {
-      if (!username) return;
+  const [slidingState, setSlidingState] = useState(SlidingState.Hidden);
+  const { device } = useDevice();
+  const isMobile = device === DeviceTypes.Mobile || device === DeviceTypes.MobilePortrait;
 
-      try {
-        const res = await fetch(
-          `http://localhost:3000/auth/all?exclude=${encodeURIComponent(
-            username
-          )}`
-        );
-        const data = await res.json();
-        setOtherUsers(data);
-      } catch (err) {
-        console.error("Failed to fetch users", err);
-      }
-    };
-
-    fetchOtherUsers();
-  }, [username]);
+  const [viewMode, setViewMode] = useState<"self" | "other">("self");
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -70,107 +44,69 @@ const UserProfile = () => {
     }
   }, [dispatch]);
 
+  const openSelfProfile = () => {
+    setViewMode("self");
+    open();
+  };
+
+  const openUserProfile = (username: string) => {
+    setSelectedUser(username);
+    setViewMode("other");
+    open();
+    if (isMobile) setSlidingState(SlidingState.Full);
+  };
+
+  const handleClose = () => {
+    console.log("Meow");
+    close();
+    setSelectedUser(null);
+    setViewMode("self");
+    setSlidingState(SlidingState.Hidden);
+     console.log("🔒 handleClose triggered, opened=", opened);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     dispatch(logout());
     close();
   };
 
-  const statsData = [
-    {
-      id: 1,
-      icon: "🏔️",
-      value: favoriteSlopes.length,
-      label: "Favorite Slopes",
-    },
-    {
-      id: 2,
-      icon: "🎿",
-      value: visitedSlopes.length,
-      label: "Visited Slopes",
-    },
-    { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
-    { id: 4, icon: "🏅", value: "5", label: "League Medals" },
-  ];
+  const drawerTitle = viewMode === "self" ? "User Profile" : `Profile: ${selectedUser}`;
+
+  const Content = viewMode === "self"
+    ? <UserProfileContent openUserProfile={openUserProfile} onLogout={handleLogout}  />
+    : <OtherUserProfileContent username={selectedUser} />;
 
   return (
     <>
-      <Drawer
-        opened={opened}
-        onClose={close}
-        title="User Profile"
-        overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-        position="right"
-        classNames={{
-          root: classes.drawerRoot,
-          header: classes.drawerHeader,
-        }}
-      >
-        <div className={classes.butttonsContainer}>
-          {isAuthenticated ? (
-            <div className={classes.userContainer}>
-              <UserAvatar username={username} />
-              <div className={classes.container}>
-                <DayTrackForm />
-                <h3 className={classes.title}>Statistics</h3>
-                <div className={classes.grid}>
-                  {statsData.map((stat) => (
-                    <div key={stat.id} className={classes.statBox}>
-                      <span className={classes.icon}>{stat.icon}</span>
-                      <div className={classes.info}>
-                        <span className={classes.value}>{stat.value}</span>
-                        <span className={classes.label}>{stat.label}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className={classes.container}>
-                <h3 className={classes.title}>Achievements</h3>
-                <div className={classes.imageContainer}>
-                  <Image src={FirstFavorite} className={classes.image} />
-                  <Image src={FirstSlope} className={classes.image} />
-                  <Image src={FirstReview} className={classes.image} />
-                </div>
-              </div>
-              <div className={classes.container}>
-                <h3 className={classes.title}>Friends</h3>
-                <div className={classes.userList}>
-                  {otherUsers.length > 0 ? (
-                    otherUsers.map((user) => (
-                      <div key={user.username} className={classes.userCard}>
-                        <Avatar
-                          src={user.profilePicture || undefined}
-                          alt={user.username}
-                          size="md"
-                          color="cyan"
-                        />
-                        <span>{user.username}</span>
-                      </div>
-                    ))
-                  ) : (
-                    <p>No other users found</p>
-                  )}
-                </div>
-              </div>
-              <Button variant="default" onClick={handleLogout}>
-                {EnDictionary.Logout}
-              </Button>
-            </div>
-          ) : (
-            <div className={classes.authContainer}>
-              <SignUp />
-              <SignIn />
-            </div>
-          )}
-        </div>
-      </Drawer>
+      {isMobile ? (
+        <FeatureSlidingDrawer
+          onSlidingStateChanged={setSlidingState}
+          slidingState={slidingState}
+          opened={opened}
+          onFeaturesMenu={() => setSlidingState(SlidingState.Full)}
+          title={drawerTitle}
+          onClose={handleClose}
+        >
+          {Content}
+        </FeatureSlidingDrawer>
+      ) : (
+        <FeatureDrawer
+          opened={opened}
+          onClose={handleClose}
+          onFeaturesMenu={() => {}}
+          title={drawerTitle}
+        >
+          {Content}
+        </FeatureDrawer>
+      )}
 
-      <Button variant="transparent" color="#040024" onClick={open} size="lg">
+      <Button  style={{ position: "fixed", top: 16, right: 16, zIndex: 1 }} variant="transparent" color="#040024" onClick={openSelfProfile} size="lg">
         {isAuthenticated ? (
           <UserAvatarImage username={username} size="md" />
         ) : (
           <FaUserAlt />
+          
         )}
       </Button>
     </>

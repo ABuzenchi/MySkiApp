@@ -17,6 +17,7 @@ const forum_module_1 = require("./forum/forum.module");
 const scraper_module_1 = require("./scraper/scraper.module");
 const slope_module_1 = require("./slope/slope.module");
 const dayTrack_module_1 = require("./dayTrack/dayTrack.module");
+const friend_request_module_1 = require("./friend-request/friend-request.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -32,7 +33,8 @@ exports.AppModule = AppModule = __decorate([
             forum_module_1.ForumModule,
             scraper_module_1.ScraperModule,
             slope_module_1.SlopeModule,
-            dayTrack_module_1.DayTrackModule
+            dayTrack_module_1.DayTrackModule,
+            friend_request_module_1.FriendRequestModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
