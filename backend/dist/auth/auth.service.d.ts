@@ -19,7 +19,11 @@ export declare class AuthService {
         visitedSlopes?: string[];
     }>;
     updateUser(username: string, updateData: Partial<User>): Promise<User>;
-    getUserByUsername(username: string): Promise<User>;
+    getUserByUsername(username: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    } & {
+        __v: number;
+    }>;
     updateProfilePicture(username: string, profilePicture: string): Promise<{
         username: string;
         profilePicture: string;

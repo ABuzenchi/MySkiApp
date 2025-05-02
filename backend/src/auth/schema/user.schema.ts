@@ -1,4 +1,5 @@
 import { Schema,Prop, SchemaFactory } from "@nestjs/mongoose";
+import mongoose from "mongoose";
 
 export type UserDocument = User & Document;
 @Schema({
@@ -23,6 +24,9 @@ export class User{
 
     @Prop()
     visitedSlopes:string[]
+
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }], default: [] })
+    friends: mongoose.Types.ObjectId[];
 }
 
 

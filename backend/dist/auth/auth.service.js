@@ -77,7 +77,9 @@ let AuthService = class AuthService {
         return this.userModel.findOneAndUpdate({ username }, { $set: updateData }, { new: true });
     }
     async getUserByUsername(username) {
-        return this.userModel.findOne({ username });
+        return this.userModel
+            .findOne({ username })
+            .populate('friends', 'username profilePicture');
     }
     async updateProfilePicture(username, profilePicture) {
         const user = await this.userModel.findOneAndUpdate({ username }, { profilePicture }, { new: true });

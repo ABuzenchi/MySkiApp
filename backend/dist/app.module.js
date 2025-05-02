@@ -34,7 +34,7 @@ exports.AppModule = AppModule = __decorate([
             scraper_module_1.ScraperModule,
             slope_module_1.SlopeModule,
             dayTrack_module_1.DayTrackModule,
-            friend_request_module_1.FriendRequestModule
+            friend_request_module_1.FriendRequestModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

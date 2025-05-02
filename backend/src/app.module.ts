@@ -22,7 +22,7 @@ import { FriendRequestModule } from './friend-request/friend-request.module';
     ScraperModule,
     SlopeModule,
     DayTrackModule,
-    FriendRequestModule
+    FriendRequestModule,
   ],
   controllers: [AppController],
   providers: [AppService],

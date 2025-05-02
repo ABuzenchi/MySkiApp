@@ -98,8 +98,10 @@ export class AuthService {
     );
   }
 
-  async getUserByUsername(username: string): Promise<User> {
-    return this.userModel.findOne({ username });
+  async getUserByUsername(username: string) {
+    return this.userModel
+      .findOne({ username })
+      .populate('friends', 'username profilePicture');
   }
 
   async updateProfilePicture(username: string, profilePicture: string) {

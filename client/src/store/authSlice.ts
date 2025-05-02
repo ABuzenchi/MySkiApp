@@ -3,6 +3,7 @@ import { updateSlopes } from "./updateSlopes";
 import { getUserByUsername } from "./getUserByUsername";
 
 interface AuthState {
+  id:string|null;
   username: string | null;
   isAuthenticated: boolean;
   profilePicture: string | null;
@@ -11,6 +12,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
+  id:null,
   username: null,
   isAuthenticated: false,
   profilePicture: null,
@@ -23,11 +25,13 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login(state, action) {
+      state.id = action.payload.id || null;
       state.username = action.payload.username;
       state.isAuthenticated = true;
       state.profilePicture = action.payload.avatar || null;
     },
     logout(state) {
+      state.id = null;
       state.username = null;
       state.isAuthenticated = false;
       state.profilePicture = null;
@@ -55,6 +59,7 @@ const authSlice = createSlice({
       state.visitedSlopes = action.payload.visitedSlopes || [];
     });
     builder.addCase(getUserByUsername.fulfilled, (state, action) => {
+      state.id = action.payload._id || null;
       state.username = action.payload.username;
       state.profilePicture = action.payload.profilePicture || null;
       state.favoriteSlopes = action.payload.favoriteSlopes || [];
