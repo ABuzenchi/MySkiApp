@@ -18,6 +18,13 @@ interface Props {
   onLogout: () => void;
 }
 
+interface ExtraStats {
+  totalRuns: number;
+  topSlopeName: string | null;
+  activeDays: number;
+  averageKm: number;
+}
+
 const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -33,6 +40,34 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
   const [pendingRequests, setPendingRequests] = useState<any[]>([]);
   const [prediction, setPrediction] = useState<any | null>(null);
   const [suggestedSlopes, setSuggestedSlopes] = useState<any[]>([]);
+  const [extraStats, setExtraStats] = useState<ExtraStats | null>(null);
+
+  const computeExtraStats = (dayTracks: any[], slopes: any[]) => {
+    let totalRuns = 0;
+    const slopeCounter: Record<string, number> = {};
+
+    for (const day of dayTracks) {
+      for (const entry of day.slopes) {
+        if (!entry.slopeId) continue;
+        const slopeId = typeof entry.slopeId === "object" ? entry.slopeId._id : entry.slopeId;
+        slopeCounter[slopeId] = (slopeCounter[slopeId] || 0) + entry.times;
+        totalRuns += entry.times;
+      }
+    }
+
+    const topSlopeId = Object.entries(slopeCounter).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+    const topSlopeName = slopes.find((s) => s._id === topSlopeId)?.name || null;
+    const totalKm = dayTracks.reduce((sum, d) => sum + (d.totalDistance || 0), 0);
+    const activeDays = dayTracks.length;
+    const averageKm = activeDays > 0 ? totalKm / activeDays : 0;
+
+    return {
+      totalRuns,
+      topSlopeName,
+      activeDays,
+      averageKm: Math.round(averageKm),
+    };
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,11 +79,8 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
           fetch(`http://localhost:3000/friend-requests/pending/${userId}`),
         ]);
 
-        const users = await usersRes.json();
-        const pending = await pendingRes.json();
-
-        setOtherUsers(users);
-        setPendingRequests(pending);
+        setOtherUsers(await usersRes.json());
+        setPendingRequests(await pendingRes.json());
       } catch (err) {
         console.error("Failed to fetch users or pending requests", err);
       }
@@ -61,26 +93,24 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
     const fetchInsights = async () => {
       if (!username) return;
       try {
-        // 1. Fetch DayTrack și Slopes
         const [dayTrackRes, slopesRes] = await Promise.all([
           fetch(`http://localhost:3000/day-track/${username}`),
           fetch(`http://localhost:3000/slopes`),
         ]);
-  
+
         const dayTracksRaw = await dayTrackRes.json();
         const slopes = await slopesRes.json();
-  
-        // 2. Formatează datele ca să respecte schema cerută de FastAPI
+
         const formattedTracks = dayTracksRaw.map((track: any) => ({
           date: track.date,
           slopes: track.slopes
-            .filter((s: any) => s.slopeId) // evită slopeId null
+            .filter((s: any) => s.slopeId)
             .map((s: any) => ({
               slopeId: typeof s.slopeId === "object" ? s.slopeId._id : s.slopeId,
               times: s.times,
             })),
         }));
-  
+
         const trackData = {
           dayTracks: formattedTracks,
           slopesInfo: slopes.map((s: any) => ({
@@ -91,25 +121,22 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
             difficulty: s.difficulty,
           })),
         };
-        
-        
-  
-        // 3. Trimitere către FastAPI (predict și suggest)
+
         const [predictionResult, suggestionsResult] = await Promise.all([
           fetchPrediction(trackData),
           fetchSuggestions(trackData),
         ]);
-  
+
         setPrediction(predictionResult);
         setSuggestedSlopes(suggestionsResult.suggestedSlopes || []);
+        setExtraStats(computeExtraStats(dayTracksRaw, slopes));
       } catch (err) {
         console.error("Error fetching prediction/suggestions", err);
       }
     };
-  
+
     fetchInsights();
   }, [username]);
-  
 
   const acceptRequest = async (requestId: string) => {
     await fetch(`http://localhost:3000/friend-requests/accept/${requestId}`, {
@@ -130,6 +157,19 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
     { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Slopes" },
     { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
     { id: 4, icon: "🏅", value: "5", label: "League Medals" },
+    ...(extraStats
+      ? [
+          { id: 5, icon: "📅", value: extraStats.activeDays, label: "Active Days" },
+          { id: 6, icon: "🔁", value: extraStats.totalRuns, label: "Total Runs" },
+          { id: 7, icon: "📏", value: `${extraStats.averageKm} km`, label: "Avg per Day" },
+          {
+            id: 8,
+            icon: "🏔️",
+            value: extraStats.topSlopeName || "–",
+            label: "Top Slope",
+          },
+        ]
+      : []),
   ];
 
   return (
