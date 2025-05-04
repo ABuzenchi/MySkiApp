@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
@@ -30,6 +38,13 @@ export class AuthController {
     console.log('Exclude username primit:', exclude);
     return this.authService.getAllUsersExceptCurrent(exclude);
   }
+
+  @Get('all-suggested')
+async getSuggestedUsers(@Query('userId') userId: string) {
+  
+  return this.authService.getSuggestedUsers(userId); // ✅ return direct
+}
+
 
   @Patch('/update/:username')
   updateUser(

@@ -17,13 +17,15 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("./schema/user.schema");
 const mongoose_2 = require("mongoose");
+const friend_request_schema_1 = require("../friend-request/friend-request.schema");
 const bcrypt = require("bcryptjs");
 const jwt_1 = require("@nestjs/jwt");
 const google_auth_library_1 = require("google-auth-library");
 const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 let AuthService = class AuthService {
-    constructor(userModel, jwtService) {
+    constructor(userModel, friendRequestModel, jwtService) {
         this.userModel = userModel;
+        this.friendRequestModel = friendRequestModel;
         this.jwtService = jwtService;
     }
     async signUp(signUpDto) {
@@ -114,10 +116,35 @@ let AuthService = class AuthService {
         };
     }
     async getAllUsersExceptCurrent(currentUsername) {
-        console.log("Excluding user:", currentUsername);
-        const users = await this.userModel.find({ username: { $ne: currentUsername } }, 'username profilePicture').exec();
-        console.log("Filtered users:", users);
-        return users.map(user => ({
+        console.log('Excluding user:', currentUsername);
+        const users = await this.userModel
+            .find({ username: { $ne: currentUsername } }, 'username profilePicture')
+            .exec();
+        console.log('Filtered users:', users);
+        return users.map((user) => ({
+            username: user.username,
+            profilePicture: user.profilePicture,
+        }));
+    }
+    async getSuggestedUsers(userId) {
+        const user = await this.userModel.findById(userId).populate('friends');
+        const friendsIds = user.friends.map((f) => f._id.toString());
+        const pendingRequests = await this.friendRequestModel.find({
+            $or: [{ sender: userId }, { receiver: userId }],
+            status: 'pending',
+        });
+        const pendingIds = new Set(pendingRequests.flatMap((req) => [
+            req.sender.toString(),
+            req.receiver.toString(),
+        ]));
+        const excludeIds = new Set([userId, ...friendsIds, ...pendingIds]);
+        const suggestedUsers = await this.userModel
+            .find({
+            _id: { $nin: Array.from(excludeIds) },
+        })
+            .select('username profilePicture');
+        console.log('Returning suggested users:', suggestedUsers.map(u => u.username));
+        return suggestedUsers.map((user) => ({
             username: user.username,
             profilePicture: user.profilePicture,
         }));
@@ -127,7 +154,9 @@ exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __param(1, (0, mongoose_1.InjectModel)(friend_request_schema_1.FriendRequest.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model,
         jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

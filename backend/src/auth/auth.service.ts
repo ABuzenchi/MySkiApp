@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './schema/user.schema';
 import { Model } from 'mongoose';
+import { FriendRequest, FriendRequestDocument } from '../friend-request/friend-request.schema';
 
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
@@ -16,6 +17,8 @@ export class AuthService {
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
+    @InjectModel(FriendRequest.name)
+    private friendRequestModel: Model<FriendRequestDocument>,
     private jwtService: JwtService,
   ) {}
 
@@ -54,9 +57,7 @@ export class AuthService {
     }
   }
 
-  async signIn(
-    signInDto: SignInDto,
-  ): Promise<{
+  async signIn(signInDto: SignInDto): Promise<{
     token: string;
     username: string;
     profilePicture?: string;
@@ -94,7 +95,7 @@ export class AuthService {
     return this.userModel.findOneAndUpdate(
       { username },
       { $set: updateData }, // <--- Asta e important
-      { new: true }
+      { new: true },
     );
   }
 
@@ -108,7 +109,7 @@ export class AuthService {
     const user = await this.userModel.findOneAndUpdate(
       { username },
       { profilePicture },
-      { new: true }
+      { new: true },
     );
     return { username: user.username, profilePicture: user.profilePicture };
   }
@@ -118,15 +119,15 @@ export class AuthService {
       idToken: token,
       audience: process.env.GOOGLE_CLIENT_ID,
     });
-  
+
     const payload = ticket.getPayload();
-  
+
     if (!payload || !payload.email) {
       throw new UnauthorizedException('Google token is invalid');
     }
-  
+
     let user = await this.userModel.findOne({ email: payload.email });
-  
+
     if (!user) {
       user = await this.userModel.create({
         username: payload.name,
@@ -135,34 +136,66 @@ export class AuthService {
         password: await bcrypt.hash('google-auth-placeholder', 10),
       });
     }
-  
+
     const jwt = this.jwtService.sign({
       id: user._id,
       username: user.username,
     });
-  
+
     return {
       token: jwt,
       username: user.username,
       profilePicture: user.profilePicture,
     };
   }
-  async getAllUsersExceptCurrent(currentUsername: string): Promise<{ username: string; profilePicture?: string }[]> {
-    console.log("Excluding user:", currentUsername);
-  
-    const users = await this.userModel.find(
-      { username: { $ne: currentUsername } },
-      'username profilePicture'
-    ).exec();
-  
-    console.log("Filtered users:", users);
-  
-    return users.map(user => ({
+  async getAllUsersExceptCurrent(
+    currentUsername: string,
+  ): Promise<{ username: string; profilePicture?: string }[]> {
+    console.log('Excluding user:', currentUsername);
+
+    const users = await this.userModel
+      .find({ username: { $ne: currentUsername } }, 'username profilePicture')
+      .exec();
+
+    console.log('Filtered users:', users);
+
+    return users.map((user) => ({
       username: user.username,
       profilePicture: user.profilePicture,
     }));
   }
-  
-  
-  
+
+  async getSuggestedUsers(
+    userId: string,
+  ): Promise<{ username: string; profilePicture?: string }[]> {
+    const user = await this.userModel.findById(userId).populate('friends');
+    const friendsIds = user.friends.map((f) => f._id.toString());
+
+    const pendingRequests = await this.friendRequestModel.find({
+      $or: [{ sender: userId }, { receiver: userId }],
+      status: 'pending',
+    });
+
+    const pendingIds = new Set(
+      pendingRequests.flatMap((req) => [
+        req.sender.toString(),
+        req.receiver.toString(),
+      ]),
+    );
+
+    const excludeIds = new Set([userId, ...friendsIds, ...pendingIds]);
+
+    const suggestedUsers = await this.userModel
+      .find({
+        _id: { $nin: Array.from(excludeIds) },
+      })
+      .select('username profilePicture');
+      console.log('Returning suggested users:', suggestedUsers.map(u => u.username));
+
+
+    return suggestedUsers.map((user) => ({
+      username: user.username,
+      profilePicture: user.profilePicture,
+    }));
+  }
 }

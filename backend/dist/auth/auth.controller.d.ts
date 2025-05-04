@@ -20,6 +20,10 @@ export declare class AuthController {
         username: string;
         profilePicture?: string;
     }[]>;
+    getSuggestedUsers(userId: string): Promise<{
+        username: string;
+        profilePicture?: string;
+    }[]>;
     updateUser(username: string, updateUserDto: UpdateUserDto): Promise<User>;
     getUser(username: string): Promise<User>;
     updateAvatar(username: string, profilePicture: string): Promise<{

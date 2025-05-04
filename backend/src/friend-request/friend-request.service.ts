@@ -44,8 +44,13 @@ export class FriendRequestService {
     request.status = 'accepted';
     await request.save();
 
-    await this.userModel.findByIdAndUpdate(request.sender, { $addToSet: { friends: request.receiver } });
-    await this.userModel.findByIdAndUpdate(request.receiver, { $addToSet: { friends: request.sender } });
+    await this.userModel.findByIdAndUpdate(request.sender, {
+      $addToSet: { friends: request.receiver },
+    });
+    await this.userModel.findByIdAndUpdate(request.receiver, {
+      $addToSet: { friends: request.sender },
+    });
+    
 
     return request;
   }

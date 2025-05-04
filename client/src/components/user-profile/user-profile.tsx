@@ -75,7 +75,8 @@ const UserProfile = () => {
 
   const Content = viewMode === "self"
     ? <UserProfileContent openUserProfile={openUserProfile} onLogout={handleLogout}  />
-    : <OtherUserProfileContent username={selectedUser} />;
+    :  <OtherUserProfileContent username={selectedUser} openUserProfile={openUserProfile} />
+    ;
 
   return (
     <>

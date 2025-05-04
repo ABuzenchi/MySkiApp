@@ -33,6 +33,9 @@ let AuthController = class AuthController {
         console.log('Exclude username primit:', exclude);
         return this.authService.getAllUsersExceptCurrent(exclude);
     }
+    async getSuggestedUsers(userId) {
+        return this.authService.getSuggestedUsers(userId);
+    }
     updateUser(username, updateUserDto) {
         return this.authService.updateUser(username, updateUserDto);
     }
@@ -71,6 +74,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getAllUsersExceptCurrent", null);
+__decorate([
+    (0, common_1.Get)('all-suggested'),
+    __param(0, (0, common_1.Query)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "getSuggestedUsers", null);
 __decorate([
     (0, common_1.Patch)('/update/:username'),
     __param(0, (0, common_1.Param)('username')),

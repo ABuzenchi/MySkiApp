@@ -15,6 +15,7 @@ const user_schema_1 = require("./schema/user.schema");
 const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
+const friend_request_schema_1 = require("../friend-request/friend-request.schema");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -33,7 +34,10 @@ exports.AuthModule = AuthModule = __decorate([
                     };
                 }
             }),
-            mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_schema_1.UserSchema }])
+            mongoose_1.MongooseModule.forFeature([
+                { name: 'User', schema: user_schema_1.UserSchema },
+                { name: friend_request_schema_1.FriendRequest.name, schema: friend_request_schema_1.FriendRequestSchema },
+            ])
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService]

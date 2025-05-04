@@ -1,12 +1,14 @@
 import { User } from './schema/user.schema';
 import { Model } from 'mongoose';
+import { FriendRequestDocument } from '../friend-request/friend-request.schema';
 import { JwtService } from '@nestjs/jwt';
 import { SignUpDto } from './dto/signUp.dto';
 import { SignInDto } from './dto/signIn.dto';
 export declare class AuthService {
     private userModel;
+    private friendRequestModel;
     private jwtService;
-    constructor(userModel: Model<User>, jwtService: JwtService);
+    constructor(userModel: Model<User>, friendRequestModel: Model<FriendRequestDocument>, jwtService: JwtService);
     signUp(signUpDto: SignUpDto): Promise<{
         token: string;
         username: string;
@@ -34,6 +36,10 @@ export declare class AuthService {
         profilePicture: string;
     }>;
     getAllUsersExceptCurrent(currentUsername: string): Promise<{
+        username: string;
+        profilePicture?: string;
+    }[]>;
+    getSuggestedUsers(userId: string): Promise<{
         username: string;
         profilePicture?: string;
     }[]>;
