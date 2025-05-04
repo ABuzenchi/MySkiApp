@@ -3,3 +3,47 @@
   flex-direction: row;
   gap: 10px;
 }
+
+.slopeTable {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slopeTable h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.slopeTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.slopeTable th,
+.slopeTable td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.slopeTable th {
+  background-color: #f4f4f4;
+}
+
+.slopeTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.slopeTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
