@@ -32,33 +32,39 @@ const DayTrackCalendar = () => {
   useEffect(() => {
     const fetchLogForDate = async () => {
       if (!username) return;
-
+    
       setTimes({});
       setSlopes([]);
       setIsExistingLog(false);
       setStatus('');
-
+    
       try {
         const res = await fetch(`http://localhost:3000/day-track/${username}/${formatDate(selectedDate)}`);
+    
+        if (res.status === 204) {
+          // zi fără date, log nul
+          setIsExistingLog(false);
+          return;
+        }
+    
         if (!res.ok) throw new Error('Eroare la preluarea logului');
-
+    
         const data = await res.json();
-
+    
         if (data && data.slopes && data.slopes.length > 0) {
           setIsExistingLog(true);
-
+    
           const loc = data.slopes[0].slopeId.location;
           setLocation(loc);
-
+    
           const slopeList = await fetchSlopesByLocation(loc);
           setSlopes(slopeList);
-
+    
           const loadedTimes = Object.fromEntries(
             data.slopes.map((entry: any) => [entry.slopeId._id, entry.times])
           );
           setTimes(loadedTimes);
         } else {
-          // zi liberă, userul alege stațiunea
           setIsExistingLog(false);
           setLocation('');
         }
@@ -67,6 +73,7 @@ const DayTrackCalendar = () => {
         setStatus('Nu s-au putut încărca datele zilei.');
       }
     };
+    
 
     fetchLogForDate();
   }, [selectedDate]);

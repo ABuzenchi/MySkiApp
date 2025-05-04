@@ -10,6 +10,7 @@ import { SlopeModule } from './slope/slope.module';
 import { DayTrackModule } from './dayTrack/dayTrack.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { SuggestionsModule } from './suggestions/suggestions.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     SlopeModule,
     DayTrackModule,
     FriendRequestModule,
+    SuggestionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

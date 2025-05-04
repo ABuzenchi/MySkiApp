@@ -1,5 +1,3 @@
-// ✅ Updated: UserProfileContent.tsx with pending friend requests section
-
 import { useEffect, useState } from "react";
 import { Avatar, Button, Image, Group } from "@mantine/core";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,6 +11,7 @@ import DayTrackForm from "../../day-track/day-track";
 import classes from "../user-profile.module.css";
 import SignUp from "../../signUp/signUp";
 import SignIn from "../../signIn/signIn";
+import { fetchPrediction, fetchSuggestions } from "../../../api/suggestionsApi.ts";
 
 interface Props {
   openUserProfile: (username: string) => void;
@@ -32,10 +31,13 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
 
   const [otherUsers, setOtherUsers] = useState<{ username: string; profilePicture?: string }[]>([]);
   const [pendingRequests, setPendingRequests] = useState<any[]>([]);
+  const [prediction, setPrediction] = useState<any | null>(null);
+  const [suggestedSlopes, setSuggestedSlopes] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!username || !userId) return;
+
       try {
         const [usersRes, pendingRes] = await Promise.all([
           fetch(`http://localhost:3000/auth/all?exclude=${encodeURIComponent(username)}`),
@@ -55,6 +57,60 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
     fetchData();
   }, [username, userId]);
 
+  useEffect(() => {
+    const fetchInsights = async () => {
+      if (!username) return;
+      try {
+        // 1. Fetch DayTrack și Slopes
+        const [dayTrackRes, slopesRes] = await Promise.all([
+          fetch(`http://localhost:3000/day-track/${username}`),
+          fetch(`http://localhost:3000/slopes`),
+        ]);
+  
+        const dayTracksRaw = await dayTrackRes.json();
+        const slopes = await slopesRes.json();
+  
+        // 2. Formatează datele ca să respecte schema cerută de FastAPI
+        const formattedTracks = dayTracksRaw.map((track: any) => ({
+          date: track.date,
+          slopes: track.slopes
+            .filter((s: any) => s.slopeId) // evită slopeId null
+            .map((s: any) => ({
+              slopeId: typeof s.slopeId === "object" ? s.slopeId._id : s.slopeId,
+              times: s.times,
+            })),
+        }));
+  
+        const trackData = {
+          dayTracks: formattedTracks,
+          slopesInfo: slopes.map((s: any) => ({
+            id: s._id,
+            name: s.name,
+            location: s.location,
+            length: s.length,
+            difficulty: s.difficulty,
+          })),
+        };
+        
+        
+  
+        // 3. Trimitere către FastAPI (predict și suggest)
+        const [predictionResult, suggestionsResult] = await Promise.all([
+          fetchPrediction(trackData),
+          fetchSuggestions(trackData),
+        ]);
+  
+        setPrediction(predictionResult);
+        setSuggestedSlopes(suggestionsResult.suggestedSlopes || []);
+      } catch (err) {
+        console.error("Error fetching prediction/suggestions", err);
+      }
+    };
+  
+    fetchInsights();
+  }, [username]);
+  
+
   const acceptRequest = async (requestId: string) => {
     await fetch(`http://localhost:3000/friend-requests/accept/${requestId}`, {
       method: "POST",
@@ -70,10 +126,10 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
   };
 
   const statsData = [
-    { id: 1, icon: "\ud83c\udfd4\ufe0f", value: favoriteSlopes.length, label: "Favorite Slopes" },
-    { id: 2, icon: "\ud83c\udfbf", value: visitedSlopes.length, label: "Visited Slopes" },
-    { id: 3, icon: "\ud83d\udd37", value: "Sapphire", label: "Current League" },
-    { id: 4, icon: "\ud83c\udfc5", value: "5", label: "League Medals" },
+    { id: 1, icon: "🏔️", value: favoriteSlopes.length, label: "Favorite Slopes" },
+    { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Slopes" },
+    { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
+    { id: 4, icon: "🏅", value: "5", label: "League Medals" },
   ];
 
   return (
@@ -96,6 +152,26 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className={classes.container}>
+            <h3 className={classes.title}>AI Insights</h3>
+            {prediction && (
+              <div className={classes.predictionBox}>
+                <p><strong>Tracked:</strong> {Math.round(prediction.totalLogged / 1000)} km</p>
+                <p><strong>Estimated Season:</strong> {Math.round(prediction.seasonPrediction / 1000)} km</p>
+              </div>
+            )}
+            {suggestedSlopes.length > 0 && (
+              <div className={classes.userList}>
+                <h4>Recommended Slopes:</h4>
+                {suggestedSlopes.map((slope) => (
+                  <div key={slope.id} className={classes.userCard}>
+                    <p>{slope.name} – {slope.location} ({slope.difficulty})</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className={classes.container}>
