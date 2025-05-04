@@ -18,6 +18,7 @@ const scraper_module_1 = require("./scraper/scraper.module");
 const slope_module_1 = require("./slope/slope.module");
 const dayTrack_module_1 = require("./dayTrack/dayTrack.module");
 const friend_request_module_1 = require("./friend-request/friend-request.module");
+const schedule_1 = require("@nestjs/schedule");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -29,6 +30,7 @@ exports.AppModule = AppModule = __decorate([
                 isGlobal: true,
             }),
             mongoose_1.MongooseModule.forRoot(process.env.MONGO),
+            schedule_1.ScheduleModule.forRoot(),
             auth_module_1.AuthModule,
             forum_module_1.ForumModule,
             scraper_module_1.ScraperModule,

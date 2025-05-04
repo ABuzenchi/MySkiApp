@@ -9,6 +9,7 @@ import { ScraperModule } from './scraper/scraper.module';
 import { SlopeModule } from './slope/slope.module';
 import { DayTrackModule } from './dayTrack/dayTrack.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { FriendRequestModule } from './friend-request/friend-request.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.MONGO),
+    ScheduleModule.forRoot(),
     AuthModule,
     ForumModule,
     ScraperModule,
