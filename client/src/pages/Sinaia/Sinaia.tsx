@@ -9,6 +9,7 @@ import sinaiaPicture03 from "../../assets/sinaia-picture03.jpg";
 import sinaiaPicture04 from "../../assets/sinaia-picture04.jpg";
 import { Slope } from "../../interfaces/slope.interface";
 import SlopeStatus from "../../components/slope-status/slope-status";
+import SlopeFilter from "../../components/slope-filter/slope-filter";
 
 const images = [
   sinaiaMap,
@@ -20,7 +21,6 @@ const images = [
 
 export default function Sinaia() {
   const [slopes, setSlopes] = useState<Slope[]>([]);
- 
 
   useEffect(() => {
     fetch("http://localhost:3000/slopes/location/Sinaia")
@@ -29,42 +29,16 @@ export default function Sinaia() {
       .catch((error) => console.error("Eroare la preluarea datelor: ", error));
   }, []);
 
-  
   return (
     <>
-      <SlopeStatus name="Sinaia"/>
+      <SlopeStatus name="Sinaia" />
       <div className={classes.container}>
         <Weather location="Sinaia" />
         <CarouselPhoto images={images} />
       </div>
 
       <div className={classes.slopeTable}>
-        <table>
-          <thead>
-            <tr>
-              <th>Nume</th>
-              <th>Lungime (m)</th>
-              <th>Dificultate</th>
-              <th>Lățime (m)</th>
-              <th>Altitudine Bază (m)</th>
-              <th>Altitudine Vârf (m)</th>
-              <th>Stare</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slopes.map((slope) => (
-              <tr key={slope._id}>
-                <td>{slope.name}</td>
-                <td>{slope.length}</td>
-                <td>{slope.difficulty}</td>
-                <td>{slope.width}</td>
-                <td>{slope.baseElevation}</td>
-                <td>{slope.topElevation}</td>
-                <td>{slope.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <SlopeFilter slopes={slopes} />
       </div>
 
       <div>

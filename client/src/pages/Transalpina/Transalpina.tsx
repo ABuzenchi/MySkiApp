@@ -9,6 +9,7 @@ import transalpinaPicture04 from "../../assets/transalpina-picture04.png";
 import SlopeStatus from "../../components/slope-status/slope-status";
 import { useEffect, useState } from "react";
 import { Slope } from "../../interfaces/slope.interface";
+import SlopeFilter from "../../components/slope-filter/slope-filter";
 const images = [
   transalpinaMap,
   transalpinaPicture01,
@@ -34,32 +35,7 @@ export default function Transalpina() {
         <CarouselPhoto images={images} />
       </div>
       <div className={classes.slopeTable}>
-        <table>
-          <thead>
-            <tr>
-              <th>Nume</th>
-              <th>Lungime (m)</th>
-              <th>Dificultate</th>
-              <th>Lățime (m)</th>
-              <th>Altitudine Bază (m)</th>
-              <th>Altitudine Vârf (m)</th>
-              <th>Stare</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slopes.map((slope) => (
-              <tr key={slope._id}>
-                <td>{slope.name}</td>
-                <td>{slope.length}</td>
-                <td>{slope.difficulty}</td>
-                <td>{slope.width}</td>
-                <td>{slope.baseElevation}</td>
-                <td>{slope.topElevation}</td>
-                <td>{slope.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <SlopeFilter slopes={slopes} />
       </div>
       <div>
       <iframe width="972" height="546" src="https://www.youtube.com/embed/S4-J13OMpRA" title="🔴 LIVE | Webcam Ski Resort Transalpina | Starea Pârtiilor în Timp Real" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>

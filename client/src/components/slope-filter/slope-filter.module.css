@@ -1,0 +1,28 @@
+.filterContainer {
+    margin: 2rem 0;
+  }
+  
+  .controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .controls select,
+  .controls input {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .slopeTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .slopeTable th,
+  .slopeTable td {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  

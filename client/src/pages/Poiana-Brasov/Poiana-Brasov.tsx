@@ -11,6 +11,7 @@ import MapSearch from "../../components/map/map-search";
 import SlopeStatus from "../../components/slope-status/slope-status";
 import { useEffect, useState } from "react";
 import { Slope } from "../../interfaces/slope.interface";
+import SlopeFilter from "../../components/slope-filter/slope-filter";
 
 const images = [
   PostavaruMap,
@@ -38,32 +39,7 @@ const PoianaBrasov = () => {
         <CarouselPhoto images={images} />
       </div>
       <div className={classes.slopeTable}>
-        <table>
-          <thead>
-            <tr>
-              <th>Nume</th>
-              <th>Lungime (m)</th>
-              <th>Dificultate</th>
-              <th>Lățime (m)</th>
-              <th>Altitudine Bază (m)</th>
-              <th>Altitudine Vârf (m)</th>
-              <th>Stare</th>
-            </tr>
-          </thead>
-          <tbody>
-            {slopes.map((slope) => (
-              <tr key={slope._id}>
-                <td>{slope.name}</td>
-                <td>{slope.length}</td>
-                <td>{slope.difficulty}</td>
-                <td>{slope.width}</td>
-                <td>{slope.baseElevation}</td>
-                <td>{slope.topElevation}</td>
-                <td>{slope.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <SlopeFilter slopes={slopes} />
       </div>
       <RatingResort></RatingResort>
       <div>
