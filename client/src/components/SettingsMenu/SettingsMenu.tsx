@@ -48,7 +48,9 @@ const SettingsMenu = () => {
         opened={opened}
         onClose={() => setOpened(false)}
         title={EnDictionary.ProfileSettings}
-        withinPortal={false}
+        overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
+        withinPortal={true}
+        centered
       >
         <div>
           <ImageUploader onImageSelect={handleImageSelect} />
