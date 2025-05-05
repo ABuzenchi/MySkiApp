@@ -36,6 +36,9 @@ let AuthController = class AuthController {
     async getSuggestedUsers(userId) {
         return this.authService.getSuggestedUsers(userId);
     }
+    async verifyCredentials(username, password) {
+        return this.authService.verifyCredentials(username, password);
+    }
     updateUser(username, updateUserDto) {
         return this.authService.updateUser(username, updateUserDto);
     }
@@ -81,6 +84,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getSuggestedUsers", null);
+__decorate([
+    (0, common_1.Post)('/verify'),
+    __param(0, (0, common_1.Body)('username')),
+    __param(1, (0, common_1.Body)('password')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "verifyCredentials", null);
 __decorate([
     (0, common_1.Patch)('/update/:username'),
     __param(0, (0, common_1.Param)('username')),

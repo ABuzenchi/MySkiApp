@@ -92,12 +92,27 @@ export class AuthService {
   }
   async updateUser(username: string, updateData: Partial<User>): Promise<User> {
     console.log(`Updating ${username} with`, updateData);
+  
+    // 🔐 Hash-uiește parola dacă e prezentă
+    if (updateData.password) {
+      updateData.password = await bcrypt.hash(updateData.password, 10);
+    }
+  
+    // ⚠️ (Opțional) Verifică dacă username-ul nou este deja luat
+    if (updateData.username) {
+      const existingUser = await this.userModel.findOne({ username: updateData.username });
+      if (existingUser && existingUser.username !== username) {
+        throw new Error("Username already taken");
+      }
+    }
+  
     return this.userModel.findOneAndUpdate(
       { username },
-      { $set: updateData }, // <--- Asta e important
+      { $set: updateData },
       { new: true },
     );
   }
+  
 
   async getUserByUsername(username: string) {
     return this.userModel
@@ -164,6 +179,22 @@ export class AuthService {
       profilePicture: user.profilePicture,
     }));
   }
+
+  async verifyCredentials(username: string, password: string) {
+    const user = await this.userModel.findOne({ username });
+  
+    if (!user) {
+      throw new UnauthorizedException('Invalid username');
+    }
+  
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new UnauthorizedException('Invalid password');
+    }
+  
+    return { success: true };
+  }
+  
 
   async getSuggestedUsers(
     userId: string,

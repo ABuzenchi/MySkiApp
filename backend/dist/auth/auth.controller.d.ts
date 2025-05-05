@@ -24,6 +24,9 @@ export declare class AuthController {
         username: string;
         profilePicture?: string;
     }[]>;
+    verifyCredentials(username: string, password: string): Promise<{
+        success: boolean;
+    }>;
     updateUser(username: string, updateUserDto: UpdateUserDto): Promise<User>;
     getUser(username: string): Promise<User>;
     updateAvatar(username: string, profilePicture: string): Promise<{

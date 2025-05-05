@@ -76,6 +76,15 @@ let AuthService = class AuthService {
     }
     async updateUser(username, updateData) {
         console.log(`Updating ${username} with`, updateData);
+        if (updateData.password) {
+            updateData.password = await bcrypt.hash(updateData.password, 10);
+        }
+        if (updateData.username) {
+            const existingUser = await this.userModel.findOne({ username: updateData.username });
+            if (existingUser && existingUser.username !== username) {
+                throw new Error("Username already taken");
+            }
+        }
         return this.userModel.findOneAndUpdate({ username }, { $set: updateData }, { new: true });
     }
     async getUserByUsername(username) {
@@ -125,6 +134,17 @@ let AuthService = class AuthService {
             username: user.username,
             profilePicture: user.profilePicture,
         }));
+    }
+    async verifyCredentials(username, password) {
+        const user = await this.userModel.findOne({ username });
+        if (!user) {
+            throw new common_1.UnauthorizedException('Invalid username');
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            throw new common_1.UnauthorizedException('Invalid password');
+        }
+        return { success: true };
     }
     async getSuggestedUsers(userId) {
         const user = await this.userModel.findById(userId).populate('friends');

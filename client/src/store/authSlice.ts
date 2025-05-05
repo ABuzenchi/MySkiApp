@@ -52,6 +52,9 @@ const authSlice = createSlice({
         (slope) => slope !== action.payload
       );
     },
+    setUsername(state, action) {
+      state.username = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(updateSlopes.fulfilled, (state, action) => {
@@ -76,6 +79,7 @@ export const {
   addFavoriteSlopes,
   addVisitedSlopes,
   removeFavoriteSlope,
+  setUsername
 } = authSlice.actions;
 
 export default authSlice.reducer;

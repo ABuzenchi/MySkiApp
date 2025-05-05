@@ -39,6 +39,9 @@ export declare class AuthService {
         username: string;
         profilePicture?: string;
     }[]>;
+    verifyCredentials(username: string, password: string): Promise<{
+        success: boolean;
+    }>;
     getSuggestedUsers(userId: string): Promise<{
         username: string;
         profilePicture?: string;

@@ -45,6 +45,14 @@ async getSuggestedUsers(@Query('userId') userId: string) {
   return this.authService.getSuggestedUsers(userId); // ✅ return direct
 }
 
+@Post('/verify')
+async verifyCredentials(
+  @Body('username') username: string,
+  @Body('password') password: string,
+) {
+  return this.authService.verifyCredentials(username, password);
+}
+
 
   @Patch('/update/:username')
   updateUser(
