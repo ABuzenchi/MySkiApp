@@ -11,6 +11,7 @@ import { DayTrackModule } from './dayTrack/dayTrack.module';
 import { FriendRequestModule } from './friend-request/friend-request.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { SuggestionsModule } from './suggestions/suggestions.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { SuggestionsModule } from './suggestions/suggestions.module';
     DayTrackModule,
     FriendRequestModule,
     SuggestionsModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],

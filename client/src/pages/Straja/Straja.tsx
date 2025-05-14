@@ -10,6 +10,7 @@ import SlopeStatus from "../../components/slope-status/slope-status";
 import { useEffect, useState } from "react";
 import { Slope } from "../../interfaces/slope.interface";
 import SlopeFilter from "../../components/slope-filter/slope-filter";
+import ChatBox from "../../components/chat/chat";
 
 const images = [
   strajaMap,
@@ -42,6 +43,7 @@ export default function Straja() {
       <div>
       <iframe width="775" height="436" src="https://www.youtube.com/embed/hB9f4Gpdtwc" title="Starea Pârtiilor din România ⛷️🏔️ - 4 Martie 2025" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
       </div>
+      <ChatBox/>
     </>
   );
 }

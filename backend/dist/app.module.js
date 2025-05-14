@@ -20,6 +20,7 @@ const dayTrack_module_1 = require("./dayTrack/dayTrack.module");
 const friend_request_module_1 = require("./friend-request/friend-request.module");
 const schedule_1 = require("@nestjs/schedule");
 const suggestions_module_1 = require("./suggestions/suggestions.module");
+const chat_module_1 = require("./chat/chat.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -39,6 +40,7 @@ exports.AppModule = AppModule = __decorate([
             dayTrack_module_1.DayTrackModule,
             friend_request_module_1.FriendRequestModule,
             suggestions_module_1.SuggestionsModule,
+            chat_module_1.ChatModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
