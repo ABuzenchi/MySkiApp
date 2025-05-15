@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import { SkiResort } from "../../interfaces/skiResort.interface";
@@ -40,9 +40,7 @@ const skiResorts: SkiResort[] = [
 ];
 
 const MapComponent = () => {
-  const [userLocation, setUserLocation] = useState<LatLngExpression | null>(
-    null
-  );
+  const [userLocation, setUserLocation] = useState<LatLngExpression | null>(null);
 
   return (
     <MapContainer
@@ -54,7 +52,16 @@ const MapComponent = () => {
 
       {skiResorts.map((resort, index) => (
         <Marker key={index} position={[resort.lat, resort.lng]} icon={skiIcon}>
-          <Popup>{resort.name}</Popup>
+          <Popup minWidth={300} maxWidth={300}>
+            <iframe
+              src={`https://ro.m.wikipedia.org/wiki/${encodeURIComponent(resort.name)}`}
+              width="100%"
+              height="250"
+              style={{ border: "none" }}
+              title={`Wikipedia - ${resort.name}`}
+              loading="lazy"
+            />
+          </Popup>
         </Marker>
       ))}
 
