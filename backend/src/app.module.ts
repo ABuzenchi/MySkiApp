@@ -12,8 +12,11 @@ import { FriendRequestModule } from './friend-request/friend-request.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { SuggestionsModule } from './suggestions/suggestions.module';
 import { ChatModule } from './chat/chat.module';
+import { ReviewModule } from './review/review.module';
+console.log('🌐 Using Mongo URI:', process.env.MONGO);
 
 @Module({
+  
   imports: [
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -29,6 +32,7 @@ import { ChatModule } from './chat/chat.module';
     FriendRequestModule,
     SuggestionsModule,
     ChatModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [AppService],

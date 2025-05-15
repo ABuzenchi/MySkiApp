@@ -6,6 +6,7 @@ import { UserSchema } from './schema/user.schema';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './jwt.strategy';
 import { FriendRequest, FriendRequestSchema } from 'src/friend-request/friend-request.schema';
 
 @Module({
@@ -30,6 +31,6 @@ import { FriendRequest, FriendRequestSchema } from 'src/friend-request/friend-re
     ],
 
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService,JwtStrategy]
 })
 export class AuthModule {}

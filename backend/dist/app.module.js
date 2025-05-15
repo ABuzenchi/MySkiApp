@@ -21,6 +21,8 @@ const friend_request_module_1 = require("./friend-request/friend-request.module"
 const schedule_1 = require("@nestjs/schedule");
 const suggestions_module_1 = require("./suggestions/suggestions.module");
 const chat_module_1 = require("./chat/chat.module");
+const review_module_1 = require("./review/review.module");
+console.log('🌐 Using Mongo URI:', process.env.MONGO);
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -41,6 +43,7 @@ exports.AppModule = AppModule = __decorate([
             friend_request_module_1.FriendRequestModule,
             suggestions_module_1.SuggestionsModule,
             chat_module_1.ChatModule,
+            review_module_1.ReviewModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

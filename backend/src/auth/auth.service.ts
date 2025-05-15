@@ -81,6 +81,7 @@ export class AuthService {
     const token = this.jwtService.sign({
       id: user._id,
       username: user.username,
+      profilePicture:user.profilePicture,
     });
     return {
       token,
@@ -155,6 +156,7 @@ export class AuthService {
     const jwt = this.jwtService.sign({
       id: user._id,
       username: user.username,
+      profilePicture: user.profilePicture,
     });
 
     return {

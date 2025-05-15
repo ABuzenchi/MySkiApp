@@ -10,6 +10,7 @@ import sinaiaPicture04 from "../../assets/sinaia-picture04.jpg";
 import { Slope } from "../../interfaces/slope.interface";
 import SlopeStatus from "../../components/slope-status/slope-status";
 import SlopeFilter from "../../components/slope-filter/slope-filter";
+import { SlopeReviews } from "../../components/reviews/SlopeReviews";
 
 const images = [
   sinaiaMap,
@@ -40,6 +41,9 @@ export default function Sinaia() {
       <div className={classes.slopeTable}>
         <SlopeFilter slopes={slopes} />
       </div>
+      <div className={classes.reviewsSection}>
+          <SlopeReviews resortName="Sinaia" />
+        </div>
 
       <div>
         <iframe

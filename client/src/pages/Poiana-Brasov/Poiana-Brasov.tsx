@@ -12,6 +12,8 @@ import SlopeStatus from "../../components/slope-status/slope-status";
 import { useEffect, useState } from "react";
 import { Slope } from "../../interfaces/slope.interface";
 import SlopeFilter from "../../components/slope-filter/slope-filter";
+import { ReviewCard } from "../../components/reviews/ReviewCard";
+import { SlopeReviews } from "../../components/reviews/SlopeReviews";
 
 const images = [
   PostavaruMap,
@@ -22,31 +24,40 @@ const images = [
 ];
 
 const PoianaBrasov = () => {
-   const [slopes, setSlopes] = useState<Slope[]>([]);
-       
-      
-        useEffect(() => {
-          fetch("http://localhost:3000/slopes/location/Poiana Brașov")
-            .then((response) => response.json())
-            .then((data) => setSlopes(data))
-            .catch((error) => console.error("Eroare la preluarea datelor: ", error));
-        }, []);
+  const [slopes, setSlopes] = useState<Slope[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/slopes/location/Poiana Brașov")
+      .then((response) => response.json())
+      .then((data) => setSlopes(data))
+      .catch((error) => console.error("Eroare la preluarea datelor: ", error));
+  }, []);
   return (
     <>
-    <SlopeStatus name="Poiana Brasov"/>
+      <SlopeStatus name="Poiana Brasov" />
       <div className={classes.container}>
         <Weather location="Brasov" />
         <CarouselPhoto images={images} />
       </div>
       <div className={classes.slopeTable}>
         <SlopeFilter slopes={slopes} />
+        <div className={classes.reviewsSection}>
+          <SlopeReviews resortName="Poiana Brașov" />
+        </div>
+
+        <iframe
+          width="1074"
+          height="604"
+          src="https://www.youtube.com/embed/Ifw-41CDRjQ"
+          title="🔴 LIVE | Webcam Poiana Brașov - Gondola Postăvaru | Starea Pârtiilor în Timp Real"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
       </div>
-      <RatingResort></RatingResort>
       <div>
-      <iframe width="1074" height="604" src="https://www.youtube.com/embed/Ifw-41CDRjQ" title="🔴 LIVE | Webcam Poiana Brașov - Gondola Postăvaru | Starea Pârtiilor în Timp Real" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
-      </div>
-      <div>
-        <MapSearch/>
+        <MapSearch />
       </div>
     </>
   );
