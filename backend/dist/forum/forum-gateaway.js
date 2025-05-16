@@ -16,11 +16,13 @@ exports.ForumGateaway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 const jwt = require("jsonwebtoken");
+const forum_service_1 = require("./forum.service");
 let ForumGateaway = class ForumGateaway {
+    constructor(forumService) {
+        this.forumService = forumService;
+    }
     handleConnection(client) {
         const token = client.handshake.auth.token || client.handshake.query.token;
-        console.log('Auth token', client.handshake.auth.token);
-        console.log('Query token', client.handshake.query.token);
         console.log('Received token:', token);
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -32,7 +34,6 @@ let ForumGateaway = class ForumGateaway {
             client.disconnect();
             return;
         }
-        console.log('User after connection', client.data);
         console.log('Client connected:', client.id);
         client.broadcast.emit('user-joined', {
             message: `New user joined the forum: ${client.data.user.username}`,
@@ -44,16 +45,34 @@ let ForumGateaway = class ForumGateaway {
             message: `User left the forum: ${client.data?.user?.username}`,
         });
     }
-    handleNewMessage(message, client) {
+    handleJoinRoom(room, client) {
+        if (!client.data?.user)
+            return;
+        client.join(room);
+        console.log(`${client.data.user.username} joined room: ${room}`);
+    }
+    async handleNewMessage(data, client) {
         if (!client.data?.user) {
-            console.error('No user data found for client');
+            console.error('Unauthorized message attempt.');
             return;
         }
-        console.log(`${client.data.user.username} says: ${message}`);
-        this.server.emit('message', {
-            username: client.data.user.username,
-            message: message,
-        });
+        const { room, message, imageUrl } = data;
+        const username = client.data.user.username;
+        try {
+            const profilePicture = client.data.user.profilePicture;
+            const saved = await this.forumService.saveMessage(room, username, message, imageUrl, profilePicture);
+            this.server.to(room).emit('message', {
+                username,
+                message,
+                imageUrl,
+                profilePicture: client.data.user.profilePicture,
+                timestamp: saved.createdAt,
+            });
+        }
+        catch (err) {
+            console.error('Error saving message:', err.message);
+        }
+        console.log('📥 WS primeste:', data);
     }
 };
 exports.ForumGateaway = ForumGateaway;
@@ -62,12 +81,20 @@ __decorate([
     __metadata("design:type", socket_io_1.Server)
 ], ForumGateaway.prototype, "server", void 0);
 __decorate([
-    (0, websockets_1.SubscribeMessage)('newMessage'),
+    (0, websockets_1.SubscribeMessage)('joinRoom'),
     __param(0, (0, websockets_1.MessageBody)()),
     __param(1, (0, websockets_1.ConnectedSocket)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, socket_io_1.Socket]),
     __metadata("design:returntype", void 0)
+], ForumGateaway.prototype, "handleJoinRoom", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('newMessage'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __param(1, (0, websockets_1.ConnectedSocket)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, socket_io_1.Socket]),
+    __metadata("design:returntype", Promise)
 ], ForumGateaway.prototype, "handleNewMessage", null);
 exports.ForumGateaway = ForumGateaway = __decorate([
     (0, websockets_1.WebSocketGateway)(3002, {
@@ -76,6 +103,7 @@ exports.ForumGateaway = ForumGateaway = __decorate([
             methods: ['GET', 'POST'],
             allowedHeaders: ['Content-Type'],
         },
-    })
+    }),
+    __metadata("design:paramtypes", [forum_service_1.ForumService])
 ], ForumGateaway);
 //# sourceMappingURL=forum-gateaway.js.map

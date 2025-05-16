@@ -3,23 +3,27 @@ import { EnDictionary } from "../../dictionaries/en";
 
 interface ImageUploaderProps {
   onImageSelect: (imageUrl: string | null) => void;
+  onUploadStart?: () => void;
 }
 
-const ImageUploader = ({ onImageSelect }: ImageUploaderProps) => {
+const ImageUploader = ({ onImageSelect, onUploadStart }: ImageUploaderProps) => {
   const handleFileChange = async (file: File | null) => {
     if (!file) return;
+
+    if (onUploadStart) onUploadStart();
 
     const reader = new FileReader();
     reader.onload = async (e) => {
       const base64Image = e.target?.result as string;
       const imageUrl = await uploadToCloudinary(base64Image);
+      console.log("✅ Image URL from Cloudinary:", imageUrl);
       onImageSelect(imageUrl);
     };
     reader.readAsDataURL(file);
   };
 
   const uploadToCloudinary = async (base64Image: string): Promise<string> => {
-    const cloudName = "ds7qfjrp8"; // înlocuiește cu al tău din dashboard
+    const cloudName = "ds7qfjrp8";
     const uploadPreset = "unsigned_profile_upload";
 
     const formData = new FormData();
