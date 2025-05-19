@@ -13,6 +13,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { SuggestionsModule } from './suggestions/suggestions.module';
 import { ChatModule } from './chat/chat.module';
 import { ReviewModule } from './review/review.module';
+import { AchievementModule } from './achievement/achievement.module';
+import { UserAchievementModule } from './userachievement/userachievement.module';
 console.log('🌐 Using Mongo URI:', process.env.MONGO);
 
 @Module({
@@ -33,6 +35,8 @@ console.log('🌐 Using Mongo URI:', process.env.MONGO);
     SuggestionsModule,
     ChatModule,
     ReviewModule,
+    AchievementModule,
+    UserAchievementModule,
   ],
   controllers: [AppController],
   providers: [AppService],

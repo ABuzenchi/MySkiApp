@@ -5,6 +5,8 @@ import { DayTrackService } from './dayTrack.service';
 import { DayTrackController } from './dayTrack.controller';
 import { User, UserSchema } from '../auth/schema/user.schema';
 import { Slope, SlopeSchema } from '../slope/slope.schema';
+import { UserAchievementModule } from '../userachievement/userachievement.module';
+
 
 @Module({
   imports: [
@@ -12,7 +14,9 @@ import { Slope, SlopeSchema } from '../slope/slope.schema';
       { name: DayTrack.name, schema: DayTrackSchema },
       { name: User.name, schema: UserSchema },
       { name: Slope.name, schema: SlopeSchema },
+      
     ]),
+     UserAchievementModule,
   ],
   controllers: [DayTrackController],
   providers: [DayTrackService],

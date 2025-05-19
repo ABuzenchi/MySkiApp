@@ -5,12 +5,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FriendRequest, FriendRequestDocument } from './friend-request.schema';
 import { User, UserDocument } from '../auth/schema/user.schema';
+import { UserAchievementService } from 'src/userachievement/userachievement.service';
 
 @Injectable()
 export class FriendRequestService {
   constructor(
     @InjectModel(FriendRequest.name) private friendRequestModel: Model<FriendRequestDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
+     private readonly achievementService: UserAchievementService,
   ) {}
 
   async sendRequest(senderId: string, receiverId: string) {
@@ -38,22 +40,25 @@ export class FriendRequestService {
   }
 
   async acceptRequest(requestId: string) {
-    const request = await this.friendRequestModel.findById(requestId);
-    if (!request) throw new NotFoundException('Cerere inexistentă.');
+  const request = await this.friendRequestModel.findById(requestId);
+  if (!request) throw new NotFoundException('Cerere inexistentă.');
 
-    request.status = 'accepted';
-    await request.save();
+  request.status = 'accepted';
+  await request.save();
 
-    await this.userModel.findByIdAndUpdate(request.sender, {
-      $addToSet: { friends: request.receiver },
-    });
-    await this.userModel.findByIdAndUpdate(request.receiver, {
-      $addToSet: { friends: request.sender },
-    });
-    
+  await this.userModel.findByIdAndUpdate(request.sender, {
+    $addToSet: { friends: request.receiver },
+  });
+  await this.userModel.findByIdAndUpdate(request.receiver, {
+    $addToSet: { friends: request.sender },
+  });
 
-    return request;
-  }
+  await this.achievementService.checkAndAssignAchievements(request.sender.toString());
+  await this.achievementService.checkAndAssignAchievements(request.receiver.toString());
+
+  return request;
+}
+
 
   async declineRequest(requestId: string) {
     const request = await this.friendRequestModel.findById(requestId);

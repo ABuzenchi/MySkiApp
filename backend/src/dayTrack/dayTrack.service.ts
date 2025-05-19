@@ -5,37 +5,43 @@ import { DayTrack, DayTrackDocument } from './dayTrack.schema';
 import { DayTrackDto } from './dayTrack.dto';
 import { User } from '../auth/schema/user.schema';
 import { Slope } from '../slope/slope.schema';
+import { UserAchievementService } from 'src/userachievement/userachievement.service';
+
 
 @Injectable()
 export class DayTrackService {
   constructor(
     @InjectModel(DayTrack.name) private dayTrackModel: Model<DayTrackDocument>,
     @InjectModel(User.name) private userModel: Model<User>,
-    @InjectModel(Slope.name) private slopeModel: Model<Slope>
+    @InjectModel(Slope.name) private slopeModel: Model<Slope>,
+     private readonly achievementService: UserAchievementService,
   ) {}
 
   async createLog(username: string, logDto: DayTrackDto) {
-    const user = await this.userModel.findOne({ username });
-    if (!user) throw new NotFoundException('User not found');
+  const user = await this.userModel.findOne({ username });
+  if (!user) throw new NotFoundException('User not found');
 
-    let totalDistance = 0;
+  let totalDistance = 0;
 
-    for (const entry of logDto.slopes) {
-      const slope = await this.slopeModel.findById(entry.slopeId);
-      if (slope) {
-        totalDistance += slope.length * entry.times;
-      }
+  for (const entry of logDto.slopes) {
+    const slope = await this.slopeModel.findById(entry.slopeId);
+    if (slope) {
+      totalDistance += slope.length * entry.times;
     }
-
-    const newLog = await this.dayTrackModel.create({
-      user: user._id,
-      date: new Date(logDto.date),
-      slopes: logDto.slopes,
-      totalDistance,
-    });
-
-    return newLog;
   }
+
+  const newLog = await this.dayTrackModel.create({
+    user: user._id,
+    date: new Date(logDto.date),
+    slopes: logDto.slopes,
+    totalDistance,
+  });
+
+  await this.achievementService.checkAndAssignAchievements(user._id.toString());
+
+  return newLog;
+}
+
 
   async getLogsByUsername(username: string) {
     const user = await this.userModel.findOne({ username });
@@ -55,9 +61,12 @@ export class DayTrackService {
     const end = new Date(date);
     end.setHours(23, 59, 59, 999);
   
-    return this.dayTrackModel
-      .findOne({ user: user._id, date: { $gte: start, $lte: end } })
-      .populate('slopes.slopeId');
+    const log = await this.dayTrackModel
+  .findOne({ user: user._id, date: { $gte: start, $lte: end } })
+  .populate('slopes.slopeId');
+
+return log || {}; // 🛡️ Protecție: nu trimite `undefined`
+
   }
   
 }

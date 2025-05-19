@@ -16,6 +16,7 @@ import {
   fetchPrediction,
   fetchSuggestions,
 } from "../../../api/suggestionsApi.ts";
+import AchievementsSection from "../../achievements/achievements.tsx";
 
 interface Props {
   openUserProfile: (username: string) => void;
@@ -266,12 +267,7 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
 
           {/* Achievements */}
           <div className={classes.container}>
-            <h3 className={classes.title}>Achievements</h3>
-            <div className={classes.imageContainer}>
-              <Image src={FirstFavorite} className={classes.image} />
-              <Image src={FirstSlope} className={classes.image} />
-              <Image src={FirstReview} className={classes.image} />
-            </div>
+            <AchievementsSection username={username} />
           </div>
 
           {/* Friends */}
