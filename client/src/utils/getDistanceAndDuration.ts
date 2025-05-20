@@ -1,7 +1,11 @@
+import polyline from "@mapbox/polyline";
+import { LatLngExpression } from "leaflet";
+
+
 export async function getDistanceAndDuration(
   start: [number, number],
   end: [number, number]
-): Promise<{ distance: string; duration: string }> {
+): Promise<{ distance: string; duration: string; geometry: LatLngExpression[] }> {
   const apiKey = import.meta.env.VITE_ROUTE_CALCULATION;
   const url = `https://api.openrouteservice.org/v2/directions/driving-car`;
 
@@ -13,6 +17,7 @@ export async function getDistanceAndDuration(
     },
     body: JSON.stringify({
       coordinates: [start, end],
+      radiuses: [1000, 1000],
     }),
   });
 
@@ -23,16 +28,17 @@ export async function getDistanceAndDuration(
   }
 
   const data = await response.json();
-
-  // corect: folosim .routes[0].summary, nu .features[0].properties.summary
   const meters = data.routes[0].summary.distance;
   const seconds = data.routes[0].summary.duration;
+  const geometry = data.routes[0].geometry;
 
-  const km = (meters / 1000).toFixed(2);
-  const mins = Math.round(seconds / 60);
+  // Decode geometry into array of [lat, lng]
+  const decoded = polyline.decode(geometry);
+  const coordinates: LatLngExpression[] = decoded.map(([lat, lng]) => [lat, lng]);
 
   return {
-    distance: `${km} km`,
-    duration: `${mins} min`,
+    distance: `${(meters / 1000).toFixed(2)} km`,
+    duration: `${Math.round(seconds / 60)} min`,
+    geometry: coordinates,
   };
 }

@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { getDistanceAndDuration } from "../../utils/getDistanceAndDuration";
 import LocateUser from "../userLocation/userLocation";
+import { Polyline } from "react-leaflet";
 
 function toTuple(loc: LatLngExpression): [number, number] {
   if (Array.isArray(loc)) {
@@ -14,7 +15,6 @@ function toTuple(loc: LatLngExpression): [number, number] {
   if ("lat" in loc && "lng" in loc) return [loc.lat, loc.lng];
   throw new Error("Coordonatele nu sunt într-un format valid");
 }
-
 
 interface SearchResult {
   place_id: string;
@@ -46,6 +46,8 @@ const MapSearch = () => {
   const [userLocation, setUserLocation] = useState<LatLngExpression | null>(
     null
   );
+  const [routeLine, setRouteLine] = useState<LatLngExpression[] | null>(null);
+
   const [routeInfo, setRouteInfo] = useState<{
     distance: string;
     duration: string;
@@ -102,6 +104,7 @@ const MapSearch = () => {
       getDistanceAndDuration([start[1], start[0]], [end[1], end[0]])
         .then((info) => {
           setRouteInfo({ distance: info.distance, duration: info.duration });
+          setRouteLine(info.geometry); // aici salvăm traseul
         })
         .catch(console.error);
     }
@@ -141,6 +144,7 @@ const MapSearch = () => {
             </Popup>
           </Marker>
         )}
+        {routeLine && <Polyline positions={routeLine} color="blue" />}
       </MapContainer>
 
       {routeInfo && (
