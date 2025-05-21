@@ -24,6 +24,7 @@ const chat_module_1 = require("./chat/chat.module");
 const review_module_1 = require("./review/review.module");
 const achievement_module_1 = require("./achievement/achievement.module");
 const userachievement_module_1 = require("./userachievement/userachievement.module");
+const stripe_module_1 = require("./stripe/stripe.module");
 console.log('🌐 Using Mongo URI:', process.env.MONGO);
 let AppModule = class AppModule {
 };
@@ -48,6 +49,7 @@ exports.AppModule = AppModule = __decorate([
             review_module_1.ReviewModule,
             achievement_module_1.AchievementModule,
             userachievement_module_1.UserAchievementModule,
+            stripe_module_1.StripeModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

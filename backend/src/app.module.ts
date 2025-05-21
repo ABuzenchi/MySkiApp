@@ -15,6 +15,7 @@ import { ChatModule } from './chat/chat.module';
 import { ReviewModule } from './review/review.module';
 import { AchievementModule } from './achievement/achievement.module';
 import { UserAchievementModule } from './userachievement/userachievement.module';
+import { StripeModule } from './stripe/stripe.module';
 console.log('🌐 Using Mongo URI:', process.env.MONGO);
 
 @Module({
@@ -37,6 +38,7 @@ console.log('🌐 Using Mongo URI:', process.env.MONGO);
     ReviewModule,
     AchievementModule,
     UserAchievementModule,
+    StripeModule
   ],
   controllers: [AppController],
   providers: [AppService],

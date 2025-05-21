@@ -14,6 +14,7 @@ import { Slope } from "../../interfaces/slope.interface";
 import SlopeFilter from "../../components/slope-filter/slope-filter";
 import { ReviewCard } from "../../components/reviews/ReviewCard";
 import { SlopeReviews } from "../../components/reviews/SlopeReviews";
+import Payment from "../../components/payment/payment";
 
 const images = [
   PostavaruMap,
@@ -59,6 +60,7 @@ const PoianaBrasov = () => {
       <div>
         <MapSearch />
       </div>
+      <Payment/>
     </>
   );
 };

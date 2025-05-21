@@ -10,6 +10,7 @@ import Sinaia from "./pages/Sinaia/Sinaia";
 import PoianaBrasov from "./pages/Poiana-Brasov/Poiana-Brasov";
 import Straja from "./pages/Straja/Straja";
 import Transalpina from "./pages/Transalpina/Transalpina";
+import SuccessPage from "./pages/succes";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/Poiana Brasov" element={ <PoianaBrasov/>} />
           <Route path="/Straja" element={ <Straja/>} />
           <Route path="/Transalpina" element={ <Transalpina/>} />
+          <Route path="/success" element={<SuccessPage/>}/>
         </Routes>
       </BrowserRouter>
       </Provider>
