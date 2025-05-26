@@ -1,5 +1,7 @@
-export const fetchAllLocations = async (): Promise<string[]> => {
-    const res = await fetch('http://localhost:3000/slopes/locations');
-    if (!res.ok) throw new Error('Failed to fetch locations');
-    return res.json();
-  };
+export const fetchAllSkiDomains = async (): Promise<string[]> => {
+  const res = await fetch("http://localhost:3000/ski-domains");
+  if (!res.ok) throw new Error("Eroare la încărcarea domeniilor");
+
+  const data = await res.json();
+  return data.map((domain: any) => domain.name);
+};

@@ -25,11 +25,11 @@ export class SlopeController {
     return this.slopeService.findAll();
   }
 
-  @Get('location/:location')
-  async findByLocation(@Param('location') location: string): Promise<Slope[]> {
-    const slopes = await this.slopeService.findByLocation(location);
-    return slopes;
-  }
+ @Get('domain/:domainId')
+async findByDomainId(@Param('domainId') domainId: string): Promise<Slope[]> {
+  return this.slopeService.findByDomainId(domainId);
+}
+
 
   @Put(':id')
   update(
@@ -37,9 +37,5 @@ export class SlopeController {
     @Body() updateSlopeDto: CreateSlopeDto,
   ): Promise<Slope> {
     return this.slopeService.update(id, updateSlopeDto);
-  }
-  @Get('/locations')
-  getLocations(): Promise<string[]> {
-    return this.slopeService.getAllLocations();
   }
 }

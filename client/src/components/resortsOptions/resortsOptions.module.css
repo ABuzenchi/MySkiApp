@@ -6,3 +6,7 @@
     font-weight: bold;
     color:#040024
   }
+  .dropdownScrollable {
+  max-height: 250px; /* sau ce dimensiune vrei */
+  overflow-y: auto;
+}

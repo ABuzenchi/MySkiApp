@@ -10,6 +10,7 @@ import SlopeStatus from "../../components/slope-status/slope-status";
 import { useEffect, useState } from "react";
 import { Slope } from "../../interfaces/slope.interface";
 import SlopeFilter from "../../components/slope-filter/slope-filter";
+import { useSlopesByDomain } from "../../hooks/useSlopesByDomain";
 const images = [
   transalpinaMap,
   transalpinaPicture01,
@@ -18,15 +19,10 @@ const images = [
   transalpinaPicture04,
 ];
 export default function Transalpina() {
-   const [slopes, setSlopes] = useState<Slope[]>([]);
-     
-    
-      useEffect(() => {
-        fetch("http://localhost:3000/slopes/location/Transalpina")
-          .then((response) => response.json())
-          .then((data) => setSlopes(data))
-          .catch((error) => console.error("Eroare la preluarea datelor: ", error));
-      }, []);
+   const { slopes, loading, error } = useSlopesByDomain("Transalpina");
+
+  if (loading) return <p>Se încarcă pârtiile...</p>;
+  if (error) return <p>Eroare: {error}</p>;
   return (
     <>
     <SlopeStatus name="Transalpina" />

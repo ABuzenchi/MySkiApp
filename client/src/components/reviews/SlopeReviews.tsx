@@ -5,15 +5,15 @@ import classes from './reviews.module.css';
 import { Review } from '../../interfaces/review.interface';
 
 interface SlopeReviewsInterface {
-  resortName: string;
+  domainId: string;
 }
 
-export const SlopeReviews = ({ resortName }: SlopeReviewsInterface) => {
+export const SlopeReviews = ({ domainId }: SlopeReviewsInterface) => {
   const [reviews, setReviews] = useState<Review[]>([]);
 
   const loadReviews = async () => {
   try {
-    const res = await fetch(`http://localhost:3000/reviews/resort/${resortName}`);
+    const res = await fetch(`http://localhost:3000/reviews/domain/${domainId}`);
     const data = await res.json();
     console.log("🧾 Review-uri primite:", data);
     if (Array.isArray(data)) {
@@ -31,12 +31,12 @@ export const SlopeReviews = ({ resortName }: SlopeReviewsInterface) => {
 
   useEffect(() => {
     loadReviews();
-  }, [resortName]);
+  }, [domainId]);
 
   return (
     <div className={classes.reviewsWrapper}>
       <h2>Recenzii</h2>
-      <AddReviewForm resortName={resortName} onReviewAdded={loadReviews} />
+      <AddReviewForm domainId={domainId} onReviewAdded={loadReviews} />
       {reviews.length === 0 ? (
         <p>Nu există recenzii pentru acest domeniu schiabil încă.</p>
       ) : (

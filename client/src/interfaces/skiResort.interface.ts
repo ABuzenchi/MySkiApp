@@ -1,5 +1,8 @@
 export interface SkiResort {
-    name: string;
-    lat: number;
-    lng: number;
-  }
+  _id: string;
+  name: string;
+  location: string;
+  lat: number;
+  lng: number;
+  website?: string;
+}

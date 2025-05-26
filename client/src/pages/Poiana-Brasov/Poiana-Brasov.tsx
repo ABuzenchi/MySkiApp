@@ -15,6 +15,9 @@ import SlopeFilter from "../../components/slope-filter/slope-filter";
 import { ReviewCard } from "../../components/reviews/ReviewCard";
 import { SlopeReviews } from "../../components/reviews/SlopeReviews";
 import Payment from "../../components/payment/payment";
+import { useSlopesByDomain } from "../../hooks/useSlopesByDomain";
+import { useDomainByName } from "../../hooks/useDomainByName";
+
 
 const images = [
   PostavaruMap,
@@ -25,14 +28,12 @@ const images = [
 ];
 
 const PoianaBrasov = () => {
-  const [slopes, setSlopes] = useState<Slope[]>([]);
+  const { slopes, loading: slopesLoading, error } = useSlopesByDomain("Poiana Brașov");
+  const { domainId, loading: domainLoading } = useDomainByName("Poiana Brașov");
 
-  useEffect(() => {
-    fetch("http://localhost:3000/slopes/location/Poiana Brașov")
-      .then((response) => response.json())
-      .then((data) => setSlopes(data))
-      .catch((error) => console.error("Eroare la preluarea datelor: ", error));
-  }, []);
+  if (slopesLoading || domainLoading) return <p>Se încarcă datele...</p>;
+  if (error) return <p>Eroare: {error}</p>;
+
   return (
     <>
       <SlopeStatus name="Poiana Brasov" />
@@ -43,7 +44,11 @@ const PoianaBrasov = () => {
       <div className={classes.slopeTable}>
         <SlopeFilter slopes={slopes} />
         <div className={classes.reviewsSection}>
-          <SlopeReviews resortName="Poiana Brașov" />
+          {domainId ? (
+            <SlopeReviews domainId={domainId} />
+          ) : (
+            <p>Se încarcă datele domeniului...</p>
+          )}
         </div>
 
         <iframe
@@ -60,9 +65,10 @@ const PoianaBrasov = () => {
       <div>
         <MapSearch />
       </div>
-      <Payment/>
+      <Payment />
     </>
   );
 };
+
 
 export default PoianaBrasov;

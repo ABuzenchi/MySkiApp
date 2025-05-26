@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { fetchAllLocations } from '../../api/allSlopes.api';
-import { fetchSlopesByLocation } from '../../api/slopes.api';
+import { fetchAllSkiDomains } from '../../api/allSlopes.api';
 import { logDayTrack } from '../../api/dayTrack.api';
+import { useSlopesByLocationName } from '../../hooks/useSlopesByLocationName';
 
 const DayTrackCalendar = () => {
   const { username } = useSelector((state: RootState) => state.auth);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [locations, setLocations] = useState<string[]>([]);
   const [location, setLocation] = useState('');
-  const [slopes, setSlopes] = useState<any[]>([]);
   const [times, setTimes] = useState<Record<string, number>>({});
   const [status, setStatus] = useState('');
   const [isExistingLog, setIsExistingLog] = useState(false);
+
+  const { slopes, loading: loadingSlopes, error: slopeError } = useSlopesByLocationName(location);
 
   const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
@@ -24,42 +25,39 @@ const DayTrackCalendar = () => {
   });
 
   useEffect(() => {
-    fetchAllLocations()
+    fetchAllSkiDomains()
       .then((res) => setLocations(res))
       .catch((err) => setStatus(err.message));
   }, []);
 
   useEffect(() => {
+    if (!isExistingLog && slopes.length > 0) {
+      const emptyTimes = Object.fromEntries(slopes.map((s) => [s._id, 0]));
+      setTimes(emptyTimes);
+    }
+  }, [slopes, isExistingLog]);
+
+  useEffect(() => {
     const fetchLogForDate = async () => {
       if (!username) return;
-    
+
       setTimes({});
-      setSlopes([]);
       setIsExistingLog(false);
       setStatus('');
-    
+
       try {
         const res = await fetch(`http://localhost:3000/day-track/${username}/${formatDate(selectedDate)}`);
-    
-        if (res.status === 204) {
-          // zi fără date, log nul
-          setIsExistingLog(false);
-          return;
-        }
-    
+        if (res.status === 204) return;
+
         if (!res.ok) throw new Error('Eroare la preluarea logului');
-    
+
         const data = await res.json();
-    
+
         if (data && data.slopes && data.slopes.length > 0) {
           setIsExistingLog(true);
-    
           const loc = data.slopes[0].slopeId.location;
           setLocation(loc);
-    
-          const slopeList = await fetchSlopesByLocation(loc);
-          setSlopes(slopeList);
-    
+
           const loadedTimes = Object.fromEntries(
             data.slopes.map((entry: any) => [entry.slopeId._id, entry.times])
           );
@@ -73,22 +71,9 @@ const DayTrackCalendar = () => {
         setStatus('Nu s-au putut încărca datele zilei.');
       }
     };
-    
 
     fetchLogForDate();
   }, [selectedDate]);
-
-  useEffect(() => {
-    if (!location || isExistingLog) return;
-
-    fetchSlopesByLocation(location)
-      .then((data) => {
-        setSlopes(data);
-        const emptyTimes = Object.fromEntries(data.map((s: any) => [s._id, 0]));
-        setTimes(emptyTimes);
-      })
-      .catch((err) => setStatus(err.message));
-  }, [location]);
 
   const handleChangeTimes = (slopeId: string, value: number) => {
     setTimes((prev) => ({ ...prev, [slopeId]: value }));
@@ -179,8 +164,7 @@ const DayTrackCalendar = () => {
                 <strong>🎿 {s.name}</strong> – {count} coborâri – {totalDistance}m
               </div>
             );
-          })
-        }
+          })}
 
         {slopes.length > 0 && (
           <>

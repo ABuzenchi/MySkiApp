@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export type SlopeDocument = Slope & Document;
 
@@ -14,8 +14,8 @@ export class Slope {
   @Prop({ required: true, unique: true })
   name: string;
 
-  @Prop({ required: true })
-  location: string;
+ @Prop({ type: Types.ObjectId, ref: 'SkiDomain', required: true })
+domainId: Types.ObjectId;
 
   @Prop({
     type: {

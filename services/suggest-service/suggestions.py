@@ -24,7 +24,7 @@ def get_suggestions(data: TrackData) -> List[Slope]:
         for cand in unvisited:
             if (
                 cand.difficulty == top.difficulty and
-                abs(cand.length - top.length) < 0.2 * top.length and
+                abs(cand.length - top.length) < 0.5 * top.length and
                 cand.location == top.location and
                 cand not in suggestions
             ):

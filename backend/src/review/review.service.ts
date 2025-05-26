@@ -23,7 +23,13 @@ export class ReviewService {
     return created;
   }
 
-  async findByResortName(resortName: string) {
-    return this.reviewModel.find({ resortName }).sort({ createdAt: -1 }).exec();
-  }
+  async findByDomainId(domainId: string) {
+  return this.reviewModel
+    .find({ domainId })
+    .populate('userId')
+    .populate('domainId')  // dacă vrei numele domeniului în rezultat
+    .sort({ createdAt: -1 })
+    .exec();
+}
+
 }

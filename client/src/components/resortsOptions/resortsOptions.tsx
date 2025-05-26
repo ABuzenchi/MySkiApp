@@ -1,8 +1,19 @@
+import { useEffect, useState } from "react";
 import { Button, Menu } from "@mantine/core";
 import { FaMap } from "react-icons/fa";
-import classes from "./resortsOptions.module.css"
-import {EnDictionary } from "../../dictionaries/en";
+import classes from "./resortsOptions.module.css";
+import { EnDictionary } from "../../dictionaries/en";
+
 const ResortsOptions = () => {
+  const [resorts, setResorts] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/ski-domains")
+      .then((res) => res.json())
+      .then((data) => setResorts(data.map((d: any) => d.name)))
+      .catch((err) => console.error("Eroare la preluarea stațiunilor:", err));
+  }, []);
+
   return (
     <Menu
       width={200}
@@ -18,19 +29,17 @@ const ResortsOptions = () => {
         </Button>
       </Menu.Target>
 
-      <Menu.Dropdown>
-        <Menu.Item component="a" href="/Sinaia" className={classes.item}>
-         {EnDictionary.Sinaia}
-        </Menu.Item>
-        <Menu.Item component="a" href="/Poiana Brasov" className={classes.item}>
-         {EnDictionary.PoianaBrasov}
-        </Menu.Item>
-        <Menu.Item component="a" href="/Straja" className={classes.item}>
-         {EnDictionary.Straja}
-        </Menu.Item>
-        <Menu.Item component="a" href="/Transalpina" className={classes.item}>
-          {EnDictionary.Transalpina}
-        </Menu.Item>
+      <Menu.Dropdown className={classes.dropdownScrollable}>
+        {resorts.map((resortName) => (
+          <Menu.Item
+            key={resortName}
+            component="a"
+            href={`/${resortName}`}
+            className={classes.item}
+          >
+            {resortName}
+          </Menu.Item>
+        ))}
       </Menu.Dropdown>
     </Menu>
   );

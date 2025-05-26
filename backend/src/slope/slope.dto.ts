@@ -1,12 +1,12 @@
 import { IsString, IsNumber, IsEnum, IsArray } from 'class-validator';
-import { SlopeDifficulty } from './slope.schema';  // Asumăm că ai un enum pentru dificultate
+import { SlopeDifficulty } from './slope.schema'; // Asumăm că ai un enum pentru dificultate
 
 export class CreateSlopeDto {
   @IsString()
   name: string;
 
   @IsString()
-  location: string;
+  domainId: string;
 
   @IsArray()
   @IsNumber({}, { each: true })

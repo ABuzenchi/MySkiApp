@@ -5,8 +5,8 @@ export type ReviewDocument = Review & Document;
 
 @Schema({ timestamps: true })
 export class Review {
-  @Prop({ required: true })
-  resortName: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'SkiDomain', required: true })
+  domainId: string; 
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
   userId: string;

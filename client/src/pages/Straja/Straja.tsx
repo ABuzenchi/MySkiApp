@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Slope } from "../../interfaces/slope.interface";
 import SlopeFilter from "../../components/slope-filter/slope-filter";
 import ChatBox from "../../components/chat/chat";
+import { useSlopesByDomain } from "../../hooks/useSlopesByDomain";
 
 const images = [
   strajaMap,
@@ -20,15 +21,10 @@ const images = [
   strajaPicture04,
 ];
 export default function Straja() {
-  const [slopes, setSlopes] = useState<Slope[]>([]);
-   
-  
-    useEffect(() => {
-      fetch("http://localhost:3000/slopes/location/Straja")
-        .then((response) => response.json())
-        .then((data) => setSlopes(data))
-        .catch((error) => console.error("Eroare la preluarea datelor: ", error));
-    }, []);
+  const { slopes, loading, error } = useSlopesByDomain("Straja");
+
+  if (loading) return <p>Se încarcă pârtiile...</p>;
+  if (error) return <p>Eroare: {error}</p>;
     
   return (
     <>

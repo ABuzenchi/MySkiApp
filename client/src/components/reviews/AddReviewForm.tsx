@@ -5,11 +5,11 @@ import classes from './reviews.module.css';
 import { RootState } from '../../store';
 
 interface AddReviewFormProps {
-  resortName: string;
+  domainId: string;
   onReviewAdded: () => void;
 }
 
-export const AddReviewForm = ({ resortName, onReviewAdded }: AddReviewFormProps) => {
+export const AddReviewForm = ({ domainId, onReviewAdded }: AddReviewFormProps) => {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -22,7 +22,7 @@ export const AddReviewForm = ({ resortName, onReviewAdded }: AddReviewFormProps)
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ resortName, rating, comment }),
+      body: JSON.stringify({ domainId, rating, comment }),
 
     });
 

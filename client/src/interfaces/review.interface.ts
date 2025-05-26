@@ -1,5 +1,6 @@
 export interface Review {
-  resortName: string;
+  _id: string;
+  domainId: string;
   rating: number;
   comment: string;
   userName: string;

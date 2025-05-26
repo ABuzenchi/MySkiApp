@@ -11,6 +11,8 @@ import { Slope } from "../../interfaces/slope.interface";
 import SlopeStatus from "../../components/slope-status/slope-status";
 import SlopeFilter from "../../components/slope-filter/slope-filter";
 import { SlopeReviews } from "../../components/reviews/SlopeReviews";
+import { useSlopesByDomain } from "../../hooks/useSlopesByDomain";
+import { useDomainByName } from "../../hooks/useDomainByName";
 
 const images = [
   sinaiaMap,
@@ -21,14 +23,11 @@ const images = [
 ];
 
 export default function Sinaia() {
-  const [slopes, setSlopes] = useState<Slope[]>([]);
+  const { slopes, loading, error } = useSlopesByDomain("Sinaia");
+  const { domainId, loading: domainLoading } = useDomainByName("Sinaia");
 
-  useEffect(() => {
-    fetch("http://localhost:3000/slopes/location/Sinaia")
-      .then((response) => response.json())
-      .then((data) => setSlopes(data))
-      .catch((error) => console.error("Eroare la preluarea datelor: ", error));
-  }, []);
+  if (loading) return <p>Se încarcă pârtiile...</p>;
+  if (error) return <p>Eroare: {error}</p>;
 
   return (
     <>
@@ -42,7 +41,11 @@ export default function Sinaia() {
         <SlopeFilter slopes={slopes} />
       </div>
       <div className={classes.reviewsSection}>
-          <SlopeReviews resortName="Sinaia" />
+          {domainId ? (
+            <SlopeReviews domainId={domainId} />
+          ) : (
+            <p>Se încarcă datele domeniului...</p>
+          )}
         </div>
 
       <div>
