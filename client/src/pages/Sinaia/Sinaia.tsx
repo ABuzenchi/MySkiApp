@@ -13,6 +13,7 @@ import SlopeFilter from "../../components/slope-filter/slope-filter";
 import { SlopeReviews } from "../../components/reviews/SlopeReviews";
 import { useSlopesByDomain } from "../../hooks/useSlopesByDomain";
 import { useDomainByName } from "../../hooks/useDomainByName";
+import { UploadVideo } from "../../components/uploadVideo/uploadVideo";
 
 const images = [
   sinaiaMap,
@@ -60,6 +61,7 @@ export default function Sinaia() {
           allowFullScreen
         ></iframe>
       </div>
+      <UploadVideo/>
     </>
   );
 }

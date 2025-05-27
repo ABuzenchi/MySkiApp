@@ -39,3 +39,9 @@ dist/
 
 # Logs
 *.log
+
+# Video uploads & processed outputs
+uploads/
+uploads/processed/
+*.mp4
+*.mov
