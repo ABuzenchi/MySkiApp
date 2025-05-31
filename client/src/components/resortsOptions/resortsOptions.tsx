@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Button, Menu } from "@mantine/core";
-import { FaMap } from "react-icons/fa";
 import classes from "./resortsOptions.module.css";
 import { EnDictionary } from "../../dictionaries/en";
 
@@ -23,8 +22,7 @@ const ResortsOptions = () => {
       closeDelay={400}
     >
       <Menu.Target>
-        <Button variant="transparent" color="#040024" size="lg">
-          <FaMap />
+        <Button variant="transparent" color="white" size="lg">
           <span className={classes.buttonText}>{EnDictionary.Resorts}</span>
         </Button>
       </Menu.Target>

@@ -18,6 +18,9 @@ lat: number;
 @Prop()
 lng: number;
 
+@Prop()
+imageUrl:string;
+
 }
 
 export const SkiDomainSchema = SchemaFactory.createForClass(SkiDomain);

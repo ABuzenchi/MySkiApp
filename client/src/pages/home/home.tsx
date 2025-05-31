@@ -1,53 +1,53 @@
-import { Autocomplete } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import classes from "./home.module.css";
-import { MdOutlineSearch } from "react-icons/md";
-import { EnDictionary } from "../../dictionaries/en";
+import ResortsSection from "../../components/resortsSection/resortsSection";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mantine/core";
 import MapComponent from "../../components/map/map";
 
+interface SkiDomain {
+  name: string;
+  imageUrl: string;
+}
+
 const Home = () => {
-  const navigate = useNavigate();
   const [resortOptions, setResortOptions] = useState<{ value: string }[]>([]);
+  const [carouselItems, setCarouselItems] = useState<SkiDomain[]>([]);
+const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/ski-domains")
       .then((res) => res.json())
       .then((data) => {
-        const options = data.map((domain: any) => ({
+        const filtered = data.filter((d: any) => d.imageUrl); // doar cele cu imagine
+        const options = filtered.map((domain: any) => ({
           value: domain.name,
         }));
         setResortOptions(options);
+        setCarouselItems(filtered);
       })
       .catch((err) => console.error("Failed to fetch ski domains", err));
   }, []);
 
-  const handleOptionSubmit = (value: string) => {
-    navigate(`/${value}`);
-  };
-
   return (
+  <>
     <div className={classes.pageBackground}>
       <div className={classes.centerContainer}>
         <div className={classes.contentContainer}>
-          <h1 className={classes.headerTitle}>{EnDictionary.Destinations}</h1>
-          <Autocomplete
-            classNames={{ options: classes.dropdownItem }}
-            placeholder={EnDictionary.SearchLocation}
-            rightSection={
-              <div className={classes.rightsection}>
-                <MdOutlineSearch size={20} />
-              </div>
-            }
-            data={resortOptions}
-            onOptionSubmit={handleOptionSubmit}
-            className={classes.searchInput}
-          />
+          <h1 className={classes.headerTitle}>
+            Descoperă cele mai spectaculoase pârtii din România
+          </h1>
         </div>
       </div>
-      <MapComponent />
+
+      <div className={classes.resortSectionInside}>
+        <ResortsSection resorts={carouselItems} />
+      </div>
     </div>
-  );
+
+   </>
+);
+
 };
 
 export default Home;

@@ -9,11 +9,22 @@
   z-index: 1000;
 }
 
+.appName {
+  font-weight: 600;
+  font-size: 24px;
+  color: white;
+  letter-spacing: 1px;
+}
+
+
 /* Secțiuni pentru aliniere corectă */
 .leftSection {
   display: flex;
+  flex-direction: row;
+  gap:10px;
   align-items: center;
   flex: 1; /* Ocupă spațiu pe stânga */
+
 }
 
 .centerSection {
@@ -37,13 +48,14 @@
   width: auto;
   margin-left: 10px;
   transition: height 0.3s ease-in-out;
+   filter: invert(1) !important;
 }
 
 /* Butoane */
 .buttonText {
   margin-left: 8px;
+  color: white;
 }
-
 .buttons {
   display: flex;
   gap: 10px;

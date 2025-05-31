@@ -3,7 +3,8 @@
   top: 0;
   left: 0;
   right: 0;
-  background-image: url("../../assets/background.jpg");
+  background-image: url("../../assets/mountain-background.png");
+  filter: brightness(1.2) contrast(1.2) saturate(1.2);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -14,21 +15,28 @@
 }
 
 .centerContainer {
+  pointer-events: none;
+  position: relative;
+  z-index: 3;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
+  align-items: flex-start;
+  height: 100vh;
+  padding-left: 5vw;
+  max-width: 60vw;
+  gap: 2rem;
 }
 
 .contentContainer {
-  text-align: center;
+  text-align: left;
 }
 
 .headerTitle {
-  color: #040024;
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: white;
+  line-height: 1.2;
 }
 .dropdownItem{
   padding: 10px;
@@ -60,4 +68,42 @@
 
 .right-section i {
   font-size: 20px;
+}
+
+.contentSection {
+  padding: 100px 5vw;
+  z-index: 1;
+  position: relative;
+}
+
+.resortSectionInside {
+  position: absolute;
+  bottom: 30px; /* Sau ajustează după gust */
+  left: 5vw;
+  right: 5vw;
+  z-index: 2;
+}
+
+.homeSections {
+  padding: 60px 5vw;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.01), #f5f7fb);
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  z-index: 1;
+  position: relative;
+}
+
+.section {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1e1e1e;
 }

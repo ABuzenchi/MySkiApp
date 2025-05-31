@@ -1,9 +1,8 @@
 import { useState } from "react";
 import classes from "./header.module.css";
-import alpineSkiingLight from "../../assets/mountainDark.png";
-import { Button, Image } from "@mantine/core";
-import { AiFillHome, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { MdForum } from "react-icons/md";
+import alpineSkiingLight from "../../assets/mountain-header.png";
+import { Button, Image, Text } from "@mantine/core";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
 import useDevice, { DeviceTypes } from "../../hooks/useDevice";
@@ -18,6 +17,7 @@ const Header = () => {
     <div className={classes.navBar}>
       <div className={classes.leftSection}>
         <Image src={alpineSkiingLight} className={classes.image} />
+        <span className={classes.appName}>WinterHeight</span>
       </div>
 
       {!isMobile ? (
@@ -29,7 +29,7 @@ const Header = () => {
             href="/"
             size="lg"
           >
-            <AiFillHome />
+           
             <span className={classes.buttonText}>{EnDictionary.Home}</span>
           </Button>
 
@@ -40,7 +40,6 @@ const Header = () => {
             href="/forum"
             size="lg"
           >
-            <MdForum />
             <span className={classes.buttonText}>{EnDictionary.Forum}</span>
           </Button>
 
@@ -64,7 +63,7 @@ const Header = () => {
                 href="/"
                 size="lg"
               >
-                <AiFillHome />
+              
                 <span className={classes.buttonText}>{EnDictionary.Home}</span>
               </Button>
 
@@ -75,7 +74,7 @@ const Header = () => {
                 href="/forum"
                 size="lg"
               >
-                <MdForum />
+              
                 <span className={classes.buttonText}>{EnDictionary.Forum}</span>
               </Button>
 
