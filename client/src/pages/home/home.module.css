@@ -1,5 +1,5 @@
 .pageBackground {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   right: 0;
@@ -11,7 +11,8 @@
   height: 100vh;
   width: 100%;
   padding: 0px;
-  z-index: -1;
+  z-index: 0;
+  margin-top: 0px !important;
 }
 
 .centerContainer {
@@ -26,6 +27,7 @@
   padding-left: 5vw;
   max-width: 60vw;
   gap: 2rem;
+  
 }
 
 .contentContainer {
@@ -37,6 +39,7 @@
   font-weight: bold;
   color: white;
   line-height: 1.2;
+  margin-top: -20px;
 }
 .dropdownItem{
   padding: 10px;
@@ -77,14 +80,16 @@
 }
 
 .resortSectionInside {
-  position: absolute;
-  bottom: 30px; /* Sau ajustează după gust */
-  left: 5vw;
-  right: 5vw;
-  z-index: 2;
-}
+   position: relative;
+   bottom: 30px;
+   left: 5vw;
+   right: 5vw;
+   z-index: 2;
+   margin-top: -300px;
+ }
 
 .homeSections {
+  margin-top: 80px;
   padding: 60px 5vw;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.01), #f5f7fb);
   display: flex;
@@ -106,4 +111,83 @@
   font-weight: 600;
   margin-bottom: 20px;
   color: #1e1e1e;
+}
+
+.featuresSection {
+  padding: 80px 5vw;
+  background: linear-gradient(to bottom, #133E50);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.imageFadeOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+ background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #133E50);
+
+
+  z-index: 1;
+}
+
+
+.linksColumn {
+  flex: 1;
+  min-width: 300px;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.buttonsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.featureButton {
+  background-color: white;
+  border: 2px solid #2c6586;
+  color: #2c6586;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
+}
+
+.featureButton:hover {
+  background-color: #2c6586;
+  color: white;
+}
+
+.mapColumn {
+  flex: 1;
+  min-width: 400px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.cardsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .featuresSection {
+    flex-direction: column;
+  }
+
+  .mapColumn {
+    width: 100%;
+    margin-top: 40px;
+  }
 }

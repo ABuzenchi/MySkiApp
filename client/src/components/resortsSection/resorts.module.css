@@ -1,76 +1,35 @@
 .wrapper {
-  padding: 2rem 5vw;
+  padding-top: 2rem;
   margin-top: 40px;
-}
 
-.title {
-  margin-bottom: 1.5rem;
-  font-size: 1.8rem;
-}
-.card img {
-  width: 100%;
-  height: 180px; /* fix height */
-  object-fit: cover; /* taie imaginea frumos */
-  border-radius: 0;
-}
+  width: 90%;
 
-.transparentCard {
-  background-color: transparent !important; /* sau rgba(...) pentru opacitate */
-  box-shadow: none;
-}
-
-
-.cardsContainer {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 16px;
+  box-sizing: border-box;
 }
 
 .cardLink {
-  scroll-snap-align: start;
   text-decoration: none;
-  min-width: 220px;
 }
 
 .card {
-background: rgba(255, 255, 255, 0.08) !important;
-backdrop-filter: blur(6px);
-border: 1px solid rgba(255, 255, 255, 0.2);
-
-
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  height: auto;
-  padding: 0;
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s;
 }
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
 .name {
   font-size: 1rem;
   padding: 12px;
   color: white !important;
   font-weight: bold;
-}
-
-.wrapper {
-  padding: 0;
-  margin-top: 0;
-}
-
-.card img {
-  height: 150px; /* mai mic */
-}
-
-.cardsContainer {
-  gap: 16px;
-  padding-bottom: 0;
-}
-
-.card {
-  min-width: 180px;
-  max-width: 200px;
-  padding: 0;
-  border-radius: 10px;
 }

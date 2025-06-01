@@ -4,9 +4,10 @@ import "leaflet/dist/leaflet.css";
 import L, { LatLngExpression } from "leaflet";
 import { SkiResort } from "../../interfaces/skiResort.interface";
 import UserLocation from "../userLocation/userLocation";
+import pin from "../../assets/pin.png"
 
 const skiIcon = new L.Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/854/854878.png",
+  iconUrl: pin,
   iconSize: [32, 32],
   iconAnchor: [16, 32],
   popupAnchor: [0, -32],
@@ -24,12 +25,16 @@ const MapComponent = () => {
   }, []);
 
   return (
-    <MapContainer
-      center={[45.5, 25.5]}
-      zoom={7}
-      style={{ height: "500px", width: "100%" }}
-    >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+   <MapContainer
+  center={[45.9432, 24.9668]}
+  zoom={6}
+  style={{ height: "500px", width: "100%" }}
+>
+  <TileLayer
+    url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+    attribution='&copy; OpenStreetMap &copy; <a href="https://carto.com/">CARTO</a>'
+  />
+
 
       {skiResorts.map((resort, index) => (
         <Marker key={index} position={[resort.lat, resort.lng]} icon={skiIcon}>
@@ -46,7 +51,6 @@ const MapComponent = () => {
         </Marker>
       ))}
 
-      <UserLocation setUserLocation={setUserLocation} />
     </MapContainer>
   );
 };
