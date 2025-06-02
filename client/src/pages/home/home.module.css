@@ -14,6 +14,13 @@
   z-index: 0;
   margin-top: 0px !important;
 }
+.zigZagImgContent {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
 
 .centerContainer {
   pointer-events: none;
@@ -105,6 +112,58 @@
   padding: 40px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
+.zigZagRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 5vw;
+  flex-wrap: wrap;
+}
+
+.zigZagRow.reverse {
+  flex-direction: row-reverse;
+}
+
+.zigZagImage {
+  flex: 1;
+  max-width: none; /* scoate limitarea */
+  display: flex;
+  justify-content: center;
+}
+
+.zigZagImage img {
+  width: 100%;
+  max-width: 600px; /* sau 700-800px dacă vrei extra mare */
+  height: auto;
+  border-radius: 16px; /* opțional pentru estetică */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* opțional */
+}
+
+
+.zigZagText {
+  flex: 2;
+  max-width: 600px;
+  color: white;
+}
+
+.zigZagText h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.zigZagText p {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: #d0d0d0;
+}
+
+.zigZagWrapper {
+  background: linear-gradient(to bottom, #133E50, #0a2c38);
+}
+
+
 
 .sectionTitle {
   font-size: 2rem;
@@ -170,6 +229,7 @@
 .mapColumn {
   flex: 1;
   min-width: 400px;
+  height: 300px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -190,4 +250,11 @@
     width: 100%;
     margin-top: 40px;
   }
+}
+.zigZagRow.reverse .zigZagText {
+  padding-right: 40px;
+}
+
+.zigZagRow:not(.reverse) .zigZagText {
+  padding-left: 40px;
 }

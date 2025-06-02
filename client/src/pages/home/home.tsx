@@ -6,6 +6,9 @@ import MapComponent from "../../components/map/map";
 import FeatureCard from "../../components/feature-card/featureCard";
 import { FaVideo } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
+import { Button } from "@mantine/core";
+import ChatMonty from "../../assets/chat.png";
+import Video from "../../assets/video.png"
 
 interface SkiDomain {
   name: string;
@@ -44,27 +47,47 @@ const Home = () => {
         <div className={classes.imageFadeOverlay} />
       </div>
 
-      <div className={classes.featuresSection}>
-        <div className={classes.linksColumn}>
-          <h2 className={classes.sectionTitle}>Explorează funcționalități</h2>
-          <div className={classes.cardsGrid}>
-            <FeatureCard
-              icon={<FaMessage size={36} />}
-              title="Chat AI"
-              description="Pune întrebări despre pârtii, condiții meteo și locații."
-              onClick={() => navigate("/chat")}
-            />
-            <FeatureCard
-              icon={<FaVideo size={36} />}
-              title="Video Analyzer"
-              description="Încarcă un video de ski și analizează viteza și traseul."
-              onClick={() => navigate("/analyzer")}
-            />
+      <div className={classes.zigZagWrapper}>
+        <div className={classes.zigZagRow}>
+          <div className={classes.zigZagImage}>
+           <img src={ChatMonty} alt="Monty" className={classes.zigZagImgContent} />
+
+          </div>
+          <div className={classes.zigZagText}>
+            <h2>Monty – Asistentul tău de zăpadă</h2>
+            <p>
+              Află prețuri, condiții sau curiozități despre pârtii. Pune-i o
+              întrebare!
+            </p>
+            <Button onClick={() => navigate("/chat")}>Vorbește cu Monty</Button>
           </div>
         </div>
 
-        <div className={classes.mapColumn}>
-          <MapComponent />
+        <div className={`${classes.zigZagRow} ${classes.reverse}`}>
+          <div className={classes.zigZagImage}>
+           <img
+              src={Video}
+              alt="Video"
+           className={classes.zigZagImgContent}
+            />
+          </div>
+          <div className={classes.zigZagText}>
+            <h2>Video Analyzer</h2>
+            <p>Încarcă un video de ski și analizează viteza și traseul.</p>
+            <Button onClick={() => navigate("/analyzer")}>Încarcă video</Button>
+          </div>
+        </div>
+
+        <div className={classes.zigZagRow}>
+          <div className={classes.mapColumn}>
+            <MapComponent />
+          </div>
+          <div className={classes.zigZagText}>
+            <h2>Harta interactivă</h2>
+            <p>
+              Explorează pârtii pe hartă și descoperă stațiuni aproape de tine.
+            </p>
+          </div>
         </div>
       </div>
     </>
