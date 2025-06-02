@@ -1,21 +1,45 @@
+.pageBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: url("../../assets/mountain-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(1.1) contrast(1.05) saturate(1.2);
+  z-index: -1;
+}
+
 .pageLayout {
   display: flex;
   width: 100%;
-  height: 90vh;
-  background: #f0f2f5;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
+
 .sidebar {
-  width: 220px;
-  background-color: #e5e7eb;
-  padding: 20px;
-  border-right: 1px solid #d1d5db;
+  width: 250px;
+  height: 80vh;
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 24px;
+  margin-right: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .sidebar h3 {
   font-size: 18px;
   margin-bottom: 16px;
-  color: #333;
+  color: white;
 }
 
 .sidebar ul {
@@ -25,22 +49,25 @@
 }
 
 .sidebar li {
-  padding: 10px 12px;
+  padding: 12px 18px;
   cursor: pointer;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  transition: background-color 0.2s ease;
-  color: #3b3b3b;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  transition: all 0.2s ease;
 }
 
 .sidebar li:hover {
-  background-color: #d1d5db;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .active {
-  background-color: #cbd5e1;
+  background-color: rgba(255, 255, 255, 0.3);
   font-weight: bold;
+  color: white;
 }
+
 
 /* Chat Container */
 .container {
@@ -56,13 +83,15 @@
 .chatBox {
   display: flex;
   flex-direction: column;
-  height: 600px;
   width: 100%;
-  max-width: 800px;
-  background: white;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 850px;
+  height: 80vh;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 20px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Message List */

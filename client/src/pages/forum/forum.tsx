@@ -99,6 +99,7 @@ const Forum = () => {
   };
 
   return (
+    <div className={classes.pageBackground}>
     <div className={classes.pageLayout}>
       <div className={classes.sidebar}>
         <h3>Camere</h3>
@@ -211,6 +212,7 @@ const Forum = () => {
           </form>
         </div>
       </div>
+    </div>
     </div>
   );
 };
