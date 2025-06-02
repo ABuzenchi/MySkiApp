@@ -14,8 +14,8 @@ export class Slope {
   @Prop({ required: true, unique: true })
   name: string;
 
- @Prop({ type: Types.ObjectId, ref: 'SkiDomain', required: true })
-domainId: Types.ObjectId;
+  @Prop({ type: Types.ObjectId, ref: 'SkiDomain', required: true })
+  domainId: Types.ObjectId;
 
   @Prop({
     type: {

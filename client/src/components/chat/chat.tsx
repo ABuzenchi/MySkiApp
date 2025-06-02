@@ -1,74 +1,97 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from "react";
+
+import classes from "./chat.module.css";
 
 function ChatBox() {
-    type Message = {
-  role: 'user' | 'assistant';
-  text: string;
-  sources?: string[];
-};
+  type Message = {
+    role: "Monty" | "Me";
+    text: string;
+  };
+const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  const [question, setQuestion] = useState('');
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [question, setQuestion] = useState("");
+  const [messages, setMessages] = useState<Message[]>([
+  { role: "Monty", text: "Hello! How can I help you?" },
+]);
 
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+  if (bottomRef.current) {
+    bottomRef.current.scrollIntoView({ behavior: "smooth" });
+  }
+}, [messages]);
+
 
   const askQuestion = async () => {
     if (!question.trim()) return;
 
-    setMessages(prev => [...prev, { role: 'user', text: question }]);
-    setQuestion('');
+    setMessages((prev) => [...prev, { role: "Me", text: question }]);
+    setQuestion("");
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:3000/chat/ask', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("http://localhost:3000/chat/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),
       });
 
       const data = await res.json();
 
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev,
         {
-          role: 'assistant',
+          role: "Monty",
           text: data.answer,
-          sources: data.sources || [],
         },
       ]);
     } catch (err) {
-      console.error('Eroare la trimiterea întrebării:', err);
+      console.error("Eroare la trimiterea întrebării:", err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: 'auto', padding: 20 }}>
-      <h2>💬 Chat AI despre pârtii</h2>
-      <div style={{ border: '1px solid #ccc', padding: 10, minHeight: 200 }}>
-        {messages.map((msg, idx) => (
-          <div key={idx} style={{ marginBottom: 10 }}>
-            <strong>{msg.role === 'user' ? 'Tu' : 'Asistent'}:</strong>
-            <p>{msg.text}</p>
-            {msg.sources && msg.sources.length > 0 && (
-              <small>📄 Surse: {msg.sources.join(', ')}</small>
-            )}
-          </div>
-        ))}
-      </div>
+   <div className={classes.chatPageWrapper}>
+  <div className={classes.chatContainer}>
+    <h2 className={classes.chatTitle}>Talk with Monty</h2>
 
+    <div className={classes.messagesArea}>
+      {messages.length === 0 ? (
+        <p className={classes.placeholder}>Începe conversația punând o întrebare!</p>
+      ) : (
+        messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`${classes.messageWrapper} ${
+              msg.role === "Me" ? classes.userWrapper : classes.assistantWrapper
+            }`}
+          >
+            <span className={classes.roleLabel}>
+              {msg.role === "Me" ? "Me" : "Monty"}
+            </span>
+            <div className={classes.messageBubble}>{msg.text}</div>
+          </div>
+        ))
+      )}
+      <div ref={bottomRef} />
+    </div>
+
+    <div className={classes.inputBar}>
       <input
         value={question}
-        onChange={e => setQuestion(e.target.value)}
-        onKeyDown={e => e.key === 'Enter' && askQuestion()}
+        onChange={(e) => setQuestion(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && askQuestion()}
         placeholder="Pune o întrebare..."
-        style={{ width: '100%', marginTop: 10 }}
       />
       <button onClick={askQuestion} disabled={loading}>
-        {loading ? 'Se răspunde...' : 'Trimite'}
+        {loading ? "Se răspunde..." : "Trimite"}
       </button>
     </div>
+  </div>
+</div>
+
   );
 }
 
