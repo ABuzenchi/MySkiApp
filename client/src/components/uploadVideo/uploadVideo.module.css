@@ -1,0 +1,85 @@
+.pageBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../assets/mountain-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(1.2) contrast(1.2) saturate(1.2);
+  z-index: -1;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* După ce selectezi video, îl ridicăm sus */
+.topAligned {
+  margin: 8vh auto 2vh auto;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+}
+
+/* Centrare și blur pentru containerul principal */
+.uploadContainer {
+  max-width: 700px;
+  margin: 10vh auto;
+  padding: 2rem;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 2;
+}
+
+.uploadTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.videoPreview {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.successText {
+  color: #90ee90;
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.uploadButton {
+  width: 100%;
+  margin-top: 1rem;
+  background: linear-gradient(to right, #1e90ff, #00bfff);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.uploadButton:hover {
+  transform: scale(1.03);
+  background: linear-gradient(to right, #00bfff, #1e90ff);
+}
+
+.modalVideo {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}

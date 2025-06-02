@@ -1,13 +1,12 @@
 import { useState } from "react";
 import {
   Button,
-  Group,
   FileInput,
   Title,
-  Text,
   Stack,
   Modal,
 } from "@mantine/core";
+import classes from "./uploadVideo.module.css";
 
 export function UploadVideo() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
@@ -30,7 +29,7 @@ export function UploadVideo() {
 
       const data = await res.json();
       setResponseData(data);
-      setModalOpened(true); // 👈 deschide modalul automat
+      setModalOpened(true);
     } catch (err) {
       console.error("Upload failed:", err);
     } finally {
@@ -38,10 +37,18 @@ export function UploadVideo() {
     }
   };
 
+  const containerClass = `${classes.uploadContainer} ${
+    videoFile ? classes.topAligned : classes.centered
+  }`;
+
   return (
     <>
-      <Stack>
-        <Title order={3}>Upload Ski Video</Title>
+      <div className={classes.pageBackground}></div>
+
+      <Stack className={containerClass}>
+        <Title order={3} className={classes.uploadTitle}>
+          Upload Ski Video
+        </Title>
 
         <FileInput
           label="Select your skiing video"
@@ -51,25 +58,20 @@ export function UploadVideo() {
           onChange={setVideoFile}
         />
 
+        <Button
+          onClick={handleUpload}
+          disabled={!videoFile || uploading}
+          className={classes.uploadButton}
+        >
+          {uploading ? "Uploading..." : "Upload"}
+        </Button>
+
         {videoFile && (
           <video
-            width="100%"
             controls
-            style={{ borderRadius: "12px", marginTop: "10px" }}
+            className={classes.videoPreview}
             src={URL.createObjectURL(videoFile)}
           />
-        )}
-
-        <Group>
-          <Button onClick={handleUpload} disabled={!videoFile || uploading}>
-            {uploading ? "Uploading..." : "Upload"}
-          </Button>
-        </Group>
-
-        {responseData && (
-          <Text color="green" mt="sm">
-            Upload completat. Se procesează video analizat...
-          </Text>
         )}
       </Stack>
 
@@ -84,13 +86,10 @@ export function UploadVideo() {
           <>
             <video
               controls
-              width="100%"
+              className={classes.videoPreview}
               src={`http://localhost:8002/processed/${responseData.processed}`}
-              style={{ borderRadius: "10px" }}
             />
-
             <Button
-              mt="md"
               component="a"
               href={`http://localhost:8002/download/${responseData.processed}`}
               download
