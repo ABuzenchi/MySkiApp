@@ -45,26 +45,21 @@ const SlopeStatus = ({ name }: SlopeStatusProps) => {
     }
   };
 
-  return (
-    <div className={classes.slopeDetails}>
-      <p>{name}</p>
-      <Button
-        variant="transparent"
-        onClick={handleFavoriteToggle}
-        size="lg"
-      >
+ return (
+  <div className={classes.slopeDetails}>
+    <p>{name}</p>
+    <div className={classes.actions}>
+      <Button variant="transparent" onClick={handleFavoriteToggle} size="lg">
         {isFavorite ? <MdOutlineFavorite /> : <MdFavoriteBorder />}
       </Button>
       <ShareModal />
-      <Button
-        variant="transparent"
-        onClick={handleVisitedToggle}
-        size="sm"
-      >
+      <Button variant="transparent" onClick={handleVisitedToggle} size="lg">
         {isVisited ? <AiFillCheckCircle /> : <AiOutlineCheckCircle />}
       </Button>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default SlopeStatus;

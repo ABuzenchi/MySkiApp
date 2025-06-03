@@ -10,7 +10,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(1.1) contrast(1.1) saturate(1.2);
+ filter: brightness(1.2) contrast(1.2) saturate(1.2);
   z-index: -1;
 }
 .sidebarWrapper {
@@ -24,9 +24,8 @@
   display: flex;
   width: 100%;
   min-height: 100vh;
-  padding: 6rem 2rem 2rem;
+  padding: 6rem 2rem 2rem calc(80px + 2rem); /* 80px lățimea estimată a sidebarului + 2rem spațiu */
   box-sizing: border-box;
-  gap: 2rem;
 }
 
 .mainContent {
