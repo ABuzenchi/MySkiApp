@@ -13,6 +13,7 @@ import Transalpina from "./pages/Transalpina/Transalpina";
 import SuccessPage from "./pages/succes";
 import ChatBox from "./components/chat/chat";
 import { UploadVideo } from "./components/uploadVideo/uploadVideo";
+import ResortPage from "./pages/ResortPage/ResortPage";
 
 const App = () => {
   return (
@@ -23,10 +24,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/forum" element={<Forum />} />
-            <Route path="/Sinaia" element={<Sinaia />} />
-            <Route path="/Poiana Brașov" element={<PoianaBrasov />} />
-            <Route path="/Straja" element={<Straja />} />
-            <Route path="/Transalpina" element={<Transalpina />} />
+           <Route path="/resorts/:name" element={<ResortPage />} />
             <Route path="/success" element={<SuccessPage />} />
             <Route path="/chat" element={<ChatBox />} />
             <Route path="/analyzer" element={<UploadVideo />} />

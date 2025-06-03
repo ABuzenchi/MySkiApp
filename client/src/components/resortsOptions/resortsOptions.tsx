@@ -32,7 +32,8 @@ const ResortsOptions = () => {
           <Menu.Item
             key={resortName}
             component="a"
-            href={`/${resortName}`}
+          href={`/resorts/${encodeURIComponent(resortName)}`}
+
             className={classes.item}
           >
             {resortName}

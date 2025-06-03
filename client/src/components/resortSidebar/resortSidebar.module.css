@@ -1,35 +1,32 @@
-/* components/ResortSidebar.module.css */
-
+/* ResortSidebar.module.css */
 .sidebar {
   position: fixed;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
+  top: 100px; /* sub header */
+  left: 2rem;
+  z-index: 999;
+
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  padding: 12px;
+  gap: 1.5rem;
+
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  z-index: 999;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+
 .button {
-  background-color: transparent;
+  background: none;
   border: none;
   color: white;
-  padding: 10px;
-  border-radius: 10px;
+  font-size: 22px;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.2s ease;
 }
 
 .button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
