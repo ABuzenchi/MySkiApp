@@ -14,6 +14,7 @@ import { SlopeReviews } from "../../components/reviews/SlopeReviews";
 import { useSlopesByDomain } from "../../hooks/useSlopesByDomain";
 import { useDomainByName } from "../../hooks/useDomainByName";
 import { UploadVideo } from "../../components/uploadVideo/uploadVideo";
+import ResortSidebar from "../../components/resortSidebar/resortSidebar";
 
 const images = [
   sinaiaMap,
@@ -61,7 +62,7 @@ export default function Sinaia() {
           allowFullScreen
         ></iframe>
       </div>
-      <UploadVideo/>
+      <ResortSidebar/>
     </>
   );
 }
