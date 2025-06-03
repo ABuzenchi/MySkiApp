@@ -1,107 +1,62 @@
 .container {
-  font-family: "Arial", sans-serif;
-  max-width: 400px;
-  margin: 40px;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  width: 100%;
+  max-width: 480px;
+  padding: 2.5rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.40);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   text-align: center;
-  height: 570px;
+  color: #133E50;
 }
 
 .location {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.location input {
-  font-size: 16px;
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  transition: border 0.3s;
-  flex: 1;
-}
-
-.location input:focus {
-  border: 1px solid #666;
-}
-
-.searchButton {
-  background-color: #ff8c00;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-}
-
-.searchButton:hover {
-  background-color: #e07b00;
-}
-
-.weather {
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
 }
 
 .weather img {
-  width: 400px;
-  height: 200px;
-  margin-bottom: 10px;
+  width: 100px;
+  height: 100px;
+  margin: 1rem 0;
 }
 
 .weathertype {
   font-size: 18px;
-  color: #555;
-  text-transform: capitalize;
+  color: #133E50;
+  margin-bottom: 0.5rem;
 }
 
 .temp {
-  font-size: 48px;
+  font-size: 52px;
   font-weight: bold;
-  color: #ff8c00;
+  color: #de6a2a;
+  margin-bottom: 1rem;
 }
 
 .weatherdate {
-  margin: 15px 0;
   font-size: 14px;
-  color: #777;
+  color: #133E50;
+  margin-bottom: 1.5rem;
 }
 
 .weatherdata {
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
-}
-
-.humidity,
-.wind {
-  text-align: center;
+  margin-top: 1rem;
 }
 
 .dataname {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 5px;
+  font-size: 13px;
+  color: #133E50;
 }
 
 .data {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: #133E50;
 }
+
+

@@ -42,7 +42,9 @@ export default function ResortPage() {
 
           {activeSection === "weather" && (
             <>
+            <div className={classes.weatherContainer}>
               <Weather location={resortName} />
+              </div>
               <CarouselPhoto images={images} />
             </>
           )}
