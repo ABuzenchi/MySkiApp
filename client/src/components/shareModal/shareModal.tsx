@@ -42,8 +42,14 @@ const ShareModal = () => {
         size="md"
         classNames={{
           title: classes.customModalTitle,
+          content:classes.customModalContent,
         }}
+        
       >
+       <div className={classes.modalHeader}>
+  <h2 className={classes.modalTitle}>Distribuie locația ta preferată</h2>
+  <p className={classes.modalSubtitle}>Trimite unui prieten pasionat de ski</p>
+</div>
         <div className={classes.container}>
           <Button
             variant="transparent"
@@ -61,8 +67,12 @@ const ShareModal = () => {
           </Button>
           <QRCode value={currentUrl} size={80} />
         </div>
+        <p className={classes.subtitle}>Link-ul către pagină</p>
+
         <div className={classes.urlContainer}>
-        <Input.Placeholder>{currentUrl}</Input.Placeholder>
+          
+          <span className={classes.linkText}>{currentUrl}</span>
+
           <CopyButton value={currentUrl} timeout={2000}>
             {({ copied, copy }) => (
               <Tooltip
@@ -71,11 +81,11 @@ const ShareModal = () => {
                 position="top"
               >
                 <ActionIcon
-                  color={copied ? "teal" : "gray"}
-                  variant="subtle"
+                  color={copied ? "blue" : "gray"}
+                  variant="transparent"
                   onClick={copy}
                 >
-                  <FaCopy size={16} />
+                  <FaCopy size={18} />
                 </ActionIcon>
               </Tooltip>
             )}
