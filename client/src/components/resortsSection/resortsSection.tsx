@@ -23,21 +23,29 @@ const ResortsSection = ({ resorts }: Props) => {
         withIndicators
         loop
         height={260}
-        styles={{
+        styles={(theme) => ({
           indicators: {
-            marginTop: 32, // sau 32 dacă vrei mai mult spațiu
+            marginTop: 32,
+            justifyContent: "center",
           },
           indicator: {
-            width: 8,
-            height: 8,
-            transition: "opacity 0.3s ease",
-            background: "#fff",
-            opacity: 0.5,
+            width: 10,
+            height: 10,
+            borderRadius: "50%",
+            background: "rgba(255, 255, 255, 0.5)",
+            border: "1px solid white",
+            transition: "all 0.3s ease",
             "&[data-active]": {
-              opacity: 1,
+              backgroundColor: "white",
+              transform: "scale(1.4)",
+              boxShadow: "0 0 6px white",
+            },
+            "&:hover": {
+              background: "white",
+              opacity: 0.8,
             },
           },
-        }}
+        })}
       >
         {resorts.map((resort) => (
           <Carousel.Slide key={resort.name}>
