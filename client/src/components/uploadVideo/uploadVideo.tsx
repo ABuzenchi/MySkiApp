@@ -47,7 +47,7 @@ export function UploadVideo() {
 
       <Stack className={containerClass}>
         <Title order={3} className={classes.uploadTitle}>
-          Upload Ski Video
+       Let’s analyze your speed!
         </Title>
 
         <FileInput

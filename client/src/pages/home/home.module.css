@@ -259,6 +259,26 @@
   flex-wrap: wrap;
   gap: 24px;
 }
+.zigZagButton {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff;
+  padding: 16px 24px !;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.zigZagButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+  cursor: pointer;
+}
+
 
 @media (max-width: 768px) {
   .featuresSection {

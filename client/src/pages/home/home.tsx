@@ -59,7 +59,7 @@ const Home = () => {
               Află prețuri, condiții sau curiozități despre pârtii. Pune-i o
               întrebare!
             </p>
-            <Button onClick={() => navigate("/chat")}>Vorbește cu Monty</Button>
+            <Button className={classes.zigZagButton} onClick={() => navigate("/chat")}>Vorbește cu Monty</Button>
           </div>
         </div>
 
@@ -74,7 +74,7 @@ const Home = () => {
           <div className={classes.zigZagText}>
             <h2>Video Analyzer</h2>
             <p>Încarcă un video de ski și analizează viteza și traseul.</p>
-            <Button onClick={() => navigate("/analyzer")}>Încarcă video</Button>
+            <Button className={classes.zigZagButton} onClick={() => navigate("/analyzer")}>Încarcă video</Button>
           </div>
         </div>
 
@@ -83,9 +83,9 @@ const Home = () => {
             <MapComponent />
           </div>
           <div className={classes.zigZagText}>
-            <h2>Harta interactivă</h2>
+            <h2>Harta domeniilor schiabile</h2>
             <p>
-              Explorează pârtii pe hartă și descoperă stațiuni aproape de tine.
+             Explorează domeniile marcate și află mai multe despre fiecare.
             </p>
           </div>
         </div>
