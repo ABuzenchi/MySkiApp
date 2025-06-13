@@ -140,12 +140,30 @@
   border-radius: 16px; /* opțional pentru estetică */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* opțional */
 }
+.zigZagRow.reverse .zigZagText {
+  padding-right: 40px;
+}
+
+.zigZagRow.reverse .zigZagImage {
+  padding-left: 40px;
+}
+
+.zigZagRow:not(.reverse) .zigZagText {
+  padding-left: 10px !important;
+}
+
+.zigZagRow:not(.reverse) .zigZagImage {
+  padding-right: 80px;
+}
+
 
 
 .zigZagText {
   flex: 2;
   max-width: 600px;
   color: white;
+   padding-left: 40px; /* poți regla această valoare la fix */
+  padding-right: 40px;
 }
 
 .zigZagText h2 {
@@ -228,7 +246,8 @@
 
 .mapColumn {
   flex: 1;
-  min-width: 400px;
+  max-width: 600px;
+  margin-left: 30px !important;
   height: 300px;
   border-radius: 16px;
   overflow: hidden;
