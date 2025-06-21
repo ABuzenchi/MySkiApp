@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { FriendRequest, FriendRequestDocument } from './friend-request.schema';
 import { User, UserDocument } from '../auth/schema/user.schema';
-import { UserAchievementService } from 'src/userachievement/userachievement.service';
+import { UserAchievementService } from '../userachievement/userachievement.service';
 
 @Injectable()
 export class FriendRequestService {

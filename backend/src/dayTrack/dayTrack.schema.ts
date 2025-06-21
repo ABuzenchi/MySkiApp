@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Slope } from 'src/slope/slope.schema';
+import { Slope } from '../slope/slope.schema';
 
 export type DayTrackDocument = DayTrack & Document;
 

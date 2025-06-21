@@ -3,7 +3,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { Review, ReviewSchema } from "./review.schema";
 import { ReviewController } from "./review.controller";
 import { ReviewService } from "./review.service";
-import { UserAchievementModule } from "src/userachievement/userachievement.module";
+import { UserAchievementModule } from "../userachievement/userachievement.module";
 
 
 @Module({

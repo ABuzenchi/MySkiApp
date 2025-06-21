@@ -1,6 +1,6 @@
 // backend/src/suggestions/suggestions.service.ts
 import { Injectable } from '@nestjs/common';
-import { SlopeService } from 'src/slope/slope.service';
+import { SlopeService } from '../slope/slope.service';
 
 @Injectable()
 export class SuggestionsService {

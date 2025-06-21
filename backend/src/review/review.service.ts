@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Review, ReviewDocument } from './review.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserAchievementService } from 'src/userachievement/userachievement.service';
+import { UserAchievementService } from '../userachievement/userachievement.service';
 
 @Injectable()
 export class ReviewService {

@@ -5,7 +5,7 @@ import { DayTrack, DayTrackDocument } from './dayTrack.schema';
 import { DayTrackDto } from './dayTrack.dto';
 import { User } from '../auth/schema/user.schema';
 import { Slope } from '../slope/slope.schema';
-import { UserAchievementService } from 'src/userachievement/userachievement.service';
+import { UserAchievementService } from '../userachievement/userachievement.service';
 
 
 @Injectable()
