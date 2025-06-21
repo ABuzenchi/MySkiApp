@@ -128,7 +128,7 @@ const SignIn = () => {
         </div>
       </Modal>
 
-      <Button variant="default" onClick={open}>
+      <Button data-testid="sign-in-button" variant="default" onClick={open}>
         {EnDictionary.SignIn}
       </Button>
     </>

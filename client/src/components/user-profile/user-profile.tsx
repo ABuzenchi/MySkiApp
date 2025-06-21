@@ -102,7 +102,7 @@ const UserProfile = () => {
         </FeatureDrawer>
       )}
 
-      <Button  style={{ position: "fixed", top: 16, right: 16, zIndex: 1 }} variant="transparent" color="#040024" onClick={openSelfProfile} size="lg">
+      <Button data-testid="user-avatar-button" style={{ position: "fixed", top: 16, right: 16, zIndex: 1 }} variant="transparent" color="#040024" onClick={openSelfProfile} size="lg">
         {isAuthenticated ? (
           <UserAvatarImage username={username} size="md" />
         ) : (
