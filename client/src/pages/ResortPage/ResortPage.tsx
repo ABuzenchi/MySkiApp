@@ -11,10 +11,16 @@ import Payment from "../../components/payment/payment";
 import MapSearch from "../../components/map/map-search";
 import ResortSidebar from "../../components/resortSidebar/resortSidebar";
 import classes from "./ResortPage.module.css";
+import { useInstallationsByDomain } from "../../hooks/useInstallationByDomain";
+import Installation from "../../components/installations/installations";
 
 const imageSets: { [key: string]: string[] } = {
-  "Poiana Brașov": [/* ... */],
-  Sinaia: [/* ... */],
+  "Poiana Brașov": [
+    /* ... */
+  ],
+  Sinaia: [
+    /* ... */
+  ],
 };
 
 export default function ResortPage() {
@@ -25,7 +31,14 @@ export default function ResortPage() {
   const { slopes, loading, error } = useSlopesByDomain(resortName);
   const { domainId, loading: domainLoading } = useDomainByName(resortName);
 
-  const [activeSection, setActiveSection] = useState<string>("weather");
+  const [activeSection, setActiveSection] = useState<string>("slopes");
+  const {
+  installations,
+  loading: installationsLoading,
+  error: installationsError,
+} = useInstallationsByDomain(domainId || "");
+
+
 
   if (loading || domainLoading) return <p>Se încarcă datele...</p>;
   if (error) return <p>Eroare: {error}</p>;
@@ -34,18 +47,26 @@ export default function ResortPage() {
     <>
       <div className={classes.pageBackground} />
       <div className={classes.pageLayout}>
-     
-  <ResortSidebar onSelectSection={setActiveSection} />
+        <ResortSidebar onSelectSection={setActiveSection} />
 
         <div className={classes.mainContent}>
           <SlopeStatus name={resortName} />
 
           {activeSection === "weather" && (
             <>
-            <div className={classes.weatherContainer}>
-              <Weather location={resortName} />
+              <div className={classes.weatherContainer}>
+                <Weather location={resortName} />
               </div>
               <CarouselPhoto images={images} />
+            </>
+          )}
+          {activeSection === "installation" && (
+            <>
+              {installationsLoading ? (
+                <p>Se încarcă instalațiile...</p>
+              ) : (
+                <Installation installations={installations} />
+              )}
             </>
           )}
 

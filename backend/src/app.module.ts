@@ -17,6 +17,7 @@ import { AchievementModule } from './achievement/achievement.module';
 import { UserAchievementModule } from './userachievement/userachievement.module';
 import { StripeModule } from './stripe/stripe.module';
 import { SkiDomainModule } from './ski-domain/ski-domain.module';
+import { SkiInstallationModule } from './ski-installation/ski-installation.module';
 console.log('🌐 Using Mongo URI:', process.env.MONGO);
 
 @Module({
@@ -40,7 +41,8 @@ console.log('🌐 Using Mongo URI:', process.env.MONGO);
     AchievementModule,
     UserAchievementModule,
     StripeModule,
-    SkiDomainModule
+    SkiDomainModule,
+    SkiInstallationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

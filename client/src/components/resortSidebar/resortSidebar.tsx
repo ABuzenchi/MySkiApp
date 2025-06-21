@@ -10,7 +10,7 @@ interface Props {
 const ResortSidebar = ({ onSelectSection }: Props) => {
   return (
     <div className={classes.sidebar}>
-      <button className={classes.button} title="Instalații" onClick={() => onSelectSection("instalatii")}>
+      <button className={classes.button} title="Instalații" onClick={() => onSelectSection("installation")}>
         <FaCableCar size={20} />
       </button>
       <button className={classes.button} title="Pârtii" onClick={() => onSelectSection("slopes")}>
