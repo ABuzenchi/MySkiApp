@@ -39,38 +39,20 @@ const ResortsSection = ({ resorts }: Props) => {
 
   return (
     <div className={classes.wrapper}>
-      <Carousel
-        slideSize={slideSize}
-        slideGap={slideGap}
-        align="start"
-        containScroll="trimSnaps"
-        withIndicators
-        loop
-        height={260}
-        styles={() => ({
-          indicators: {
-            marginTop: 32,
-            justifyContent: "center",
-          },
-          indicator: {
-            width: 10,
-            height: 10,
-            borderRadius: "50%",
-            background: "rgba(255, 255, 255, 0.5)",
-            border: "1px solid white",
-            transition: "all 0.3s ease",
-            "&[data-active]": {
-              backgroundColor: "white",
-              transform: "scale(1.4)",
-              boxShadow: "0 0 6px white",
-            },
-            "&:hover": {
-              background: "white",
-              opacity: 0.8,
-            },
-          },
-        })}
-      >
+    <Carousel
+  slideSize={slideSize}
+  slideGap={slideGap}
+  align="start"
+  containScroll="trimSnaps"
+  withIndicators
+  loop
+  height={260}
+  classNames={{
+    indicators: classes.indicators,
+    indicator: classes.indicator,
+  }}
+>
+
         {resorts.map((resort) => (
           <Carousel.Slide key={resort.name}>
             <Link

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Menu } from "@mantine/core";
 import classes from "./resortsOptions.module.css";
 import { EnDictionary } from "../../dictionaries/en";
+import { RoDictionary } from "../../dictionaries/ro";
 
 const ResortsOptions = () => {
   const [resorts, setResorts] = useState<string[]>([]);
@@ -23,7 +24,7 @@ const ResortsOptions = () => {
     >
       <Menu.Target>
         <Button variant="transparent" color="white" size="lg">
-          <span className={classes.buttonText}>{EnDictionary.Resorts}</span>
+          <span className={classes.buttonText}>{RoDictionary.Resorts}</span>
         </Button>
       </Menu.Target>
 
