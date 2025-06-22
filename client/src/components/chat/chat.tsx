@@ -12,7 +12,7 @@ function ChatBox() {
 
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState<Message[]>([
-    { role: "Monty", text: "Hello! How can I help you?" },
+    { role: "Monty", text: "Hei, sunt Monty! Cu ce te pot ajuta azi?" },
   ]);
 
   const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ function ChatBox() {
     <div className={classes.chatPageWrapper}>
       <div className={classes.chatContainer}>
         <div className={classes.titleRow}>
-          <h2 className={classes.chatTitle}>Talk with Monty</h2>
+          <h2 className={classes.chatTitle}>Monty – Asistentul tău de zăpadă</h2>
           <img src={Monty} alt="Monty" className={classes.montyImage} />
         </div>
 

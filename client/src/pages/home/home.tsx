@@ -72,7 +72,7 @@ const Home = () => {
             />
           </div>
           <div className={classes.zigZagText}>
-            <h2 >Video Analyzer</h2>
+            <h2 >Analiză video </h2>
             <p>Încarcă un video de ski și analizează viteza și traseul.</p>
             <Button className={classes.zigZagButton} onClick={() => navigate("/analyzer")}>Încarcă video</Button>
           </div>

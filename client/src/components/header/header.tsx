@@ -7,6 +7,7 @@ import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
 import useDevice, { DeviceTypes } from "../../hooks/useDevice";
 import { EnDictionary } from "../../dictionaries/en";
+import { RoDictionary } from "../../dictionaries/ro";
 
 const Header = () => {
   const { device } = useDevice();
@@ -29,7 +30,7 @@ const Header = () => {
             href="/"
             size="lg"
           >
-            <span className={classes.buttonText}>{EnDictionary.Home}</span>
+            <span className={classes.buttonText}>{RoDictionary.Home}</span>
           </Button>
 
           <Button
