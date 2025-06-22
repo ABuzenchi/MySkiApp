@@ -279,23 +279,52 @@
   cursor: pointer;
 }
 
-
 @media (max-width: 768px) {
-  .featuresSection {
-    flex-direction: column;
+  .zigZagRow {
+    flex-direction: column !important;
+    align-items: center;
+    padding: 40px 5vw;
+    text-align: center;
+  }
+
+  .zigZagText {
+    padding: 0 !important;
+    max-width: 90vw;
+  }
+
+  .zigZagImage {
+    padding: 0 !important;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .zigZagImgContent {
+    width: 100%;
+    max-width: 90vw;
+    height: auto;
+  }
+
+  .zigZagText h2 {
+    font-size: 1.8rem;
+  }
+
+  .zigZagText p {
+    font-size: 1rem;
+    color: #e0e0e0;
+  }
+
+  .zigZagButton {
+    width: 100%;
+    max-width: 250px;
+    margin: 20px auto 0;
   }
 
   .mapColumn {
     width: 100%;
-    margin-top: 40px;
+    max-width: 90vw;
+    margin-left: 0 !important;
+    height: 20px !important;
   }
-}
-.zigZagRow.reverse .zigZagText {
-  padding-right: 40px;
-}
-
-.zigZagRow:not(.reverse) .zigZagText {
-  padding-left: 40px;
 }
 
 @media (max-width: 768px) {
