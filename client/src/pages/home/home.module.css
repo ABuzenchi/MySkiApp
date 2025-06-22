@@ -148,9 +148,9 @@
   padding-left: 40px;
 }
 
-.zigZagRow:not(.reverse) .zigZagText {
+/* .zigZagRow:not(.reverse) .zigZagText {
   padding-left: 10px !important;
-}
+} */
 
 .zigZagRow:not(.reverse) .zigZagImage {
   padding-right: 80px;
@@ -161,14 +161,18 @@
 .zigZagText {
   flex: 2;
   max-width: 600px;
-  color: white;
+  color: white ;
    padding-left: 40px; /* poți regla această valoare la fix */
   padding-right: 40px;
+   display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .zigZagText h2 {
   font-size: 2rem;
   margin-bottom: 12px;
+  color:white;
 }
 
 .zigZagText p {
@@ -262,15 +266,18 @@
 .zigZagButton {
   background: rgba(255, 255, 255, 0.3) !important;
   color: #ffffff;
-  padding: 16px 24px !;
+  padding: 12px 20px; /* 🟢 mai compact */
   font-size: 1rem;
   font-weight: 600;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 16px;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
-  min-width: 200px;
+  width: fit-content;      /* 🔥 cheia ca să nu fie full-width */
+  min-width: unset;        /* ✅ scoți limitarea */
+  align-self: center;  /* 🟢 dacă vrei să-l aliniezi stânga */
 }
+
 
 .zigZagButton:hover {
   background: rgba(255, 255, 255, 0.2);

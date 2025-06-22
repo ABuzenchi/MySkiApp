@@ -1,6 +1,10 @@
 // components/ResortSidebar.tsx
 import { FaMapMarkedAlt, FaSkiing, FaSnowflake, FaCamera, FaCreditCard } from 'react-icons/fa';
 import { FaCableCar } from "react-icons/fa6";
+import { BiCommentDetail } from "react-icons/bi";
+import { MdRateReview } from "react-icons/md";
+
+
 import classes from './ResortSidebar.module.css';
 // components/ResortSidebar.tsx
 interface Props {
@@ -27,6 +31,9 @@ const ResortSidebar = ({ onSelectSection }: Props) => {
       </button>
       <button className={classes.button} title="Hartă" onClick={() => onSelectSection("map")}>
         <FaMapMarkedAlt size={20} />
+      </button>
+      <button className={classes.button} title="Reviews" onClick={() => onSelectSection("reviews")}>
+        <BiCommentDetail size={24} />
       </button>
     </div>
   );
