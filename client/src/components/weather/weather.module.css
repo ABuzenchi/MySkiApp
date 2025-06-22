@@ -18,10 +18,11 @@
 }
 
 .weather img {
-  width: 100px;
-  height: 100px;
-  margin: 1rem 0;
+  width: auto;
+  height: 200px; /* 🔁 mărit de la 100px */
+  object-fit: contain;
 }
+
 
 .weathertype {
   font-size: 18px;

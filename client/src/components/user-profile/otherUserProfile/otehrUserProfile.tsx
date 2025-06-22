@@ -59,12 +59,6 @@ const OtherUserProfileContent = ({ username, openUserProfile }: Props) => {
       <p>
         <strong>Visited Slopes:</strong> {userData.visitedSlopes?.length ?? 0}
       </p>
-      <p>
-        <strong>League:</strong> Sapphire
-      </p>
-      <p>
-        <strong>Medals:</strong> 5
-      </p>
 
       {currentUserId && userData._id !== currentUserId && !isFriend && (
         <Group mt="md">

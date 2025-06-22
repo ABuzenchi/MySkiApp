@@ -180,31 +180,29 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
       value: favoriteSlopes.length,
       label: "Favorite Slopes",
     },
-    { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Slopes" },
-    { id: 3, icon: "🔷", value: "Sapphire", label: "Current League" },
-    { id: 4, icon: "🏅", value: "5", label: "League Medals" },
+    { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Resorts" },
     ...(extraStats
       ? [
           {
-            id: 5,
+            id: 3,
             icon: "📅",
             value: extraStats.activeDays,
             label: "Active Days",
           },
           {
-            id: 6,
+            id: 4,
             icon: "🔁",
             value: extraStats.totalRuns,
             label: "Total Runs",
           },
           {
-            id: 7,
+            id: 5,
             icon: "📏",
-            value: `${extraStats.averageKm} km`,
+            value: `${extraStats.averageKm} m`,
             label: "Avg per Day",
           },
           {
-            id: 8,
+            id: 6,
             icon: "🏔️",
             value: extraStats.topSlopeName || "–",
             label: "Top Slope",
@@ -271,7 +269,9 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
           </div>
 
           {/* Friends */}
+            <div className={classes.container}>
           <div className={classes.userList}>
+              <h3 className={classes.title}>Friends</h3>
             {currentUserData?.friends?.length > 0 ? (
               currentUserData.friends.map((friend: any) => (
                 <div
@@ -287,6 +287,7 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
             ) : (
               <p>Nu ai prieteni încă.</p>
             )}
+          </div>
           </div>
 
           {/* Pending Friend Requests */}

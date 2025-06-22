@@ -75,12 +75,14 @@
 .statBox {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; 🔴 elimină asta dacă vrei iconul și textul mai apropiați */
   background: #f0f0f0;
   padding: 12px;
   border-radius: 8px;
   transition: transform 0.2s ease-in-out;
+  gap: 8px; /* ✅ adaugă această linie pentru controlul distanței între icon și text */
 }
+
 
 /* Hover effect */
 .statBox:hover {

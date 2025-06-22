@@ -71,7 +71,7 @@ const UserProfile = () => {
     close();
   };
 
-  const drawerTitle = viewMode === "self" ? "User Profile" : `Profile: ${selectedUser}`;
+  const drawerTitle = viewMode === "self" ? `Profile: ${username}` : `Profile: ${selectedUser}`;
 
   const Content = viewMode === "self"
     ? <UserProfileContent openUserProfile={openUserProfile} onLogout={handleLogout}  />
