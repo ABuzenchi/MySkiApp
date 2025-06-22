@@ -44,7 +44,7 @@ export default function ResortPage() {
     error: installationsError,
   } = useInstallationsByDomain(domainId || "");
 
-  if (loading || domainLoading) return <Spinner/>
+  if (loading || domainLoading) return <Spinner />;
   if (error) return <p>Eroare: {error}</p>;
 
   return (
@@ -85,17 +85,14 @@ export default function ResortPage() {
           {activeSection === "payment" && domain && <Payment domain={domain} />}
 
           {activeSection === "webcam" && webcamUrl && (
-            <iframe
-              width="100%"
-              height="600"
-              src={webcamUrl}
-              title={`Webcam ${resortName}`}
-              allowFullScreen
-              style={{
-                borderRadius: "16px",
-                boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
-              }}
-            />
+            <div className={classes.iframeWrapper}>
+              <iframe
+                className={classes.responsiveIframe}
+                src={webcamUrl}
+                title={`Webcam ${resortName}`}
+                allowFullScreen
+              />
+            </div>
           )}
 
           {activeSection === "webcam" && !webcamUrl && (

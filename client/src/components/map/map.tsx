@@ -11,6 +11,7 @@ import { SkiResort } from "../../interfaces/skiResort.interface";
 import pin from "../../assets/pin.png";
 import { Modal } from "@mantine/core";
 import { MdFullscreen } from "react-icons/md";
+import useDevice, { DeviceTypes } from "../../hooks/useDevice";
 
 // Icon pentru marker
 const skiIcon = new L.Icon({
@@ -20,14 +21,14 @@ const skiIcon = new L.Icon({
   popupAnchor: [0, -32],
 });
 
-// Centrare default pe România
 const DEFAULT_CENTER: [number, number] = [45.9432, 24.9668];
 const DEFAULT_ZOOM = 7;
 
 const MapComponent = () => {
   const [skiResorts, setSkiResorts] = useState<SkiResort[]>([]);
   const [modalOpened, setModalOpened] = useState(false);
-  const isMobile = window.innerWidth < 768;
+  const { device } = useDevice();
+  const isMobile = device === DeviceTypes.Mobile || device === DeviceTypes.MobilePortrait;
 
   useEffect(() => {
     fetch("http://localhost:3000/ski-domains/map")
@@ -36,7 +37,6 @@ const MapComponent = () => {
       .catch(console.error);
   }, []);
 
-  // Funcție ce returnează mapa
   const renderMap = (fullscreen = false) => (
     <MapContainer
       center={DEFAULT_CENTER}
@@ -44,9 +44,11 @@ const MapComponent = () => {
       style={{
         width: "100%",
         height: fullscreen
-          ? "100vh"
+          ? "150vh"
           : isMobile
-          ? "280px"
+          ? "250px"
+          : device === DeviceTypes.Tablet
+          ? "400px"
           : "500px",
       }}
     >
@@ -54,7 +56,6 @@ const MapComponent = () => {
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         attribution='&copy; OpenStreetMap &copy; <a href="https://carto.com/">CARTO</a>'
       />
-
       {skiResorts.map((resort, index) => (
         <Marker key={index} position={[resort.lat, resort.lng]} icon={skiIcon}>
           <Popup minWidth={300} maxWidth={300}>

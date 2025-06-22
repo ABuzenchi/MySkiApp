@@ -9,7 +9,7 @@ import store from "./store";
 import PoianaBrasov from "./pages/Poiana-Brasov/Poiana-Brasov";
 import Straja from "./pages/Straja/Straja";
 import Transalpina from "./pages/Transalpina/Transalpina";
-import SuccessPage from "./pages/succes";
+import SuccessPage from "././pages/succes/succes";
 import ChatBox from "./components/chat/chat";
 import { UploadVideo } from "./components/uploadVideo/uploadVideo";
 import ResortPage from "./pages/ResortPage/ResortPage";

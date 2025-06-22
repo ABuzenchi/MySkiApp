@@ -1,0 +1,32 @@
+.container {
+  text-align: center;
+  margin-top: 5rem;
+  padding: 2rem;
+  max-width: 500px;
+  margin-inline: auto;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  font-size: 2rem;
+  color: #2b8a3e;
+}
+
+.message {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  color: #133e50;
+}
+
+.redirectNote {
+  margin-top: 1.5rem;
+  font-style: italic;
+  color: #555;
+}
+
+.loaderWrapper {
+  margin-top: 2rem;
+}

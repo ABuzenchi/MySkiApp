@@ -1,52 +1,56 @@
 .container {
   width: 100%;
-  max-width: 480px;
-  padding: 2.5rem;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.40);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  text-align: center;
+  max-width: 360px;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   color: #133E50;
+  text-align: center;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen;
 }
 
 .location {
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 600;
-  margin-bottom: 0.8rem;
-}
-
-.weather img {
-  width: auto;
-  height: 200px; /* 🔁 mărit de la 100px */
-  object-fit: contain;
-}
-
-
-.weathertype {
-  font-size: 18px;
-  color: #133E50;
   margin-bottom: 0.5rem;
 }
 
+.weather img {
+  height: 100px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.weathertype {
+  font-size: 16px;
+  color: #133E50;
+  margin: 0.3rem 0;
+}
+
 .temp {
-  font-size: 52px;
+  font-size: 40px;
   font-weight: bold;
   color: #de6a2a;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .weatherdate {
   font-size: 14px;
   color: #133E50;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .weatherdata {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  gap: 2rem;
   margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .dataname {
@@ -55,9 +59,32 @@
 }
 
 .data {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: #133E50;
 }
 
+.loading {
+  font-size: 16px;
+  color: #999;
+  padding: 2rem;
+}
 
+@media (min-width: 768px) {
+  .container {
+    max-width: 480px;
+    padding: 2.5rem;
+  }
+
+  .location {
+    font-size: 28px;
+  }
+
+  .temp {
+    font-size: 52px;
+  }
+
+  .weather img {
+    height: 160px;
+  }
+}
