@@ -1,7 +1,7 @@
 .navBar {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Distribuie elementele pe lățime */
+  justify-content: space-between;
   padding: 10px 20px;
   position: sticky;
   top: 0;
@@ -17,22 +17,19 @@
   letter-spacing: 1px;
 }
 
-
-/* Secțiuni pentru aliniere corectă */
 .leftSection {
   display: flex;
   flex-direction: row;
-  gap:10px;
+  gap: 10px;
   align-items: center;
-  flex: 1; /* Ocupă spațiu pe stânga */
-
+  flex: 1;
 }
 
 .centerSection {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 2; /* Face ca butoanele să fie centrate */
+  flex: 2;
   gap: 15px;
 }
 
@@ -40,45 +37,115 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  flex: 1; /* Plasează user profile la dreapta */
+  flex: 1;
 }
 
-/* Imaginea */
 .image {
   height: 60px;
   width: auto;
   margin-left: 10px;
   transition: height 0.3s ease-in-out;
-   filter: invert(1) !important;
+  filter: invert(1) !important;
 }
 
-/* Butoane */
 .buttonText {
   margin-left: 8px;
   color: white;
 }
+
 .buttons {
   display: flex;
   gap: 10px;
 }
 
-/* Mobile Styles */
 @media (max-width: 768px) {
-  .navBar {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 10px;
-  }
-
   .centerSection {
-    display: none; /* Ascunde butoanele în versiunea mobilă */
+    display: none !important;
   }
 
-  .image {
-    height: 40px;
+  .rightSection {
+    display: none;
   }
 
   .menuButton {
     display: block;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+    margin-left: auto;
   }
+
+  .image {
+    height: 36px;
+  }
+
+  .appName {
+    font-size: 16px;
+  }
+
+ .mobileMenu {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 🔄 Schimbat din flex-end în flex-start */
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  z-index: 999;
+  width: 140px; /* sau cât e dropdown-ul Resorts */
+}
+
+
+  .mobileProfile {
+  align-self: flex-end;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.mobileMenuButton {
+  color: white !important;
+  background: none !important;
+  border: none !important;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+  padding: 4px 0;
+  display: block;
+  margin-left: 20px;
+}
+
+
+
+  .mobileMenuButton:hover {
+    color: #dddddd;
+    background: none;
+  }
+
+  .firstButton{
+    margin-top: 30px;
+  }
+  .mobileMenu :global(button),
+.mobileMenu :global(.mantine-Button-root),
+.mobileMenu :global(select),
+.mobileMenu :global(.mantine-Select-root) {
+  font-size: 16px;
+  font-weight: 400; /* sau 500 ca restul */
+  color: white !important;
+  background: none;
+}
+.mobileMenu :global(.mantine-Select-input) {
+  color: white !important;
+  background: none !important;
+  border: none !important;
+  font-size: 16px;
+  font-weight: 400;
+  padding-right: 0;
+}
+
 }

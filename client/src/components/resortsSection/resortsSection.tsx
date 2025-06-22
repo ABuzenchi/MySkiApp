@@ -1,5 +1,5 @@
 import { Carousel } from "@mantine/carousel";
-import { Text, Card } from "@mantine/core";
+import { Text, Card, Center, Loader } from "@mantine/core";
 import { Link } from "react-router-dom";
 import classes from "./resorts.module.css";
 
@@ -13,6 +13,14 @@ interface Props {
 }
 
 const ResortsSection = ({ resorts }: Props) => {
+  
+  if (!resorts || resorts.length === 0) {
+    return (
+      <Center style={{ height: 260 }}>
+        <Loader size="lg" color="blue" />
+      </Center>
+    );
+  }
   return (
     <div className={classes.wrapper}>
       <Carousel

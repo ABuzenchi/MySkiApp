@@ -1,7 +1,7 @@
 import { useState } from "react";
 import classes from "./header.module.css";
 import alpineSkiingLight from "../../assets/mountain-header.png";
-import { Button, Image, Text } from "@mantine/core";
+import { Button, Image } from "@mantine/core";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import UserProfile from "../user-profile/user-profile";
 import ResortsOptions from "../resortsOptions/resortsOptions";
@@ -29,7 +29,6 @@ const Header = () => {
             href="/"
             size="lg"
           >
-           
             <span className={classes.buttonText}>{EnDictionary.Home}</span>
           </Button>
 
@@ -56,44 +55,44 @@ const Header = () => {
 
           {menuOpen && (
             <div className={classes.mobileMenu}>
+              <div className={classes.mobileProfile}>
+                <UserProfile />
+              </div>
+
               <Button
                 variant="transparent"
-                color="#040024"
+                color="white"
+              
                 component="a"
                 href="/"
-                size="lg"
+                className={`${classes.mobileMenuButton} ${classes.firstButton}`}
               >
-              
-                <span className={classes.buttonText}>{EnDictionary.Home}</span>
+                {EnDictionary?.Home || "Home"}
               </Button>
 
               <Button
                 variant="transparent"
-                color="#040024"
+                color="white"
+                className={classes.mobileMenuButton}
                 component="a"
                 href="/forum"
-                size="lg"
               >
-              
-                <span className={classes.buttonText}>{EnDictionary.Forum}</span>
+                {EnDictionary?.Forum || "Forum"}
               </Button>
 
-              <ResortsOptions />
-              <UserProfile />
+              <div style={{ width: "100%" }}>
+                <ResortsOptions />
+              </div>
             </div>
           )}
         </>
       )}
-      <div className={classes.rightSection}>
-        <UserProfile />
-        {/* <LanguageSelector />
-        <Button variant="outline">
-          <FaMoon color="white" />
-        </Button>
-        <Button variant="outline">
-          <MdSunny color="white" />
-        </Button> */}
-      </div>
+
+      {!isMobile && (
+        <div className={classes.rightSection}>
+          <UserProfile />
+        </div>
+      )}
     </div>
   );
 };
