@@ -13,6 +13,7 @@ import ResortSidebar from "../../components/resortSidebar/resortSidebar";
 import classes from "./ResortPage.module.css";
 import { useInstallationsByDomain } from "../../hooks/useInstallationByDomain";
 import Installation from "../../components/installations/installations";
+import Spinner from "../../components/spinner/spinner";
 
 const imageSets: { [key: string]: string[] } = {
   "Poiana Brașov": [
@@ -43,7 +44,7 @@ export default function ResortPage() {
     error: installationsError,
   } = useInstallationsByDomain(domainId || "");
 
-  if (loading || domainLoading) return <p>Se încarcă datele...</p>;
+  if (loading || domainLoading) return <Spinner/>
   if (error) return <p>Eroare: {error}</p>;
 
   return (

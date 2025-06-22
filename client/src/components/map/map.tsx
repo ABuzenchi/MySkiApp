@@ -65,9 +65,7 @@ const MapComponent = () => {
     </MapContainer>
   );
 
-  useEffect(() => {
-  console.log("userLocation actualizată:", userLocation);
-}, [userLocation]);
+ 
 
   return (
   <div style={{ position: "relative", borderRadius: "16px", overflow: "hidden" }}>
