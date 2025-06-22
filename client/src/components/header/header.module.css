@@ -136,11 +136,11 @@
 .mobileMenu :global(.mantine-Select-root) {
   font-size: 16px;
   font-weight: 400; /* sau 500 ca restul */
-  color: white !important;
+  color: #133E50 !important;
   background: none;
 }
 .mobileMenu :global(.mantine-Select-input) {
-  color: white !important;
+  color: #133E50 !important;
   background: none !important;
   border: none !important;
   font-size: 16px;

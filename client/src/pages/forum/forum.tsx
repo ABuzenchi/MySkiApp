@@ -5,6 +5,9 @@ import EmojiWidget from "../../components/emoji-picker/emoji-picker";
 import classes from "./forum.module.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import useDevice, { DeviceTypes } from "../../hooks/useDevice";
+import { Select } from "@mantine/core";
+
 dayjs.extend(relativeTime);
 
 interface Message {
@@ -16,6 +19,9 @@ interface Message {
 }
 
 const Forum = () => {
+  const { device } = useDevice();
+  const isMobile = device === DeviceTypes.Mobile || device === DeviceTypes.MobilePortrait;
+
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [room, setRoom] = useState("stare-partii");
@@ -100,119 +106,152 @@ const Forum = () => {
 
   return (
     <div className={classes.pageBackground}>
-    <div className={classes.pageLayout}>
-      <div className={classes.sidebar}>
-        <h3>Camere</h3>
-        <ul>
-          <li
-            className={room === "stare-partii" ? classes.active : ""}
-            onClick={() => setRoom("stare-partii")}
-          >
-            Starea pârtiilor
-          </li>
-          <li
-            className={room === "lucruri-pierdute" ? classes.active : ""}
-            onClick={() => setRoom("lucruri-pierdute")}
-          >
-            Lucruri pierdute
-          </li>
-          <li
-            className={room === "echipamente" ? classes.active : ""}
-            onClick={() => setRoom("echipamente")}
-          >
-            Echipament
-          </li>
-        </ul>
-      </div>
-
-      <div className={classes.container}>
-        <div className={classes.chatBox}>
-          <ul className={classes.messageList} ref={messageListRef}>
-            {messages.map((msg, index) => (
-              <li key={index} className={classes.messageCard}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginBottom: 8,
-                  }}
+      <div className={classes.pageLayout}>
+        <div className={classes.sidebar}>
+          {isMobile ? (
+            <Select
+              className={classes.roomSelect}
+              data={[
+                { value: "stare-partii", label: "Starea pârtiilor" },
+                { value: "lucruri-pierdute", label: "Lucruri pierdute" },
+                { value: "echipamente", label: "Echipament" },
+              ]}
+              value={room}
+              onChange={(value) => setRoom(value!)}
+              placeholder="Alege o cameră"
+              radius="md"
+              size="md"
+              variant="filled"
+              styles={{
+                input: {
+                  backgroundColor: "rgba(255,255,255,0.15)",
+                  color: "white",
+                  backdropFilter: "blur(8px)",
+                  border: "1px solid rgba(255,255,255,0.4)",
+                },
+                dropdown: {
+                  backgroundColor: "#f8f9fa",
+                },
+              }}
+            />
+          ) : (
+            <>
+              <h3>Camere</h3>
+              <ul>
+                <li
+                  className={room === "stare-partii" ? classes.active : ""}
+                  onClick={() => setRoom("stare-partii")}
                 >
-                  <img
-                    src={msg.profilePicture}
-                    alt="avatar"
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: "50%",
-                      marginRight: 12,
-                    }}
-                  />
-                  <strong>{msg.username}</strong>
-                </div>
-                <div style={{ whiteSpace: "pre-line" }}>{msg.message}</div>
-                {msg.imageUrl && (
-                  <img
-                    src={msg.imageUrl}
-                    alt="sent"
-                    className={classes.messageImage}
-                    onClick={() => setSelectedImage(msg.imageUrl!)}
-                    style={{ cursor: "pointer" }}
-                  />
-                )}
-                {selectedImage && (
+                  Starea pârtiilor
+                </li>
+                <li
+                  className={room === "lucruri-pierdute" ? classes.active : ""}
+                  onClick={() => setRoom("lucruri-pierdute")}
+                >
+                  Lucruri pierdute
+                </li>
+                <li
+                  className={room === "echipamente" ? classes.active : ""}
+                  onClick={() => setRoom("echipamente")}
+                >
+                  Echipament
+                </li>
+              </ul>
+            </>
+          )}
+        </div>
+
+        <div className={classes.container}>
+          <div className={classes.chatBox}>
+            <ul className={classes.messageList} ref={messageListRef}>
+              {messages.map((msg, index) => (
+                <li key={index} className={classes.messageCard}>
                   <div
-                    className={classes.modalOverlay}
-                    onClick={() => setSelectedImage(null)}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      marginBottom: 8,
+                    }}
                   >
                     <img
-                      src={selectedImage}
-                      className={classes.modalImage}
-                      alt="preview"
+                      src={msg.profilePicture}
+                      alt="avatar"
+                      style={{
+                        width: 36,
+                        height: 36,
+                        borderRadius: "50%",
+                        marginRight: 12,
+                      }}
                     />
+                    <strong>{msg.username}</strong>
                   </div>
-                )}
-                {msg.timestamp && (
-                  <div className={classes.timestamp}>
-                    {dayjs(msg.timestamp).fromNow()}
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
+                  <div style={{ whiteSpace: "pre-line" }}>{msg.message}</div>
+                  {msg.imageUrl && (
+                    <img
+                      src={msg.imageUrl}
+                      alt="sent"
+                      className={classes.messageImage}
+                      onClick={() => setSelectedImage(msg.imageUrl!)}
+                      style={{ cursor: "pointer" }}
+                    />
+                  )}
+                  {selectedImage && (
+                    <div
+                      className={classes.modalOverlay}
+                      onClick={() => setSelectedImage(null)}
+                    >
+                      <img
+                        src={selectedImage}
+                        className={classes.modalImage}
+                        alt="preview"
+                      />
+                    </div>
+                  )}
+                  {msg.timestamp && (
+                    <div className={classes.timestamp}>
+                      {dayjs(msg.timestamp).fromNow()}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
 
-          <form className={classes.chatForm} onSubmit={sendMessage}>
-            <EmojiWidget
-              show={showEmojiPicker}
-              toggle={() => setShowEmojiPicker((prev) => !prev)}
-              onEmojiSelect={(emoji) => {
-                const input = inputRef.current;
-                if (input) {
-                  input.value += emoji;
-                  input.focus();
-                }
-              }}
-            />
+            <form className={classes.chatForm} onSubmit={sendMessage}>
+              <EmojiWidget
+                show={showEmojiPicker}
+                toggle={() => setShowEmojiPicker((prev) => !prev)}
+                onEmojiSelect={(emoji) => {
+                  const input = inputRef.current;
+                  if (input) {
+                    input.value += emoji;
+                    input.focus();
+                  }
+                }}
+              />
 
-            <ImageUploader
-              onImageSelect={(url) => {
-                setImageUrl(url);
-                setIsUploadingImage(false);
-              }}
-              onUploadStart={() => setIsUploadingImage(true)}
-            />
-            <input
-              className={classes.chatInput}
-              type="text"
-              placeholder="Write your message..."
-              ref={inputRef}
-            />
-            <button className={classes.sendButton} disabled={isUploadingImage}>
-              ➤
-            </button>
-          </form>
+              <ImageUploader
+                onImageSelect={(url) => {
+                  setImageUrl(url);
+                  setIsUploadingImage(false);
+                }}
+                onUploadStart={() => setIsUploadingImage(true)}
+              />
+              <input
+                className={classes.chatInput}
+                type="text"
+                placeholder="Write your message..."
+                ref={inputRef}
+              />
+              <button
+                className={classes.sendButton}
+                disabled={isUploadingImage}
+              >
+                ➤
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 };

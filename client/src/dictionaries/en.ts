@@ -2,7 +2,7 @@ export const EnDictionary = {
   Home: "Home",
   Forum: "Forum",
   ChooseAPhoto: "Choose a photo",
-  ClickPhoto: "Click to select a picture",
+  ClickPhoto: "Add photo",
   Resorts: "Resorts",
   PoianaBrasov: "Poiana Brasov",
   Sinaia: "Sinaia",

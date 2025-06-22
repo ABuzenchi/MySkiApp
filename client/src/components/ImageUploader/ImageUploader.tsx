@@ -1,5 +1,6 @@
 import { FileInput } from "@mantine/core";
 import { EnDictionary } from "../../dictionaries/en";
+import styles from "./ImageUploader.module.css";
 
 interface ImageUploaderProps {
   onImageSelect: (imageUrl: string | null) => void;
@@ -43,12 +44,15 @@ const ImageUploader = ({ onImageSelect, onUploadStart }: ImageUploaderProps) => 
   };
 
   return (
-    <FileInput
-      label={EnDictionary.ChooseAPhoto}
-      placeholder={EnDictionary.ClickPhoto}
-      accept="image/*"
-      onChange={handleFileChange}
-    />
+    <div className={styles.wrapper}>
+      <FileInput
+        className={styles.input}
+        label={EnDictionary.ChooseAPhoto}
+        placeholder={EnDictionary.ClickPhoto}
+        accept="image/*"
+        onChange={handleFileChange}
+      />
+    </div>
   );
 };
 
