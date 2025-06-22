@@ -180,7 +180,12 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
       value: favoriteSlopes.length,
       label: "Favorite Slopes",
     },
-    { id: 2, icon: "🎿", value: visitedSlopes.length, label: "Visited Resorts" },
+    {
+      id: 2,
+      icon: "🎿",
+      value: visitedSlopes.length,
+      label: "Visited Resorts",
+    },
     ...(extraStats
       ? [
           {
@@ -212,6 +217,7 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
   ];
 
   return (
+    <div className={classes.scrollableContainer}>
     <div className={classes.butttonsContainer}>
       {isAuthenticated ? (
         <div className={classes.userContainer}>
@@ -269,25 +275,25 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
           </div>
 
           {/* Friends */}
-            <div className={classes.container}>
-          <div className={classes.userList}>
+          <div className={classes.container}>
+            <div className={classes.userList}>
               <h3 className={classes.title}>Friends</h3>
-            {currentUserData?.friends?.length > 0 ? (
-              currentUserData.friends.map((friend: any) => (
-                <div
-                  key={friend._id}
-                  className={classes.userCard}
-                  onClick={() => openUserProfile(friend.username)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <Avatar src={friend.profilePicture || undefined} />
-                  <span>{friend.username}</span>
-                </div>
-              ))
-            ) : (
-              <p>Nu ai prieteni încă.</p>
-            )}
-          </div>
+              {currentUserData?.friends?.length > 0 ? (
+                currentUserData.friends.map((friend: any) => (
+                  <div
+                    key={friend._id}
+                    className={classes.userCard}
+                    onClick={() => openUserProfile(friend.username)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Avatar src={friend.profilePicture || undefined} />
+                    <span>{friend.username}</span>
+                  </div>
+                ))
+              ) : (
+                <p>Nu ai prieteni încă.</p>
+              )}
+            </div>
           </div>
 
           {/* Pending Friend Requests */}
@@ -297,23 +303,30 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
               {pendingRequests.length > 0 ? (
                 pendingRequests.map((request) => (
                   <div
-                  key={request._id}
-                  className={classes.userCard}
-                  onClick={() => openUserProfile(request.sender.username)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <Avatar src={request.sender.profilePicture || undefined} />
-                  <span>{request.sender.username}</span>
-                  <Group onClick={(e) => e.stopPropagation()}>
-                    <Button size="xs" color="green" onClick={() => acceptRequest(request._id)}>
-                      Accept
-                    </Button>
-                    <Button size="xs" color="red" onClick={() => declineRequest(request._id)}>
-                      Decline
-                    </Button>
-                  </Group>
-                </div>
-                
+                    key={request._id}
+                    className={classes.userCard}
+                    onClick={() => openUserProfile(request.sender.username)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Avatar src={request.sender.profilePicture || undefined} />
+                    <span>{request.sender.username}</span>
+                    <Group onClick={(e) => e.stopPropagation()}>
+                      <Button
+                        size="xs"
+                        color="green"
+                        onClick={() => acceptRequest(request._id)}
+                      >
+                        Accept
+                      </Button>
+                      <Button
+                        size="xs"
+                        color="red"
+                        onClick={() => declineRequest(request._id)}
+                      >
+                        Decline
+                      </Button>
+                    </Group>
+                  </div>
                 ))
               ) : (
                 <p>No pending requests</p>
@@ -358,6 +371,7 @@ const UserProfileContent = ({ openUserProfile, onLogout }: Props) => {
           <SignIn />
         </div>
       )}
+    </div>
     </div>
   );
 };

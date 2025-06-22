@@ -28,8 +28,10 @@ const FeatureSlidingDrawer = ({
   useEffect(() => {
     if (!opened) {
       onSlidingStateChanged(SlidingState.Hidden);
+    } else if (slidingState === SlidingState.Hidden) {
+      onSlidingStateChanged(SlidingState.Default); // sau .Full dacă preferi fullscreen
     }
-  }, [opened, onSlidingStateChanged]);
+  }, [opened, slidingState, onSlidingStateChanged]);
 
   const getDrawerSize = () => {
     switch (slidingState) {
@@ -49,17 +51,33 @@ const FeatureSlidingDrawer = ({
   };
 
   return (
-    <Drawer
-      opened={opened && slidingState !== SlidingState.Hidden}
-      onClose={handleDrawerClose}
-      title={title}
-      position="bottom"
-      size={getDrawerSize()}
-      overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
-      withCloseButton
-    >
-      {children}
-    </Drawer>
+    <>
+      {/* Debug temporar - șterge după testare */}
+      {/* 
+      <div style={{ position: "fixed", top: 0, left: 0, background: "yellow", zIndex: 99999 }}>
+        🔍 Drawer opened: {String(opened)} | State: {slidingState}
+      </div>
+      */}
+
+      <Drawer
+        opened={opened && slidingState !== SlidingState.Hidden}
+        onClose={handleDrawerClose}
+        title={title}
+        position="bottom"
+        size={getDrawerSize()}
+        overlayProps={{ backgroundOpacity: 0.5, blur: 4 }}
+        withCloseButton
+        styles={{
+          body: {
+            overflowY: "auto",
+            maxHeight: "calc(100vh - 100px)",
+            paddingBottom: "2rem",
+          },
+        }}
+      >
+        {children}
+      </Drawer>
+    </>
   );
 };
 

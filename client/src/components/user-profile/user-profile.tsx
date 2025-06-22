@@ -46,6 +46,8 @@ const UserProfile = () => {
 
   const openSelfProfile = () => {
     setViewMode("self");
+      console.log("✅ Click pe Avatar — deschide UserProfile");
+
     open();
   };
 

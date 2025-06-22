@@ -6,7 +6,6 @@ import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { Provider } from "react-redux";
 import store from "./store";
-import Sinaia from "./pages/Sinaia/Sinaia";
 import PoianaBrasov from "./pages/Poiana-Brasov/Poiana-Brasov";
 import Straja from "./pages/Straja/Straja";
 import Transalpina from "./pages/Transalpina/Transalpina";
@@ -28,6 +27,7 @@ const App = () => {
             <Route path="/success" element={<SuccessPage />} />
             <Route path="/chat" element={<ChatBox />} />
             <Route path="/analyzer" element={<UploadVideo />} />
+            
           </Routes>
         </BrowserRouter>
       </Provider>

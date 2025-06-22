@@ -138,3 +138,59 @@
   border: 1px solid #ccc;
   border-radius: 12px;
 }
+
+@media (max-width: 768px) {
+  .butttonsContainer {
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 70px;
+  }
+
+  .container {
+    min-width: unset;
+    max-width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr; /* o coloană pe mobil */
+  }
+
+  .statBox {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .icon {
+    font-size: 18px;
+  }
+
+  .value {
+    font-size: 15px;
+  }
+
+  .label {
+    font-size: 11px;
+  }
+
+  .authContainer {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .userCard {
+    flex-direction: row;
+    padding: 6px;
+  }
+  .scrollableContainer {
+  overflow-y: auto;
+  max-height: 80vh;
+  padding-right: 8px;
+}
+
+}

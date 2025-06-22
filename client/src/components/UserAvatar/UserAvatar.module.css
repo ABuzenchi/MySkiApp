@@ -12,3 +12,11 @@
 .username{
     font-weight: bolder;
 }
+@media (max-width: 768px) {
+  .container {
+  display: flex;
+  flex-direction: row;
+  gap: 160px;
+}
+
+}
