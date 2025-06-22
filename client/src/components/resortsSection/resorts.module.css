@@ -33,3 +33,13 @@
   color: white !important;
   font-weight: bold;
 }
+
+
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding-top: 1rem;
+    margin-top: 20px;
+  }
+}
+

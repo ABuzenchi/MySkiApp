@@ -2,6 +2,7 @@ import { Carousel } from "@mantine/carousel";
 import { Text, Card, Center, Loader } from "@mantine/core";
 import { Link } from "react-router-dom";
 import classes from "./resorts.module.css";
+import useDevice, { DeviceTypes } from "../../hooks/useDevice";
 
 interface SkiDomain {
   name: string;
@@ -13,7 +14,21 @@ interface Props {
 }
 
 const ResortsSection = ({ resorts }: Props) => {
-  
+  const { device } = useDevice();
+
+  // Slide size & spacing responsive
+  let slideSize = "220px";
+  let slideGap: "sm" | "md" = "md";
+
+  if (device === DeviceTypes.Mobile) {
+    slideSize = "45%";
+    slideGap = "sm";
+  }
+  if (device === DeviceTypes.MobilePortrait) {
+    slideSize = "60%";
+    slideGap = "sm";
+  }
+
   if (!resorts || resorts.length === 0) {
     return (
       <Center style={{ height: 260 }}>
@@ -21,17 +36,18 @@ const ResortsSection = ({ resorts }: Props) => {
       </Center>
     );
   }
+
   return (
     <div className={classes.wrapper}>
       <Carousel
-        slideSize="220px"
-        slideGap="md"
+        slideSize={slideSize}
+        slideGap={slideGap}
         align="start"
         containScroll="trimSnaps"
         withIndicators
         loop
         height={260}
-        styles={(theme) => ({
+        styles={() => ({
           indicators: {
             marginTop: 32,
             justifyContent: "center",
