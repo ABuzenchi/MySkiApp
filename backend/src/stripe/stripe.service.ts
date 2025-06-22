@@ -24,7 +24,7 @@ export class StripeService {
       line_items: [
         {
           price_data: {
-            currency: 'eur',
+            currency: 'ron',
             product_data: {
               name: productName,
             },

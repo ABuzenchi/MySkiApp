@@ -11,6 +11,7 @@ import { SkiResort } from "../../interfaces/skiResort.interface";
 import pin from "../../assets/pin.png";
 import { Modal } from "@mantine/core";
 import { MdFullscreen } from "react-icons/md";
+import userLocation from "../userLocation/userLocation";
 
 const skiIcon = new L.Icon({
   iconUrl: pin,
@@ -63,6 +64,10 @@ const MapComponent = () => {
       ))}
     </MapContainer>
   );
+
+  useEffect(() => {
+  console.log("userLocation actualizată:", userLocation);
+}, [userLocation]);
 
   return (
   <div style={{ position: "relative", borderRadius: "16px", overflow: "hidden" }}>

@@ -27,6 +27,7 @@ const userachievement_module_1 = require("./userachievement/userachievement.modu
 const stripe_module_1 = require("./stripe/stripe.module");
 const ski_domain_module_1 = require("./ski-domain/ski-domain.module");
 const ski_installation_module_1 = require("./ski-installation/ski-installation.module");
+const route_controller_1 = require("./routes/route.controller");
 console.log('🌐 Using Mongo URI:', process.env.MONGO);
 let AppModule = class AppModule {
 };
@@ -55,7 +56,7 @@ exports.AppModule = AppModule = __decorate([
             ski_domain_module_1.SkiDomainModule,
             ski_installation_module_1.SkiInstallationModule,
         ],
-        controllers: [app_controller_1.AppController],
+        controllers: [app_controller_1.AppController, route_controller_1.RouteController],
         providers: [app_service_1.AppService],
     })
 ], AppModule);

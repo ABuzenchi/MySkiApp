@@ -29,16 +29,19 @@ export default function ResortPage() {
   const images = imageSets[resortName] || [];
 
   const { slopes, loading, error } = useSlopesByDomain(resortName);
-  const { domainId, loading: domainLoading } = useDomainByName(resortName);
+  const {
+    domainId,
+    domain,
+    webcamUrl,
+    loading: domainLoading,
+  } = useDomainByName(resortName);
 
   const [activeSection, setActiveSection] = useState<string>("slopes");
   const {
-  installations,
-  loading: installationsLoading,
-  error: installationsError,
-} = useInstallationsByDomain(domainId || "");
-
-
+    installations,
+    loading: installationsLoading,
+    error: installationsError,
+  } = useInstallationsByDomain(domainId || "");
 
   if (loading || domainLoading) return <p>Se încarcă datele...</p>;
   if (error) return <p>Eroare: {error}</p>;
@@ -76,15 +79,15 @@ export default function ResortPage() {
             <SlopeReviews domainId={domainId} />
           )}
 
-          {activeSection === "map" && <MapSearch />}
+          {activeSection === "map" && domain && <MapSearch domain={domain} />}
 
-          {activeSection === "payment" && <Payment />}
+          {activeSection === "payment" && domain && <Payment domain={domain} />}
 
-          {activeSection === "webcam" && (
+          {activeSection === "webcam" && webcamUrl && (
             <iframe
               width="100%"
               height="600"
-              src="https://www.youtube.com/embed/Ifw-41CDRjQ"
+              src={webcamUrl}
               title={`Webcam ${resortName}`}
               allowFullScreen
               style={{
@@ -92,6 +95,12 @@ export default function ResortPage() {
                 boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
               }}
             />
+          )}
+
+          {activeSection === "webcam" && !webcamUrl && (
+            <p style={{ padding: "1rem", fontStyle: "italic" }}>
+              Momentan nu există un webcam disponibil pentru acest domeniu.
+            </p>
           )}
         </div>
       </div>

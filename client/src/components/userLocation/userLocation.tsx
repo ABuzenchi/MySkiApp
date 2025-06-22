@@ -13,6 +13,8 @@ const LocateUser: React.FC<{ setUserLocation: (loc: LatLngExpression | null) => 
 
     const onLocationFound = (e: L.LocationEvent) => {
       setUserLocation(e.latlng);
+      console.log("Locația utilizatorului:", e.latlng);
+
 
       if (userMarkerRef.current) {
         map.removeLayer(userMarkerRef.current);

@@ -1,26 +1,25 @@
 import { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  Polyline,
+} from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { getDistanceAndDuration } from "../../utils/getDistanceAndDuration";
 import LocateUser from "../userLocation/userLocation";
-import { Polyline } from "react-leaflet";
 
 function toTuple(loc: LatLngExpression): [number, number] {
   if (Array.isArray(loc)) {
     const [lat, lng] = loc;
-    return [lat, lng]; // forțăm să fie [number, number]
+    return [lat, lng];
   }
   if ("lat" in loc && "lng" in loc) return [loc.lat, loc.lng];
   throw new Error("Coordonatele nu sunt într-un format valid");
-}
-
-interface SearchResult {
-  place_id: string;
-  display_name: string;
-  lat: string;
-  lon: string;
 }
 
 const skiIcon = new L.Icon({
@@ -42,108 +41,50 @@ function ChangeView({
   return null;
 }
 
-const MapSearch = () => {
-  const [userLocation, setUserLocation] = useState<LatLngExpression | null>(
-    null
-  );
+const MapSearch = ({ domain }: { domain: { lat: number; lng: number; name: string } }) => {
+  const [userLocation, setUserLocation] = useState<LatLngExpression | null>(null);
   const [routeLine, setRouteLine] = useState<LatLngExpression[] | null>(null);
+  const [routeInfo, setRouteInfo] = useState<{ distance: string; duration: string } | null>(null);
 
-  const [routeInfo, setRouteInfo] = useState<{
-    distance: string;
-    duration: string;
-  } | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [mapCenter, setMapCenter] = useState<LatLngExpression>([45.5, 25.5]);
-  const [selectedLocation, setSelectedLocation] =
-    useState<LatLngExpression | null>(null);
+  if (!domain || typeof domain.lat !== "number" || typeof domain.lng !== "number") {
+    return <p>Harta nu poate fi afișată: coordonate lipsă.</p>;
+  }
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          searchQuery
-        )}`
-      );
-      const data: SearchResult[] = await response.json();
-      setSearchResults(data);
-
-      if (data.length > 0) {
-        const firstResult = data[0];
-        const newCenter: LatLngExpression = [
-          parseFloat(firstResult.lat),
-          parseFloat(firstResult.lon),
-        ];
-        setMapCenter(newCenter);
-        setSelectedLocation(newCenter);
-      }
-    } catch (error) {
-      console.error("Error during geocoding:", error);
-    }
-  };
+  const destination: LatLngExpression = [domain.lat, domain.lng];
 
   useEffect(() => {
-    if (userLocation && selectedLocation) {
-      console.log("userLocation:", userLocation);
-      console.log("selectedLocation:", selectedLocation);
+    if (userLocation) {
       const start = toTuple(userLocation);
-      const end = toTuple(selectedLocation);
-      console.log("start:", start, "end:", end);
-
-      if (
-        typeof start[0] !== "number" ||
-        typeof start[1] !== "number" ||
-        typeof end[0] !== "number" ||
-        typeof end[1] !== "number"
-      ) {
-        console.error("Coordonatele nu sunt valide");
-        return;
-      }
+      const end = toTuple(destination);
 
       getDistanceAndDuration([start[1], start[0]], [end[1], end[0]])
         .then((info) => {
           setRouteInfo({ distance: info.distance, duration: info.duration });
-          setRouteLine(info.geometry); // aici salvăm traseul
+          setRouteLine(info.geometry);
+          console.log("Start:", start, "End:", end);
+
         })
         .catch(console.error);
     }
-  }, [userLocation, selectedLocation]);
+  }, [userLocation, destination]);
+ useEffect(() => {
+  console.log("userLocation actualizată:", userLocation);
+}, [userLocation]);
 
   return (
     <div>
-      <form onSubmit={handleSearch} style={{ marginBottom: "20px" }}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search for a location..."
-          style={{ padding: "10px", width: "300px", marginRight: "10px" }}
-        />
-        <button type="submit" style={{ padding: "10px" }}>
-          Search
-        </button>
-      </form>
-
-      <MapContainer
-        center={mapCenter}
-        zoom={7}
-        style={{ height: "500px", width: "100%" }}
-      >
-        <LocateUser setUserLocation={setUserLocation} />
-        <ChangeView center={mapCenter} zoom={7} />
+      <MapContainer center={destination} zoom={10} style={{ height: "500px", width: "100%" }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {selectedLocation && (
-          <Marker position={selectedLocation} icon={skiIcon}>
-            <Popup>
-              Searched Location: <br />
-              {searchQuery}
-            </Popup>
-          </Marker>
-        )}
+        <LocateUser setUserLocation={setUserLocation} />
+        <ChangeView center={destination} zoom={10} />
+
+        <Marker position={destination} icon={skiIcon}>
+          <Popup>{domain.name}</Popup>
+        </Marker>
+
         {routeLine && <Polyline positions={routeLine} color="blue" />}
       </MapContainer>
 
@@ -152,17 +93,6 @@ const MapSearch = () => {
           <h3>Informații rută:</h3>
           <p>Distanță: {routeInfo.distance}</p>
           <p>Durată estimată: {routeInfo.duration}</p>
-        </div>
-      )}
-
-      {searchResults.length > 0 && (
-        <div style={{ marginTop: "20px" }}>
-          <h3>Search Results:</h3>
-          <ul>
-            {searchResults.slice(0, 5).map((result) => (
-              <li key={result.place_id}>{result.display_name}</li>
-            ))}
-          </ul>
         </div>
       )}
     </div>

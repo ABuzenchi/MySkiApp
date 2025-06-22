@@ -79,7 +79,7 @@ const Home = () => {
         </div>
 
         <div className={classes.zigZagRow}>
-          <div id="map" className={classes.mapColumn}>
+          <div id="map"className={classes.mapColumn}>
             <MapComponent />
           </div>
           <div className={classes.zigZagText}>

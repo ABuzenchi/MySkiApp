@@ -30,5 +30,5 @@ export function useDomainByName(domainName: string) {
     fetchDomain();
   }, [domainName]);
 
-  return { domainId, domain, loading, error };
+  return { domainId, webcamUrl: domain?.webcamUrl,domain, loading, error };
 }

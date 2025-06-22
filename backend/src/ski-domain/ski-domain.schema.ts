@@ -21,6 +21,23 @@ lng: number;
 @Prop()
 imageUrl:string;
 
+@Prop()
+webcamUrl: string;
+
+@Prop({
+  type: {
+    oneDay: String,
+    twentyPoints: String,
+    tenPoints: String,
+  },
+})
+paymentOptions: {
+  oneDay?: string;
+  twentyPoints?: string;
+  tenPoints?: string;
+};
+
+
 }
 
 export const SkiDomainSchema = SchemaFactory.createForClass(SkiDomain);

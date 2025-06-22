@@ -1,72 +1,86 @@
 import { useState } from "react";
+import classes from "./Payment.module.css";
+import { Select } from "@mantine/core";
 
-const Payment=()=>{
-  console.log("✅ Componenta Payment este montată");
+type PaymentProps = {
+  domain: {
+    name: string;
+    paymentOptions?: {
+      oneDay?: string;
+      twentyPoints?: string;
+      tenPoints?: string;
+    };
+  };
+};
 
-  const [domain, setDomain] = useState("Poiana Brașov");
-  const [price, setPrice] = useState(20); // în EUR
+const Payment = ({ domain }: PaymentProps) => {
   const [product, setProduct] = useState("Abonament zilnic");
 
-  const handlePay = async () => {
-    console.log("📤 Trimitem cererea de plată...");
+  const getPrice = () => {
+    switch (product) {
+      case "Abonament zilnic":
+        return domain.paymentOptions?.oneDay || "0";
+      case "Puncte (20 curse)":
+        return domain.paymentOptions?.twentyPoints || "0";
+      case "Puncte (10 curse)":
+        return domain.paymentOptions?.tenPoints || "0";
+      default:
+        return "0";
+    }
+  };
 
+  const handlePay = async () => {
     try {
-      const token = localStorage.getItem("authToken"); // același ca la review
+      const token = localStorage.getItem("authToken");
 
       const response = await fetch("http://localhost:3000/stripe/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`, // token-ul JWT
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          name: `${product} - ${domain}`,
-          price: price,
+          name: `${product} - ${domain.name}`,
+          price: parseFloat(getPrice()),
+          currency: "ron",
         }),
       });
 
-      if (!response.ok) throw new Error("Checkout request failed");
-
       const data = await response.json();
-
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert("Nu s-a putut obține linkul de plată.");
-      }
+      if (data.url) window.location.href = data.url;
+      else alert("Nu s-a putut obține linkul de plată.");
     } catch (err) {
       console.error("Eroare la plată:", err);
       alert("A apărut o problemă. Încearcă din nou.");
     }
   };
 
+  if (!domain) return <p>Se încarcă informațiile despre plată...</p>;
+
   return (
-    <div style={{ maxWidth: 400, margin: "auto", textAlign: "center" }}>
-      <h2>Cumpără acces la domeniu</h2>
+    <div className={classes.paymentContainer}>
+      <h2 className={classes.title}>Abonamente & puncte – {domain.name}</h2>
 
-      <label>Domeniu schiabil:</label><br />
-      <select value={domain} onChange={(e) => setDomain(e.target.value)}>
-        <option>Poiana Brașov</option>
-        <option>Sinaia</option>
-        <option>Predeal</option>
-      </select><br /><br />
+      <label className={classes.label}>Tip produs:</label>
 
-      <label>Tip produs:</label><br />
-      <select
+      <Select
+        placeholder="Alege o opțiune"
+        data={[
+          { value: "Abonament zilnic", label: "Abonament zilnic" },
+          { value: "Puncte (20 curse)", label: "20 puncte" },
+          { value: "Puncte (10 curse)", label: "10 puncte" },
+        ]}
         value={product}
-        onChange={(e) => {
-          const val = e.target.value;
-          setProduct(val);
-          setPrice(val === "Abonament zilnic" ? 20 : 10);
+        onChange={(value) => {
+          if (value) setProduct(value);
         }}
-      >
-        <option>Abonament zilnic</option>
-        <option>Puncte (10 curse)</option>
-      </select><br /><br />
+      />
 
-      <button onClick={handlePay}>Plătește {price} €</button>
+      <button className={classes.button} onClick={handlePay}>
+        Plătește {getPrice()} RON
+      </button>
     </div>
   );
-}
+};
 
 export default Payment;
